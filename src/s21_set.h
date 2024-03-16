@@ -15,8 +15,8 @@ class set {
   bool operator==(const set &iter2);
   bool operator!=(const set &iter2);
 
-  bool add_elem();
-  bool remove_elem();
+  bool push_back();
+  bool pop_back();
   bool set_clean();
 
   int set_count();

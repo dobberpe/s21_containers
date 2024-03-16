@@ -15,8 +15,8 @@ class stack {
   bool operator==(const stack &iter2);
   bool operator!=(const stack &iter2);
 
-  bool add_elem();
-  bool remove_elem();
+  bool push_back();
+  bool pop_back();
   bool stack_clean();
 
   int stack_count();

@@ -15,8 +15,8 @@ class map {
   bool operator==(const map &iter2);
   bool operator!=(const map &iter2);
 
-  bool add_elem();
-  bool remove_elem();
+  bool push_back();
+  bool pop_back();
   bool map_clean();
 
   int map_count();

@@ -1,14 +1,14 @@
 #include "s21_list.h"
 
-template <typename Type>
-Type list<Type>::operator()(const int i) {
+template <typename T>
+T &list<T>::operator()(const int i) {
   short result = SUCCESS;
-  list_node *iter = begin();
+  list_node *node = begin();
   int index = 0;
   for (; index < i && result; index++) {
-    iter = iter->next;
-    result = (iter != nullptr);
+    node = node->next;
+    result = (node != nullptr);
   }
 
-  return iter->data;
+  return node->data;
 }

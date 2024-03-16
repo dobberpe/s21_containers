@@ -1,24 +1,25 @@
 #ifndef _S21_LIST_H_
 #define _S21_LIST_H_
 
-using namespace std;
+#include <stdio.h>
 
-#include <iostream>
+#include <initializer_list>
 
 #include "../s21_containers.h"
 
-template <typename Type>
+template <typename T>
 class list {
  private:
   class list_node {
    public:
-    Type data;
+    T data;
     list_node *prev;
     list_node *next;
-    list_node(Type data_node);
+    list_node(const T data_node);
   };
 
-  list_node *first_node;
+  list_node *head_node;
+  list_node *tail_node;
 
  public:
   class iterator {
@@ -27,26 +28,42 @@ class list {
 
    public:
     iterator();
-    Type &operator*();
+    T &operator*();
     void operator++();
     void operator--();
-    bool operator==(const list<Type>::iterator &iter2);
-    bool operator!=(const list<Type>::iterator &iter2);
+    bool operator==(const list<T>::iterator &iter2);
+    bool operator!=(const list<T>::iterator &iter2);
 
-    void operator=(const list<Type>::iterator &iter2);
+    void operator=(const list<T>::iterator &iter2);
     void operator=(list_node *node);
     bool operator!=(const list_node *node);
   };
 
+  // void print_list();
+
+  const T &front();
+  const T &back();
   list_node *begin();
   list_node *end();
-  // void print_list();
-  bool add_elem(Type new_elem);
-  bool remove_elem();
-  void list_clean();
-  int list_count();
-  bool list_empty();
-  Type operator()(const int i);
+  bool push_back(T new_elem);
+  bool pop_back();
+  void clear();
+  int size();
+  bool empty();
+  T &operator()(const int i);
+
+  // iterator insert(iterator pos, const_reference value);
+  // void erase(iterator pos);
+  // void push_front(const_reference value);
+  // void pop_front();
+
+  // void swap(list &other);
+  // void merge(list &other);
+  // void splice(const_iterator pos, list &other);
+
+  // void reverse();
+  // void unique();
+  // void sort();
 
   /*
   iterator insert_many(const_iterator pos, Args&&... args)	Inserts new
@@ -58,9 +75,11 @@ class list {
   */
 
   list();
-  list(Type data_init);
-  list(list<Type> &other);
-  list(list<Type> &&other);
+  list(list<T> &other);
+  list(const int count);
+  list<T> &operator=(list<T> &&other);
+  list(std::initializer_list<T> const &items);
+  list(list<T> &&other);
   ~list();
 };
 

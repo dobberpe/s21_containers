@@ -15,8 +15,8 @@ class array {
   bool operator==(const array &iter2);
   bool operator!=(const array &iter2);
 
-  bool add_elem();
-  bool remove_elem();
+  bool push_back();
+  bool pop_back();
   bool array_clean();
 
   int array_count();

@@ -1,15 +1,21 @@
 #include "s21_list.h"
 
-template <typename Type>
-typename list<Type>::list_node *list<Type>::begin() {
-  return first_node;
+template <typename T>
+typename list<T>::list_node *list<T>::begin() {
+  return head_node;
 }
 
-template <typename Type>
-typename list<Type>::list_node *list<Type>::end() {
-  list_node *result = first_node;
-  for (; result->next != nullptr; result = result->next)
-    ;
+template <typename T>
+typename list<T>::list_node *list<T>::end() {
+  return tail_node;
+}
 
-  return result;
+template <typename T>
+const T &list<T>::front() {
+  return begin()->data;
+}
+
+template <typename T>
+const T &list<T>::back() {
+  return end()->prev->data;
 }

@@ -15,8 +15,8 @@ class quene {
   bool operator==(const quene &iter2);
   bool operator!=(const quene &iter2);
 
-  bool add_elem();
-  bool remove_elem();
+  bool push_back();
+  bool pop_back();
   bool quene_clean();
 
   int quene_count();

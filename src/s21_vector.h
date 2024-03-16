@@ -15,8 +15,8 @@ class vector {
   bool operator==(const vector &iter2);
   bool operator!=(const vector &iter2);
 
-  bool add_elem();
-  bool remove_elem();
+  bool push_back();
+  bool pop_back();
   bool vector_clean();
 
   int vector_count();

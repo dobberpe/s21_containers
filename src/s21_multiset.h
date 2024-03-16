@@ -15,8 +15,8 @@ class multiset {
   bool operator==(const multiset &iter2);
   bool operator!=(const multiset &iter2);
 
-  bool add_elem();
-  bool remove_elem();
+  bool push_back();
+  bool pop_back();
   bool multiset_clean();
 
   int multiset_count();

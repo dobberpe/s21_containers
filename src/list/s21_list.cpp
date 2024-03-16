@@ -1,9 +1,9 @@
 #include "s21_list.h"
 
-// template <typename Type>
-// void list<Type>::print_list() {
-//   if (this->list_empty() == CONTAINER_NOT_EMPTY) {
-//     list<Type>::iterator iter;
+// template <typename T>
+// void list<T>::print_list() {
+//   if (this->empty() == CONTAINER_NOT_EMPTY) {
+//     list<T>::iterator iter;
 //     iter = begin();
 //     for (; iter != end(); ++iter) cout << *iter << " ";
 //     cout << *iter << endl;
@@ -11,79 +11,78 @@
 //     cout << "Container is empty." << endl;
 // }
 
-template <typename Type>
-bool list<Type>::add_elem(Type new_elem) {
+template <typename T>
+bool list<T>::push_back(T new_elem) {
   short result = SUCCESS;
   int exit_code = _NO_ERROR;
-  if (list_empty() == CONTAINER_EMPTY) {
-    first_node = new list<Type>::list_node(new_elem);
-    first_node->prev = nullptr;
-    first_node->next = new list<Type>::list_node(0);
-    first_node->next->prev = first_node;
-  } else {
-    list_node *save_end_index = end();
-    list_node *new_node = nullptr;
-    try {
-      new_node = new list<Type>::list_node(new_elem);
-    } catch (int error) {
-      exit_code = error;
-    }
-    if (!exit_code) {
-      new_node->prev = save_end_index->prev;
-      new_node->next = save_end_index;
-      save_end_index->prev->next = new_node;
-      save_end_index->prev = new_node;
-    } else
-      result = FAILURE;
+  list_node *save_end_index = end();
+  list_node *new_node = nullptr;
+  try {
+    new_node = new list<T>::list_node(new_elem);
+  } catch (int error) {
+    exit_code = error;
   }
+  if (!exit_code) {
+    new_node->next = save_end_index;
+    new_node->prev = save_end_index->prev;
+    save_end_index->prev = new_node;
+    if (empty() == CONTAINER_EMPTY) {
+      head_node = new_node;
+    } else {
+      new_node->prev->next = new_node;
+    }
+  } else
+    result = FAILURE;
+  // }
   return result;
 }
 
-template <typename Type>
-bool list<Type>::remove_elem() {
+template <typename T>
+bool list<T>::pop_back() {
   short result = SUCCESS;
-  if (list_empty() == CONTAINER_NOT_EMPTY) {
+  if (empty() == CONTAINER_NOT_EMPTY) {
     list_node *save_end_index = end();
     list_node *removing_elem = save_end_index->prev;
 
-    if (removing_elem != first_node) {
-      removing_elem->prev->next = save_end_index;
+    if (removing_elem != head_node) {
       save_end_index->prev = removing_elem->prev;
-      removing_elem->prev = removing_elem->next = nullptr;
-      delete removing_elem;
-
-    } else {  // iter == first
-      save_end_index->prev = save_end_index->next = nullptr;
-      first_node = nullptr;
-      delete removing_elem;
-      delete save_end_index;
+      save_end_index->prev->next = save_end_index;
+    } else {
+      head_node = tail_node;
+      save_end_index->prev = head_node;
     }
+    removing_elem->data = 0;
+    removing_elem->prev = removing_elem->next = nullptr;
+    delete removing_elem;
   } else
     result = FAILURE;
 
   return result;
 }
 
-template <typename Type>
-void list<Type>::list_clean() {
-  while (list_empty() == CONTAINER_NOT_EMPTY) remove_elem();
+template <typename T>
+void list<T>::clear() {
+  while (empty() == CONTAINER_NOT_EMPTY) pop_back();
+
+  delete tail_node;
 }
 
-template <typename Type>
-bool list<Type>::list_empty() {
+template <typename T>
+bool list<T>::empty() {
   short result = CONTAINER_NOT_EMPTY;
-  if (first_node == nullptr) result = CONTAINER_EMPTY;
+  if (head_node == tail_node) result = CONTAINER_EMPTY;
   return result;
 }
 
-template <typename Type>
-int list<Type>::list_count() {
+template <typename T>
+int list<T>::size() {
   int count = 0;
-  if (this->list_empty() == CONTAINER_NOT_EMPTY) {
-    list<Type>::iterator iter;
+  if (this->empty() == CONTAINER_NOT_EMPTY) {
+    list<T>::iterator iter;
     iter = begin();
-    
-    for (; iter != end(); ++iter, count++) ;
+
+    for (; iter != end(); ++iter, count++)
+      ;
   }
 
   return count;
