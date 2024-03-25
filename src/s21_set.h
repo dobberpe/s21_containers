@@ -1,6 +1,6 @@
 #include <initializer_list>
-#include <utility>
 #include <iostream>
+#include <utility>
 
 namespace s21 {
 
@@ -64,7 +64,7 @@ class Set {
   void erase(iterator pos);
   void swap(Set& other);
   void merge(Set& other);
-  
+
   friend class SetIterator<Key>;
   friend class SetConstIterator<Key>;
 
