@@ -1,3 +1,6 @@
+#ifndef S21_SET
+#define S21_SET
+
 #include <initializer_list>
 #include <iostream>
 #include <utility>
@@ -98,3 +101,5 @@ class SetConstIterator {
 };
 
 }  // namespace s21
+
+#endif
