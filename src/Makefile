@@ -5,7 +5,7 @@ OS=$(shell uname -s)
 
 TEST_SRC=$(wildcard tests/*.cpp)
 #DEV_SRC=$(wildcard dev/*.cpp)
-LIB_SRC=$(wildcard list/*.cpp) # https://runebook.dev/ru/docs/gnu_make/wildcard-function
+LIB_SRC=$(wildcard s21_list/*.cpp) # https://runebook.dev/ru/docs/gnu_make/wildcard-function
 TEST_OBJS=$(TEST_SRC:.cpp=.o)
 DEV_OBJS=$(DEV_SRC:.cpp=.o)
 LIB_OBJS:=$(patsubst %.cpp,%.o,$(LIB_SRC) $(DEV_SRC))
@@ -19,22 +19,19 @@ GCOV=
 
 .PHONY: clean test gcov_report control ext1_flag
 
-all: 
+all: s21_containers.a test
 
-clean:
-	-rm -rf report/ s21_containers.a $(DIR_BUILD)*.* $(DIR_BUILD)test_s21_containers
-
-test: $(TEST_OBJS) s21_containers.a
+test: $(TEST_OBJS) 
 ifeq ($(OS),Darwin)
 	$(eval OS_MAC_UX=-L/opt/homebrew/lib)
 endif
-	c++ $(FLAGS) $(GCOV) $(DIR_BUILD)*.o s21_containers.a -o $(DIR_BUILD)test_s21_containers -lgtest $(OS_MAC_UX) -L.
+	g++ $(FLAGS) $(GCOV) s21_containers.a $(DIR_BUILD)*.o -o $(DIR_BUILD)test_s21_containers -lgtest $(OS_MAC_UX) -L.
 	$(DIR_BUILD)test_s21_containers
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $(DIR_BUILD)$(notdir $@)
 
-s21_containers.a: $(LIB_OBJS) 
+s21_containers.a: clean $(LIB_OBJS) 
 	ar r $@ $(DIR_BUILD)*.o
 	ranlib $@
 
@@ -49,6 +46,9 @@ gcov_report: clean ext1_flag s21_containers.a test
 
 ext1_flag:
 	$(eval GCOV=-fprofile-arcs -ftest-coverage)
+
+clean:
+	-rm -rf report/ s21_containers.a $(DIR_BUILD)*.* $(DIR_BUILD)test_s21_containers
 
 
 control:
