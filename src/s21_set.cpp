@@ -427,7 +427,6 @@ typename Set<Key>::Node *SetConstIterator<Key>::successor(
     
 //     // Получение итераторов на начало и конец множества
 //     Set<int>::iterator begin_iter = s.begin();
-//     Set<int>::iterator end_iter = s.end();
     
 //     // Проверка значения первого элемента
 //     EXPECT_EQ(1, *begin_iter);
@@ -438,7 +437,6 @@ typename Set<Key>::Node *SetConstIterator<Key>::successor(
     
 //     // Получение константных итераторов на начало и конец множества
 //     Set<int>::const_iterator begin_iter = s.begin();
-//     Set<int>::const_iterator end_iter = s.end();
     
 //     // Проверка значения первого элемента
 //     EXPECT_EQ(1, *begin_iter);
@@ -452,14 +450,6 @@ typename Set<Key>::Node *SetConstIterator<Key>::successor(
 
 //     // Проверка, что элемент найден и итератор указывает на него
 //     EXPECT_EQ(2, *it);
-// }
-
-// TEST(SetFindTest, FindNonExistingElement) {
-//     Set<int> s = {1, 2, 3};
-
-//     // Поиск несуществующего элемента
-//     auto it = s.find(4);
-
 // }
 
 // TEST(SetContainsTest, ContainsExistingElement) {

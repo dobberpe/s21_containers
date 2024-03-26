@@ -3,6 +3,7 @@
 
 using namespace s21;
 
+
 // Тест для конструктора по умолчанию
 TEST(SetConstructorTest, DefaultConstructor) {
     Set<int> s;

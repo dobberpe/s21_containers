@@ -70,9 +70,8 @@ class Set {
 
   friend class SetIterator<Key>;
   friend class SetConstIterator<Key>;
-
- private:
 };
+
 
 template <typename Key>
 class SetIterator {
@@ -99,6 +98,10 @@ class SetConstIterator {
  private:
   typename Set<Key>::Node* successor(typename Set<Key>::Node* x);
 };
+
+template class Set<int>;
+template class SetIterator<int>;
+template class SetConstIterator<int>;
 
 }  // namespace s21
 
