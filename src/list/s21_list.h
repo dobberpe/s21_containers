@@ -18,8 +18,6 @@ class List {
   // typedef reference = T &;
   // typedef const_reference = const & T;
   using size_type = size_t;
-  // typedef iterator = T *;
-  // typedef const_iterator = const T *;
 
  private:
   class list_node {
@@ -35,21 +33,41 @@ class List {
   size_type number;
 
  public:
-  class iterator {
+  class ListIterator {
    private:
     list_node *index_ptr;
 
    public:
-    iterator();
+    ListIterator();
     T &operator*();
-    iterator &operator++();
-    iterator &operator--();
-    bool operator==(const iterator &pos);
-    bool operator!=(const iterator &pos);
+    ListIterator &operator++();
+    ListIterator &operator--();
+    bool operator==(const ListIterator &pos);
+    bool operator!=(const ListIterator &pos);
 
-    iterator &operator=(list_node *node);
+    ListIterator &operator=(list_node *node);
     list_node *get_iter_ptr();
   };
+
+  class ListConstIterator {
+   private:
+    list_node *index_ptr;
+
+   public:
+    ListConstIterator();
+    ListConstIterator(list_node *node);
+    const T &operator*() const;
+    ListConstIterator &operator++();
+    ListConstIterator &operator--();
+    bool operator==(const ListConstIterator &pos);
+    bool operator!=(const ListConstIterator &pos);
+
+    ListConstIterator &operator=(list_node *node);
+    list_node *get_iter_ptr();
+  };
+
+  using iterator = ListIterator;
+  using const_iterator = ListConstIterator;
 
  private:
   iterator iter_head;
@@ -62,9 +80,11 @@ class List {
   const T &back() const;
   iterator &begin();
   iterator &end();
-  bool empty();
-  size_type size();
-  size_type max_size();
+  const_iterator begin() const;
+  const_iterator end() const;
+  bool empty() const;
+  size_type size() const;
+  size_type max_size() const;
   T &operator()(const size_type i);
   bool operator==(List<T> &list_other);
 

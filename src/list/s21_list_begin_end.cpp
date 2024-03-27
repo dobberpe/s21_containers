@@ -13,17 +13,15 @@ typename List<T>::iterator &List<T>::end() {
   return this->iter_tail;
 }
 
-// template <typename T>
-// typename List<T>::iterator &List<T>::begin() const {
-//   this->iter_head = head_node;
-//   return this->iter_head;
-// }
+template <typename T>
+typename List<T>::const_iterator List<T>::begin() const {
+  return const_iterator(head_node);
+}
 
-// template <typename T>
-// typename List<T>::iterator &List<T>::end() const {
-//   this->iter_tail = tail_node;
-//   return this->iter_tail;
-// }
+template <typename T>
+typename List<T>::const_iterator List<T>::end() const {
+  return const_iterator(tail_node);
+}
 
 
 template <typename T>
@@ -35,7 +33,7 @@ T &List<T>::front() {
 
 template <typename T>
 const T &List<T>::front() const {
-  iterator iter = begin();
+  const_iterator iter = begin();
 
   return *iter;
 }
@@ -50,7 +48,7 @@ T &List<T>::back() {
 
 template <typename T>
 const T &List<T>::back() const {
-  iterator iter = end();
+  const_iterator iter = end();
   if (empty() == CONTAINER_NOT_EMPTY) --iter;
 
   return *iter;

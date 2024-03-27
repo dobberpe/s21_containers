@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = # -Wall -Werror -Wextra -std=c++17
+CFLAGS = -Wall -Werror -Wextra -std=c++17
 TFLAGS = -lgtest -lsubunit
 GFLAGS = -fprofile-arcs -ftest-coverage
 LIB_NAME = s21_containers.a
