@@ -2,7 +2,7 @@
 using namespace s21;
 
 #define CREATE_EMPTY_LIST                \
-  tail_node = new list<T>::list_node(0); \
+  tail_node = new List<T>::list_node(0); \
   head_node = tail_node;                 \
   number = 0;                            \
   tail_node->prev = head_node;           \
@@ -11,19 +11,19 @@ using namespace s21;
   iter_tail = tail_node;
 
 template <typename T>
-list<T>::list() {
+List<T>::List() {
   CREATE_EMPTY_LIST;
 }
 
 template <typename T>
-list<T>::list(const size_type count) {
+List<T>::List(const size_type count) {
   CREATE_EMPTY_LIST;
   if (count < max_size())
     for (size_type i = 0; i < count; i++) push_back(0);
 }
 
 template <typename T>
-list<T>::list(list<T> &copy) {
+List<T>::List(List<T> &copy) {
   CREATE_EMPTY_LIST;
   if (copy.empty() == CONTAINER_NOT_EMPTY) {
     iterator iter;
@@ -32,7 +32,7 @@ list<T>::list(list<T> &copy) {
 }
 
 template <typename T>
-list<T>::list(list<T> &&moved) {
+List<T>::List(List<T> &&moved) {
   if (moved.empty() == CONTAINER_NOT_EMPTY) {
     number = moved.number;
     head_node = moved.head_node;
@@ -46,7 +46,7 @@ list<T>::list(list<T> &&moved) {
 }
 
 template <typename T>
-list<T> &list<T>::operator=(list<T> &&moved) {
+List<T> &List<T>::operator=(List<T> &&moved) {
   if (&moved != this) {
     clear();
     if (moved.empty() == CONTAINER_NOT_EMPTY) {
@@ -63,18 +63,18 @@ list<T> &list<T>::operator=(list<T> &&moved) {
 }
 
 template <typename T>
-list<T>::list(std::initializer_list<T> const &items) {
+List<T>::List(std::initializer_list<T> const &items) {
   CREATE_EMPTY_LIST;
   for (T data : items) push_back(data);
 }
 
 template <typename T>
-list<T>::~list() {
+List<T>::~List() {
   clear();
   if (tail_node) delete tail_node;
 }
 
 template <typename T>
-list<T>::list_node::list_node(const T data_node) {
+List<T>::list_node::list_node(const T data_node) {
   data = data_node;
 }

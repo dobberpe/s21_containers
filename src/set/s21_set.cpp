@@ -1,4 +1,4 @@
-#include "../s21_set.h"
+#include "s21_set.h"
 
 // namespace s21 {
 using namespace s21;

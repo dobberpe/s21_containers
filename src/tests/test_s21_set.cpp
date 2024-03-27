@@ -1,5 +1,4 @@
-#include "../s21_set.h" 
-#include <gtest/gtest.h>
+#include "test_s21_containers.h" 
 
 using namespace s21;
 
@@ -204,7 +203,7 @@ TEST(SetContainsTest, ContainsNonExistingElement) {
     EXPECT_FALSE(s.contains(4));
 }
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+// int main(int argc, char **argv) {
+//     ::testing::InitGoogleTest(&argc, argv);
+//     return RUN_ALL_TESTS();
+// }

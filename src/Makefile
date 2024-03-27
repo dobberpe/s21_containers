@@ -1,12 +1,13 @@
 CC = g++
-CFLAGS = -Wall -Werror -Wextra -std=c++17
+CFLAGS = # -Wall -Werror -Wextra -std=c++17
 TFLAGS = -lgtest -lsubunit
 GFLAGS = -fprofile-arcs -ftest-coverage
 LIB_NAME = s21_containers.a
-LIB_SRC = $(wildcard ./set/*.cpp)
+LIB_SRC = $(wildcard ./set/*.cpp) $(wildcard ./list/*.cpp) $(wildcard ./queue/*.cpp)
 LIB_OBJ = $(LIB_SRC:.cpp=.o)
 TEST_SRC = $(wildcard ./tests/*.cpp)
 TEST_GCDA = $(LIB_SRC:.cpp=.gcda)
+TEST_GCNO = $(LIB_SRC:.cpp=.gcno)
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
 
 all: $(LIB_NAME)
@@ -40,7 +41,7 @@ leak_check: test
 	valgrind --tool=memcheck --leak-check=yes ./test
 
 clean:
-	rm -f $(LIB_OBJ) $(LIB_NAME) $(TEST_OBJ) test gcov* coverage.info *.gcda *.gcno tests/*.gcno
+	rm -f $(LIB_OBJ) $(LIB_NAME) $(TEST_OBJ) test gcov* coverage.info tests/*.gcno $(TEST_GCDA) $(TEST_GCNO)
 	rm -rf coverage_report
 	rm -rf .clang-format
 

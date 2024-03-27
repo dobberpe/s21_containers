@@ -2,16 +2,16 @@
 using namespace s21;
 
 template <typename T>
-void qiucksort(list<T> &data, typename list<T>::iterator start,
-               typename list<T>::iterator finish);  // qiuck sort
+void qiucksort(List<T> &data, typename List<T>::iterator start,
+               typename List<T>::iterator finish);  // qiuck sort
 
 template <typename T>
-void list<T>::clear() {
+void List<T>::clear() {
   while (empty() == CONTAINER_NOT_EMPTY) pop_back();
 }
 
 template <typename T>
-bool list<T>::operator==(list<T> &list_other) {
+bool List<T>::operator==(List<T> &list_other) {
   int size1 = size();
   int size2 = list_other.size();
   short result = SUCCESS;
@@ -26,7 +26,7 @@ bool list<T>::operator==(list<T> &list_other) {
 }
 
 template <typename T>
-void list<T>::swap(list &other) {
+void List<T>::swap(List &other) {
   if (this != &other) {
     list_node *save_head = other.head_node;
     list_node *save_tail = other.tail_node;
@@ -41,7 +41,7 @@ void list<T>::swap(list &other) {
 }
 
 template <typename T>
-void list<T>::merge(list &other) {
+void List<T>::merge(List &other) {
   if (this != &other && other.empty() == CONTAINER_NOT_EMPTY &&
       (number + other.number) <= max_size()) {
     number += other.number;
@@ -62,9 +62,9 @@ void list<T>::merge(list &other) {
   }
 }
 
-// transfers elements from list other starting from pos
+// transfers elements from List other starting from pos
 template <typename T>
-void list<T>::splice(const iterator pos, list &other) {
+void List<T>::splice(const iterator pos, List &other) {
   if (this != &other && other.empty() == CONTAINER_NOT_EMPTY) {
     // &&    (pos + 1 + other.number) <= max_size()) {
     // number = pos + 1;
@@ -80,7 +80,7 @@ void list<T>::splice(const iterator pos, list &other) {
 }
 
 template <typename T>
-void list<T>::reverse() {
+void List<T>::reverse() {
   if (empty() == CONTAINER_NOT_EMPTY) {
     iterator pos = begin();
     iterator pos_1 = pos;
@@ -103,7 +103,7 @@ void list<T>::reverse() {
 }
 
 template <typename T>
-void list<T>::unique() {
+void List<T>::unique() {
   if (empty() == CONTAINER_NOT_EMPTY) {
     iterator iter = begin();
     T elem = *iter;
@@ -123,7 +123,7 @@ void list<T>::unique() {
 }
 
 template <typename T>
-void list<T>::sort() {
+void List<T>::sort() {
   if (size() > 1) {
     iterator iter = end();
     qiucksort(*this, begin(), --iter);
@@ -131,13 +131,13 @@ void list<T>::sort() {
 }
 
 template <typename T>
-void qiucksort(list<T> &data, typename list<T>::iterator start,
-               typename list<T>::iterator finish) {  // qiuck sort
-  typename list<T>::iterator base_pos = finish;
-  typename list<T>::iterator curr_pos = start;
+void qiucksort(List<T> &data, typename List<T>::iterator start,
+               typename List<T>::iterator finish) {  // qiuck sort
+  typename List<T>::iterator base_pos = finish;
+  typename List<T>::iterator curr_pos = start;
   while (curr_pos != base_pos) {
     if (*curr_pos >= *base_pos) {
-      typename list<T>::iterator shift = base_pos;
+      typename List<T>::iterator shift = base_pos;
       --shift;
       T save = *shift;
       *shift = *base_pos;
@@ -151,7 +151,7 @@ void qiucksort(list<T> &data, typename list<T>::iterator start,
       ++curr_pos;
     }
   }
-  typename list<T>::iterator save = base_pos;
+  typename List<T>::iterator save = base_pos;
   if (base_pos != start && --base_pos != start)
     qiucksort(data, start, base_pos);
 
