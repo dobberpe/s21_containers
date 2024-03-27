@@ -34,7 +34,7 @@ $(LIB_NAME): $(LIB_OBJ)
 
 style_check:
 	cp ../materials/linters/.clang-format .
-	clang-format -n *.cpp *.h tests/*
+	clang-format -n *.h tests/* list/* queue/* set/*
 	cppcheck --enable=all --suppress=missingIncludeSystem .
 
 leak_check: test

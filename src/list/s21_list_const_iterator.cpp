@@ -13,7 +13,8 @@ List<T>::ListConstIterator::ListConstIterator(list_node *node) {
 }
 
 template <typename T>
-typename List<T>::ListConstIterator &List<T>::ListConstIterator::operator=(list_node *node) {
+typename List<T>::ListConstIterator &List<T>::ListConstIterator::operator=(
+    list_node *node) {
   index_ptr = node;
   return *this;
 }

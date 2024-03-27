@@ -72,7 +72,6 @@ class Set {
   friend class SetConstIterator<Key>;
 };
 
-
 template <typename Key>
 class SetIterator {
  public:

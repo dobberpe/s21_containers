@@ -23,7 +23,6 @@ typename List<T>::const_iterator List<T>::end() const {
   return const_iterator(tail_node);
 }
 
-
 template <typename T>
 T &List<T>::front() {
   iterator iter = begin();

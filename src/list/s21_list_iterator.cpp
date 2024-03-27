@@ -8,7 +8,8 @@ List<T>::ListIterator::ListIterator() {
 }
 
 template <typename T>
-typename List<T>::ListIterator &List<T>::ListIterator::operator=(list_node *node) {
+typename List<T>::ListIterator &List<T>::ListIterator::operator=(
+    list_node *node) {
   index_ptr = node;
   return *this;
 }
