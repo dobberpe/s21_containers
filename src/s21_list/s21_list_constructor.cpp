@@ -2,37 +2,35 @@
 using namespace s21;
 
 #define CREATE_EMPTY_LIST                \
-  tail_node = new list<T>::list_node(0); \
+  tail_node = new list<value_type>::list_node(0); \
   head_node = tail_node;                 \
   number = 0;                            \
   tail_node->prev = head_node;           \
-  tail_node->next = nullptr;             \
-  iter_head = head_node;                 \
-  iter_tail = tail_node;
+  tail_node->next = nullptr;             
 
-template <typename T>
-list<T>::list() {
+template <typename value_type>
+list<value_type>::list() {
   CREATE_EMPTY_LIST;
 }
 
-template <typename T>
-list<T>::list(const size_type count) {
+template <typename value_type>
+list<value_type>::list(size_type count) {
   CREATE_EMPTY_LIST;
   if (count < max_size())
     for (size_type i = 0; i < count; i++) push_back(0);
 }
 
-template <typename T>
-list<T>::list(list<T> &copy) {
+template <typename value_type>
+list<value_type>::list( list<value_type> &copy) {
   CREATE_EMPTY_LIST;
   if (copy.empty() == CONTAINER_NOT_EMPTY) {
-    iterator iter;
-    for (iter = copy.begin(); iter != copy.end(); ++iter) push_back(*iter);
+    iterator iter = copy.begin();
+    for (; iter != copy.end(); ++iter) push_back(*iter);
   }
 }
 
-template <typename T>
-list<T>::list(list<T> &&moved) {
+template <typename value_type>
+list<value_type>::list(list<value_type> &&moved) {
   if (moved.empty() == CONTAINER_NOT_EMPTY) {
     number = moved.number;
     head_node = moved.head_node;
@@ -45,8 +43,8 @@ list<T>::list(list<T> &&moved) {
   }
 }
 
-template <typename T>
-list<T> &list<T>::operator=(list<T> &&moved) {
+template <typename value_type>
+list<value_type> &list<value_type>::operator=(list<value_type> &&moved) {
   if (&moved != this) {
     clear();
     if (moved.empty() == CONTAINER_NOT_EMPTY) {
@@ -62,19 +60,19 @@ list<T> &list<T>::operator=(list<T> &&moved) {
   return *this;
 }
 
-template <typename T>
-list<T>::list(std::initializer_list<T> const &items) {
+template <typename value_type>
+list<value_type>::list(std::initializer_list<value_type> const &items) {
   CREATE_EMPTY_LIST;
-  for (T data : items) push_back(data);
+  for (value_type data : items) push_back(data);
 }
 
-template <typename T>
-list<T>::~list() {
+template <typename value_type>
+list<value_type>::~list() {
   clear();
   if (tail_node) delete tail_node;
 }
 
-template <typename T>
-list<T>::list_node::list_node(const T data_node) {
+template <typename value_type>
+list<value_type>::list_node::list_node(const_reference data_node) {
   data = data_node;
 }

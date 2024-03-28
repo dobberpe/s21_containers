@@ -1,22 +1,22 @@
 #include "s21_list.h"
 using namespace s21;
 
-template <typename T>
-void qiucksort(list<T> &data, typename list<T>::iterator start,
-               typename list<T>::iterator finish);  // qiuck sort
+template <typename value_type>
+void qiucksort(list<value_type> &data, typename list<value_type>::iterator start,
+               typename list<value_type>::iterator finish);  // qiuck sort
 
-template <typename T>
-void list<T>::clear() {
+template <typename value_type>
+void list<value_type>::clear() {
   while (empty() == CONTAINER_NOT_EMPTY) pop_back();
 }
 
-template <typename T>
-bool list<T>::operator==(list<T> &list_other) {
-  int size1 = size();
-  int size2 = list_other.size();
+template <typename value_type>
+bool list<value_type>::operator==(list<value_type> &list_other) {
+  size_type size1 = size();
+  size_type size2 = list_other.size();
   short result = SUCCESS;
   if (size1 == size2) {
-    for (int i = 0; i < size1 && result; i++) {
+    for (size_type i = 0; i < size1 && result; i++) {
       if ((*this)(i) != list_other(i)) result = FAILURE;
     }
   } else
@@ -25,8 +25,8 @@ bool list<T>::operator==(list<T> &list_other) {
   return result;
 }
 
-template <typename T>
-void list<T>::swap(list &other) {
+template <typename value_type>
+void list<value_type>::swap(list &other) {
   if (this != &other) {
     list_node *save_head = other.head_node;
     list_node *save_tail = other.tail_node;
@@ -40,8 +40,8 @@ void list<T>::swap(list &other) {
   }
 }
 
-template <typename T>
-void list<T>::merge(list &other) {
+template <typename value_type>
+void list<value_type>::merge(list &other) {
   if (this != &other && other.empty() == CONTAINER_NOT_EMPTY &&
       (number + other.number) <= max_size()) {
     number += other.number;
@@ -63,24 +63,25 @@ void list<T>::merge(list &other) {
 }
 
 // transfers elements from list other starting from pos
-template <typename T>
-void list<T>::splice(const iterator pos, list &other) {
+template <typename value_type>
+void list<value_type>::splice(iterator pos, list &other) {
   if (this != &other && other.empty() == CONTAINER_NOT_EMPTY) {
     // &&    (pos + 1 + other.number) <= max_size()) {
     // number = pos + 1;
     push_front(0);
 
     while (other.empty() == CONTAINER_NOT_EMPTY) {
+      iterator pos_insert = pos;
       iterator pos_other = other.begin();
-      insert(pos, *pos_other);
+      insert(pos_insert, *pos_other);
       other.pop_front();
     }
     pop_front();
   }
 }
 
-template <typename T>
-void list<T>::reverse() {
+template <typename value_type>
+void list<value_type>::reverse() {
   if (empty() == CONTAINER_NOT_EMPTY) {
     iterator pos = begin();
     iterator pos_1 = pos;
@@ -102,11 +103,11 @@ void list<T>::reverse() {
   }
 }
 
-template <typename T>
-void list<T>::unique() {
+template <typename value_type>
+void list<value_type>::unique() {
   if (empty() == CONTAINER_NOT_EMPTY) {
     iterator iter = begin();
-    T elem = *iter;
+    value_type elem = *iter;
     ++iter;
 
     while (iter != end()) {
@@ -122,24 +123,24 @@ void list<T>::unique() {
   }
 }
 
-template <typename T>
-void list<T>::sort() {
+template <typename value_type>
+void list<value_type>::sort() {
   if (size() > 1) {
     iterator iter = end();
     qiucksort(*this, begin(), --iter);
   }
 }
 
-template <typename T>
-void qiucksort(list<T> &data, typename list<T>::iterator start,
-               typename list<T>::iterator finish) {  // qiuck sort
-  typename list<T>::iterator base_pos = finish;
-  typename list<T>::iterator curr_pos = start;
+template <typename value_type> // qiuck sort
+void qiucksort(list<value_type> &data, typename list<value_type>::iterator start,
+               typename list<value_type>::iterator finish) { 
+  typename list<value_type>::iterator base_pos = finish;
+  typename list<value_type>::iterator curr_pos = start;
   while (curr_pos != base_pos) {
     if (*curr_pos >= *base_pos) {
-      typename list<T>::iterator shift = base_pos;
+      typename list<value_type>::iterator shift = base_pos;
       --shift;
-      T save = *shift;
+      value_type save = *shift;
       *shift = *base_pos;
       if (curr_pos != shift) {
         *base_pos = *curr_pos;
@@ -151,7 +152,7 @@ void qiucksort(list<T> &data, typename list<T>::iterator start,
       ++curr_pos;
     }
   }
-  typename list<T>::iterator save = base_pos;
+  typename list<value_type>::iterator save = base_pos;
   if (base_pos != start && --base_pos != start)
     qiucksort(data, start, base_pos);
 
