@@ -24,19 +24,18 @@ TEST_F(test_s21_list, test_s21_list_origin) {
 }
 
 TEST_F(test_s21_list, test_s21_list_const) {
-//   const std::list<int> list1{1, 2, 3, 4, 5, 6, 7};
-//   std::list<int>::const_iterator citer = list1.cend();
-// *citer = 9;
-//   s21::list<int> list2{1, 2, 3, 4, 5, 6, 7};
-//   s21::list<int>::iterator iter = list2.begin();
+  //   const std::list<int> list1{1, 2, 3, 4, 5, 6, 7};
+  //   std::list<int>::const_iterator citer = list1.cend();
+  // *citer = 9;
+  //   s21::list<int> list2{1, 2, 3, 4, 5, 6, 7};
+  //   s21::list<int>::iterator iter = list2.begin();
 
-//   printf("%d ", *(citer));
-//   printf("%d ", *iter);
-//   *citer = 10;
-//   *iter = 0;
-//   printf("%d ", *citer);
-//   printf("%d ", *iter);
-
+  //   printf("%d ", *(citer));
+  //   printf("%d ", *iter);
+  //   *citer = 10;
+  //   *iter = 0;
+  //   printf("%d ", *citer);
+  //   printf("%d ", *iter);
 }
 
 TEST_F(test_s21_list, test_s21_list_create) {
