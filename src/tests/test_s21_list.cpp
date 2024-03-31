@@ -1,3 +1,5 @@
+#include <list>
+
 #include "test_s21_containers.h"
 
 using namespace s21;
@@ -6,9 +8,35 @@ class test_s21_list : public testing::Test {
  public:
 };
 
-// max_size
-TEST_F(test_s21_list, test_s21_list_max_size) {
+TEST_F(test_s21_list, test_s21_list_origin) {
   // printf("%ld\n",list_orig.max_size());
+  // s21::list<int> l;
+  // s21::vector<int> v;
+  // s21::ListIterator lv = l.end();
+  // s21::VectorIterator vv = v.begin();
+
+  // std::list<int> l1;
+  // std::vector<int> v1;
+  // std::iterator l1v;
+  // std::iterator v1v = v1.begin();
+  // std::list<int>::iterator l2v = l1.begin();
+  // std::vector<int>::iterator v2v = v1.begin();
+}
+
+TEST_F(test_s21_list, test_s21_list_const) {
+//   const std::list<int> list1{1, 2, 3, 4, 5, 6, 7};
+//   std::list<int>::const_iterator citer = list1.cend();
+// *citer = 9;
+//   s21::list<int> list2{1, 2, 3, 4, 5, 6, 7};
+//   s21::list<int>::iterator iter = list2.begin();
+
+//   printf("%d ", *(citer));
+//   printf("%d ", *iter);
+//   *citer = 10;
+//   *iter = 0;
+//   printf("%d ", *citer);
+//   printf("%d ", *iter);
+
 }
 
 TEST_F(test_s21_list, test_s21_list_create) {
