@@ -112,16 +112,6 @@ TEST_F(test_s21_list, test_s21_list_empty_size) {
   ASSERT_EQ(list1.empty(), CONTAINER_NOT_EMPTY);
   ASSERT_EQ(list1.size(), 100);
 
-  // 384307168202282325
-  // for (int i = 0; i < 38430716820228232; i++) list1.push_back(i);
-  // ASSERT_EQ(list1.empty(), CONTAINER_NOT_EMPTY);
-  // ASSERT_EQ(list1.size(), 10000);
-  // _SPCE_::list<int> list_my(100000000);
-  // ASSERT_EQ(list_my.size(), 100000000);
-
-  // _SPCE_::list<int> list_origin(100000000);
-  // ASSERT_EQ(list_origin.size(), 100000000);
-
   list1.clear();
   ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
   list1.clear();  // clear empty-list
@@ -298,11 +288,6 @@ TEST_F(test_s21_list, test_s21_list_merge) {
 
   ASSERT_EQ(list1.size(), answ1.size());
   ASSERT_EQ(list1 == answ1, SUCCESS);
-  // _SPCE_::list<int>::iterator iter = list1.begin();
-  // for (; iter != list1.end(); ++iter) {
-  //   printf("%d ", *iter);
-  // }
-  // printf("\n");
 
   ASSERT_EQ(list2.size(), 0);
   ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
@@ -327,29 +312,29 @@ TEST_F(test_s21_list, test_s21_list_merge) {
 }
 
 // splice()
-// TEST_F(test_s21_list, test_s21_list_splice) {
-//   _SPCE_::list<int> answ1{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-//   _SPCE_::list<int> list1{5, 6, 7, 8, 11};
-//   _SPCE_::list<int> list2{1, 2, 3};
-//   _SPCE_::list<int> list3{9, 10};
-//   _SPCE_::list<int>::iterator iter = list1.begin();
+TEST_F(test_s21_list, test_s21_list_splice) {
+  _SPCE_::list<int> answ1{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+  _SPCE_::list<int> list1{5, 6, 7, 8, 11};
+  _SPCE_::list<int> list2{1, 2, 3};
+  _SPCE_::list<int> list3{9, 10};
+  _SPCE_::list<int>::iterator iter = list1.begin();
 
-//   list1.splice(iter, list2);
-//   list1.insert(iter, 4);
+  list1.splice(iter, list2);
+  list1.insert(iter, 4);
 
-//   iter = list1.end();
-//   list1.splice(--iter, list3);
+  iter = list1.end();
+  list1.splice(--iter, list3);
 
-//   ASSERT_EQ(list1 == answ1, SUCCESS);
-//   ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(list1 == answ1, SUCCESS);
+  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
 
-//   iter = list2.end();
-//   list2.splice(iter, list1);  // splice to empty-list
-//   ASSERT_EQ(list2 == answ1, SUCCESS);
+  iter = list2.end();
+  list2.splice(iter, list1);  // splice to empty-list
+  ASSERT_EQ(list2 == answ1, SUCCESS);
 
-//   list2.splice(iter = list2.begin(), list1);  // splice empty-list
-//   ASSERT_EQ(list2 == answ1, SUCCESS);
-// }
+  list2.splice(iter = list2.begin(), list1);  // splice empty-list
+  ASSERT_EQ(list2 == answ1, SUCCESS);
+}
 
 // insert()
 TEST_F(test_s21_list, test_s21_list_insert) {
