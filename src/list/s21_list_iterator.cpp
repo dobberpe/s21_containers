@@ -2,46 +2,62 @@
 
 using namespace s21;
 
-template <typename T>
-List<T>::ListIterator::ListIterator() {
+template <typename value_type>
+ListIterator<value_type>::ListIterator() {
   index_ptr = nullptr;
 }
 
-template <typename T>
-typename List<T>::ListIterator &List<T>::ListIterator::operator=(
-    list_node *node) {
-  index_ptr = node;
-  return *this;
+template <typename value_type>
+ListIterator<value_type>::ListIterator(
+    typename List<value_type>::List_node *copy) {
+  index_ptr = copy;
 }
 
-template <typename T>
-typename List<T>::ListIterator &List<T>::ListIterator::operator++() {
+template <typename value_type>
+ListIterator<value_type>::ListIterator(ListConstIterator<value_type> &copy) {
+  index_ptr = copy.get_iter_ptr();
+}
+
+template <typename value_type>
+ListIterator<value_type>::ListIterator(const ListIterator &copy) {
+  index_ptr = copy.index_ptr;
+}
+
+template <typename value_type>
+ListIterator<value_type> &ListIterator<value_type>::operator++() {
   if (index_ptr->next != nullptr) index_ptr = index_ptr->next;
   return *this;
 }
 
-template <typename T>
-typename List<T>::ListIterator &List<T>::ListIterator::operator--() {
+template <typename value_type>
+ListIterator<value_type> &ListIterator<value_type>::operator--() {
   index_ptr = index_ptr->prev;
   return *this;
 }
 
-template <typename T>
-T &List<T>::ListIterator::operator*() {
+template <typename value_type>
+typename List<value_type>::reference ListIterator<value_type>::operator*() {
   return this->index_ptr->data;
 }
 
-template <typename T>
-bool List<T>::ListIterator::operator==(const ListIterator &pos) {
+template <typename value_type>
+bool ListIterator<value_type>::operator==(const ListIterator &pos) {
   return (this->index_ptr == pos.index_ptr);
 }
 
-template <typename T>
-bool List<T>::ListIterator::operator!=(const ListIterator &pos) {
+template <typename value_type>
+bool ListIterator<value_type>::operator!=(const ListIterator &pos) {
   return (this->index_ptr != pos.index_ptr);
 }
 
-template <typename T>
-typename List<T>::list_node *List<T>::ListIterator::get_iter_ptr() {
-  return this->index_ptr;
+template <typename value_type>
+ListIterator<value_type> &ListIterator<value_type>::operator=(
+    const ListIterator &pos) {
+  index_ptr = pos.index_ptr;
+  return *this;
+}
+
+template <typename value_type>
+typename List<value_type>::List_node *ListIterator<value_type>::get_iter_ptr() {
+  return index_ptr;
 }

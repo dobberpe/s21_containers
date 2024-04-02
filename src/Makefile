@@ -3,7 +3,7 @@ CFLAGS = -Wall -Werror -Wextra -std=c++17
 TFLAGS = -lgtest -lsubunit
 GFLAGS = -fprofile-arcs -ftest-coverage
 LIB_NAME = s21_containers.a
-LIB_SRC = $(wildcard ./set/*.cpp) $(wildcard ./list/*.cpp) $(wildcard ./queue/*.cpp)
+LIB_SRC = $(wildcard ./set/*.cpp) $(wildcard ./list/*.cpp) $(wildcard ./queue/*.cpp) $(wildcard ./vector/*.cpp)
 LIB_OBJ = $(LIB_SRC:.cpp=.o)
 TEST_SRC = $(wildcard ./tests/*.cpp)
 TEST_GCDA = $(LIB_SRC:.cpp=.gcda)

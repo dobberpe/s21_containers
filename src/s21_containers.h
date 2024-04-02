@@ -9,6 +9,6 @@
 #include "set/s21_set.h"
 // #include "s21_stack.h"
 // #include "s21_map.h"
-// #include "s21_vector/s21_vector.h"
+#include "vector/s21_vector.h"
 
 #endif  //_S21_CONTAINERS_H_

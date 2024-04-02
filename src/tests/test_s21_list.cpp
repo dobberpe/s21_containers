@@ -298,7 +298,7 @@ TEST_F(test_s21_list, test_s21_list_splice) {
   List<int> list1{5, 6, 7, 8, 11};
   List<int> list2{1, 2, 3};
   List<int> list3{9, 10};
-  List<int>::iterator iter;
+  List<int>::const_iterator iter;
   iter = list1.begin();
 
   list1.splice(iter, list2);
