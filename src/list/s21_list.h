@@ -72,7 +72,6 @@ class List {
   void reverse();
   void unique();
   void sort();
-  
 
   // iterator insert_many(const iterator pos, ...);
   // Inserts new elements into the container directly before pos.
@@ -96,7 +95,7 @@ class List {
 
 template <typename T>
 class ListConstIterator {
- public:
+ private:
   typename List<T>::List_node *index_ptr;
 
  public:
@@ -108,14 +107,14 @@ class ListConstIterator {
   typename List<T>::const_reference operator*() const;
   bool operator==(const ListConstIterator &pos);
   bool operator!=(const ListConstIterator &pos);
-  ListConstIterator &operator=(ListConstIterator &pos);
-  ListConstIterator &operator=(const ListIterator<T> &pos);
+  ListConstIterator &operator=(ListConstIterator pos);
+  ListConstIterator &operator=(ListIterator<T> pos);
   typename List<T>::List_node *get_iter_ptr();
 };
 
 template <typename value_type>
 class ListIterator {
- public:
+ private:
   typename List<value_type>::List_node *index_ptr;
 
  public:
@@ -128,7 +127,7 @@ class ListIterator {
   typename List<value_type>::reference operator*();
   bool operator==(const ListIterator &pos);
   bool operator!=(const ListIterator &pos);
-  ListIterator &operator=(const ListIterator &pos);
+  ListIterator &operator=(ListIterator pos);
   typename List<value_type>::List_node *get_iter_ptr();
 };
 

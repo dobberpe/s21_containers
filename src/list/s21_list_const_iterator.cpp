@@ -14,7 +14,8 @@ ListConstIterator<value_type>::ListConstIterator(
 }
 
 template <typename value_type>
-ListConstIterator<value_type>::ListConstIterator(const ListConstIterator &copy) {
+ListConstIterator<value_type>::ListConstIterator(
+    const ListConstIterator &copy) {
   index_ptr = copy.index_ptr;
 }
 
@@ -48,15 +49,15 @@ bool ListConstIterator<value_type>::operator!=(const ListConstIterator &pos) {
 
 template <typename value_type>
 ListConstIterator<value_type> &ListConstIterator<value_type>::operator=(
-    ListConstIterator &pos) {
+    ListConstIterator pos) {
   index_ptr = pos.index_ptr;
   return *this;
 }
 
 template <typename value_type>
 ListConstIterator<value_type> &ListConstIterator<value_type>::operator=(
-   const ListIterator<value_type> &pos) {
-  index_ptr = pos.index_ptr;
+    ListIterator<value_type> pos) {
+  index_ptr = pos.get_iter_ptr();
   return *this;
 }
 

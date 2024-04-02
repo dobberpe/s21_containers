@@ -52,7 +52,7 @@ bool ListIterator<value_type>::operator!=(const ListIterator &pos) {
 
 template <typename value_type>
 ListIterator<value_type> &ListIterator<value_type>::operator=(
-    const ListIterator &pos) {
+     ListIterator pos) {
   index_ptr = pos.index_ptr;
   return *this;
 }

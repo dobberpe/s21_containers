@@ -13,17 +13,12 @@ typename List<value_type>::iterator List<value_type>::end() {
 
 template <typename value_type>
 typename List<value_type>::const_iterator List<value_type>::begin() const {
-  const_iterator iter;
-  iter.index_ptr = head_node;
-  return iter;
+  return const_iterator(head_node);
 }
 
 template <typename value_type>
 typename List<value_type>::const_iterator List<value_type>::end() const {
-  const_iterator iter;
-  iter.index_ptr = tail_node;
-  return iter;
-  // return ListConstIterator(tail_node);
+  return const_iterator(tail_node);
 }
 
 template <typename value_type>
