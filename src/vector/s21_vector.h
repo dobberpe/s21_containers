@@ -3,8 +3,6 @@
 
 #include <stdlib.h>
 
-#include <cstdio>
-
 #include "../list/s21_list.h"
 
 #define ERROR_MEM 128

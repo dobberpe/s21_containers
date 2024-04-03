@@ -1,9 +1,11 @@
-#include <vector>
-
 #include "test_s21_containers.h"
 
-#define _SPCE_ s21
-// using namespace _SPCE_;
+// #define _SPCE_ s21
+
+#ifndef _SPCE_
+#include <vector>
+#define _SPCE_ std
+#endif
 
 class test_vector : public testing::Test {
  public:
