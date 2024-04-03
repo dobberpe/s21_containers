@@ -8,8 +8,8 @@ vector<value_type>::vector() : max_number(0), number(0), head_node(nullptr) {}
 template <typename value_type>
 vector<value_type>::vector(const size_type n) {
   head_node = nullptr;
-  max_number = number = 0;
-  if (n > 0 && n < this->max_size()) reserve(n);
+  if (n > 0 && n <= this->max_size()) reserve(n);
+  max_number = number = n;
 }
 
 template <typename value_type>

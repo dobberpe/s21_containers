@@ -16,8 +16,11 @@ void vector<value_type>::reserve(size_type size) {
       else
         throw ERROR_MEM;
     }
-    max_number = size;
+  } else if (size == 0) {
+    if (head_node) free(head_node);
+    head_node = nullptr;
   }
+  max_number = size;
 }
 
 template <typename value_type>

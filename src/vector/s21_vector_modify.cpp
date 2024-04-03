@@ -26,7 +26,7 @@ typename vector<value_type>::iterator vector<value_type>::insert(
 
   size_type i = 0;
   value_type last_vect = value;
-  if (empty() == CONTAINER_NOT_EMPTY) {
+  if (empty() ==  CONTAINER_NOT_EMPTY) {
     iterator curr = end();
     iterator prev_iter = --end();
     last_vect = *prev_iter;
@@ -77,7 +77,7 @@ void vector<value_type>::push_back(const_reference value) {
 
 template <typename value_type>
 void vector<value_type>::pop_back() {
-  if (empty() == CONTAINER_NOT_EMPTY) erase(--end());
+  if (size() > 0) erase(--end());
 }
 
 // template <typename value_type>

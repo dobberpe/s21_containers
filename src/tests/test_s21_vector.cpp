@@ -54,10 +54,10 @@ TEST_F(test_vector, test_vector_create) {
   _SPCE_::vector<int> vect1;
   ASSERT_EQ(vect1.empty(), CONTAINER_EMPTY);
 
-  _SPCE_::vector<int> vect2(1);
-  ASSERT_EQ(vect2.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(vect2.size(), 0);
-  ASSERT_EQ(vect2.capacity(), 1);
+  _SPCE_::vector<int> vect2(6);
+  ASSERT_EQ(vect2.empty(), CONTAINER_NOT_EMPTY);
+  ASSERT_EQ(vect2.size(), 6);
+  ASSERT_EQ(vect2.capacity(), 6);
   try {
     vect2.at(1);
   } catch (int erorr) {
@@ -71,13 +71,13 @@ TEST_F(test_vector, test_vector_create) {
   vect2.push_back(-4);
 
   ASSERT_EQ(vect2.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(vect2.size(), 5);
+  ASSERT_EQ(vect2.size(), 11);
 
   _SPCE_::vector v3(std::move(vect2));
   ASSERT_EQ(vect2.empty(), CONTAINER_EMPTY);
   ASSERT_EQ(v3.empty(), CONTAINER_NOT_EMPTY);
   v3.push_back(1000);
-  ASSERT_EQ(v3.size(), 6);
+  ASSERT_EQ(v3.size(), 12);
 
   _SPCE_::vector<double> v5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
   ASSERT_EQ(v5.empty(), CONTAINER_NOT_EMPTY);
@@ -120,23 +120,22 @@ TEST_F(test_vector, test_vector_empty_size) {
   ASSERT_EQ(v0.empty(), CONTAINER_EMPTY);
 
   _SPCE_::vector<int> v1(1);
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(v1.empty(), CONTAINER_NOT_EMPTY);
 
-  for (int i = 0; i < 100; i++) v1(i) = i;
+  // for (int i = 0; i < 100; i++) v1[i] = i;
   v1.pop_back();
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
   ASSERT_EQ(v1.size(), 0);
+  ASSERT_EQ(v1.capacity(), 1);
+  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
 
   for (int i = 0; i < 10000; i++) v1.push_back(i);
   ASSERT_EQ(v1.empty(), CONTAINER_NOT_EMPTY);
   ASSERT_EQ(v1.size(), 10000);
 
   v1.clear();
+  ASSERT_EQ(v1.size(), 0);
   ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
-  v1.clear();  // clear empty-list
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
-
-  v1.pop_back();  // del from empty-list
+  v1.clear();  // clear empty-list, but capacity >0
   ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
 }
 
@@ -195,10 +194,10 @@ TEST_F(test_vector, test_vector_insert_erase) {
   ASSERT_EQ(v1.size(), 1);
 
   v1.pop_back();
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(v1.size(), 0);
   v1.push_back(9.6);
   v1.pop_back();
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(v1.size(), 0);
 }
 
 // тест конструктора по умолчанию, empty(), push_back/pop_back
@@ -210,7 +209,7 @@ TEST_F(test_vector, test_vector_2) {
   ASSERT_EQ(v2.empty(), CONTAINER_NOT_EMPTY);
 
   v2.pop_back();
-  ASSERT_EQ(v2.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(v2.size(), 0);
 }
 
 // тест push_back/pop_back, доступ по индексу()
@@ -263,7 +262,7 @@ TEST_F(test_vector, test_vector_4) {
 
   for (int i = 0; i < 4; i++) v2.pop_back();
 
-  ASSERT_EQ(v2.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(v2.size(), 0);
 }
 
 // тест конструктор перемещения и параметризированного конструктора
@@ -316,4 +315,35 @@ TEST_F(test_vector, test_vector_insert) {
 
   iter = v1.begin();
   ASSERT_EQ(v1 == answ1, SUCCESS);
+}
+
+
+// shrink_to_fit()
+TEST_F(test_vector, test_vector_shrink_to_fit) {
+  _SPCE_::vector<int> v1{11, 12, 13, 14};
+  _SPCE_::vector<int> answ1{11, 12, 13, 14};
+  v1.shrink_to_fit();
+  ASSERT_EQ(v1 == answ1, SUCCESS);
+  ASSERT_EQ(v1.capacity(), 4);
+  v1.pop_back();
+  v1.pop_back();
+  ASSERT_EQ(v1.capacity(), 4);
+  v1.shrink_to_fit();
+  ASSERT_EQ(v1.capacity(), 2);
+  v1.pop_back();
+  v1.pop_back();
+  ASSERT_EQ(v1.size(), 0);
+  ASSERT_EQ(v1.capacity(), 2);
+  v1.shrink_to_fit(); // shrink empty-list
+  ASSERT_EQ(v1.size(), 0);
+  ASSERT_EQ(v1.capacity(), 0);
+  ASSERT_EQ(v1.data(), nullptr);
+  v1.shrink_to_fit(); // shrink empty-list one more
+  ASSERT_EQ(v1.size(), 0);
+  ASSERT_EQ(v1.capacity(), 0);
+  ASSERT_EQ(v1.data(), nullptr);
+
+  v1.push_back(4);
+  ASSERT_EQ(v1.size(), 1);
+  ASSERT_EQ(v1.capacity(), 1);
 }

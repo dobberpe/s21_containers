@@ -55,7 +55,7 @@ class vector : public List<T> {
   size_type size() const;
   void reserve(size_type size);
   size_type capacity() const;
-  void shrink_to_fit();  // TEST!!!
+  void shrink_to_fit(); 
 
   // *Vector Modifiers*
   void clear();
