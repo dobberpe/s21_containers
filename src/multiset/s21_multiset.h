@@ -61,6 +61,8 @@ class multiset {
   const_iterator begin() const;
   const_iterator end() const;
 
+
+  size_type count(const Key& key);
   iterator find(const Key& key);
   bool contains(const Key& key) const;
 

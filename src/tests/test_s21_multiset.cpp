@@ -96,9 +96,31 @@ TEST(msTest, EqualRange) {
     ++it;
   }
   EXPECT_EQ(count, 3);
+}
 
-  // Equal range of 6 should be empty
-  // range = ms.equal_range(6);
-  // EXPECT_EQ(range.first, ms.end());
-  // EXPECT_EQ(range.second, ms.end());
+TEST(MultisetTest, Erase) {
+  multiset<int> ms{1, 2, 2, 3, 3, 3, 4, 5};
+  auto it = ms.find(2);
+  ms.erase(it);
+  EXPECT_EQ(ms.count(2), 1);
+  EXPECT_EQ(ms.size(), 7);
+}
+
+TEST(MultisetTest, Swap) {
+  multiset<int> ms1{1, 2, 3};
+  multiset<int> ms2{4, 5, 6};
+  ms1.swap(ms2);
+  EXPECT_EQ(ms1.size(), 3);
+  EXPECT_EQ(ms2.size(), 3);
+  EXPECT_TRUE(ms1.count(4) == 1 && ms1.count(5) == 1 && ms1.count(6) == 1);
+  EXPECT_TRUE(ms2.count(1) == 1 && ms2.count(2) == 1 && ms2.count(3) == 1);
+}
+
+TEST(MultisetTest, Merge) {
+  multiset<int> ms1{1, 2, 3};
+  multiset<int> ms2{4, 5, 6};
+  ms1.merge(ms2);
+  EXPECT_TRUE(ms1.size() == 6 && ms2.size() == 0);
+  EXPECT_TRUE(ms1.count(4) == 1 && ms1.count(5) == 1 && ms1.count(6) == 1);
+  EXPECT_TRUE(ms1.count(1) == 1 && ms1.count(2) == 1 && ms1.count(3) == 1);
 }

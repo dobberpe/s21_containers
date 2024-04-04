@@ -239,3 +239,34 @@ TEST(SetTest, Merge) {
   EXPECT_TRUE(s1.contains(4));
   EXPECT_TRUE(s1.contains(6));
 }
+
+TEST(SetTest, InsertMany) {
+  // Создание пустого множества
+  set<int> my_set;
+
+  // Вставка элементов и проверка результата
+  auto results = my_set.insert_many(1, 2, 3);
+  ASSERT_EQ(results.size(), 3);
+  EXPECT_EQ(results[0].second,
+            true);  // Должно быть true, так как элемент вставлен успешно
+  EXPECT_EQ(results[1].second, true);
+  EXPECT_EQ(results[2].second, true);
+
+  // Попытка вставить элементы, которые уже присутствуют в множестве
+  results = my_set.insert_many(2, 3, 4);
+  ASSERT_EQ(results.size(), 3);
+  EXPECT_EQ(
+      results[0].second,
+      false);  // Должно быть false, так как элемент уже существует в множестве
+  EXPECT_EQ(results[1].second, false);
+  EXPECT_EQ(results[2].second,
+            true);  // Должно быть true, так как элемент успешно вставлен
+
+  // Проверка содержимого множества
+  std::vector<int> expected_values = {1, 2, 3, 4};
+  int i = 0;
+  for (auto it = my_set.begin(); it != my_set.end(); ++it) {
+    EXPECT_EQ(*it, expected_values[i]);
+    ++i;
+  }
+}

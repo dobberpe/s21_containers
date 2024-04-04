@@ -1,6 +1,8 @@
 #ifndef _QUEUE_H_
 #define _QUEUE_H_
 
+#include <utility>
+
 #include "../list/s21_list.h"
 
 namespace s21 {
@@ -32,6 +34,12 @@ class queue {
   bool empty() const;
   size_type size() const;
   void swap(queue& other);
+
+  template <typename... Args>
+  void insert_many_back(Args&&... args) {
+    (void)std::initializer_list<int>{
+        (data.push_back(std::forward<Args>(args)), 0)...};
+  }
 };
 
 template class queue<int>;

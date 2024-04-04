@@ -174,6 +174,17 @@ typename multiset<Key>::const_iterator multiset<Key>::end() const {
 }
 
 template <typename Key>
+typename multiset<Key>::size_type multiset<Key>::count(const Key& key) {
+    size_type count = 0;
+    for (auto it = begin(); it != end(); ++it) {
+        if (*it == key) {
+            ++count;
+        }
+    }
+    return count;
+}
+
+template <typename Key>
 typename multiset<Key>::iterator multiset<Key>::find(const Key &key) {
   Node *node = find_node(key);
   return iterator(node);
@@ -183,6 +194,43 @@ template <typename Key>
 bool multiset<Key>::contains(const Key &key) const {
   return find_node(key) != nullptr;
 }
+
+template <typename Key>
+void multiset<Key>::erase(iterator pos) {
+  Node *node = pos.current;
+  if (node != nullptr) {
+    if (node->left == nullptr) {
+      transplant(node, node->right);
+    } else if (node->right == nullptr) {
+      transplant(node, node->left);
+    } else {
+      Node *successor_node = min_node(node->right);
+      if (successor_node->parent != node) {
+        transplant(successor_node, successor_node->right);
+        successor_node->right = node->right;
+        successor_node->right->parent = successor_node;
+      }
+      transplant(node, successor_node);
+      successor_node->left = node->left;
+      successor_node->left->parent = successor_node;
+    }
+    --num_elements;
+  }
+  delete node;
+}
+
+template <typename Key>
+void multiset<Key>::swap(multiset &other) {
+  std::swap(root, other.root);
+  std::swap(num_elements, other.num_elements);
+}
+
+template <typename Key>
+void multiset<Key>::merge(multiset &other) {
+  for (auto it = other.begin(); it != other.end(); ++it) insert(*it);
+  other.clear();
+}
+
 
 
 template <typename Key>
