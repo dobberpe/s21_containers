@@ -4,7 +4,7 @@
 using namespace s21;
 
 template <typename Key>
-void Set<Key>::transplant(Node *u, Node *v) {
+void set<Key>::transplant(Node *u, Node *v) {
   if (u->parent == nullptr)
     root = v;
   else if (u == u->parent->left)
@@ -15,13 +15,13 @@ void Set<Key>::transplant(Node *u, Node *v) {
 }
 
 template <typename Key>
-typename Set<Key>::Node *Set<Key>::min_node(Node *node) {
+typename set<Key>::Node *set<Key>::min_node(Node *node) {
   while (node->left != nullptr) node = node->left;
   return node;
 }
 
 template <typename Key>
-void Set<Key>::destroy(Node *node) {
+void set<Key>::destroy(Node *node) {
   if (node != nullptr) {
     destroy(node->left);
     destroy(node->right);
@@ -30,7 +30,7 @@ void Set<Key>::destroy(Node *node) {
 }
 
 template <typename Key>
-typename Set<Key>::Node *Set<Key>::copy_nodes(Node *other, Node *parent) {
+typename set<Key>::Node *set<Key>::copy_nodes(Node *other, Node *parent) {
   if (other == nullptr) return nullptr;
   Node *new_node = new Node(other->key);
   new_node->parent = parent;
@@ -40,7 +40,7 @@ typename Set<Key>::Node *Set<Key>::copy_nodes(Node *other, Node *parent) {
 }
 
 template <typename Key>
-typename Set<Key>::Node *Set<Key>::find_node(const_reference key) const {
+typename set<Key>::Node *set<Key>::find_node(const_reference key) const {
   Node *current = root;
   while (current != nullptr) {
     if (key == current->key)
@@ -54,33 +54,33 @@ typename Set<Key>::Node *Set<Key>::find_node(const_reference key) const {
 }
 
 template <typename Key>
-Set<Key>::Set() : root(nullptr), num_elements(0) {}
+set<Key>::set() : root(nullptr), num_elements(0) {}
 
 template <typename Key>
-Set<Key>::Set(std::initializer_list<Key> const &items)
+set<Key>::set(std::initializer_list<Key> const &items)
     : root(nullptr), num_elements(0) {
   for (const auto &item : items) insert(item);
 }
 
 template <typename Key>
-Set<Key>::Set(const Set &s) : root(nullptr), num_elements(0) {
+set<Key>::set(const set &s) : root(nullptr), num_elements(0) {
   root = copy_nodes(s.root, nullptr);
   num_elements = s.num_elements;
 }
 
 template <typename Key>
-Set<Key>::Set(Set &&s) noexcept : root(s.root), num_elements(s.num_elements) {
+set<Key>::set(set &&s) noexcept : root(s.root), num_elements(s.num_elements) {
   s.root = nullptr;
   s.num_elements = 0;
 }
 
 template <typename Key>
-Set<Key>::~Set() {
+set<Key>::~set() {
   clear();
 }
 
 template <typename Key>
-typename Set<Key>::Set &Set<Key>::operator=(Set &&s) noexcept {
+typename set<Key>::set &set<Key>::operator=(set &&s) noexcept {
   if (this != &s) {
     clear();
     root = s.root;
@@ -92,7 +92,7 @@ typename Set<Key>::Set &Set<Key>::operator=(Set &&s) noexcept {
 }
 
 template <typename Key>
-std::pair<typename Set<Key>::iterator, bool> Set<Key>::insert(
+std::pair<typename set<Key>::iterator, bool> set<Key>::insert(
     const_reference key) {
   Node *new_node = new Node(key);
   Node *parent = nullptr;
@@ -122,30 +122,30 @@ std::pair<typename Set<Key>::iterator, bool> Set<Key>::insert(
 }
 
 template <typename Key>
-size_t Set<Key>::size() const {
+size_t set<Key>::size() const {
   return num_elements;
 }
 
 template <typename Key>
-bool Set<Key>::empty() const {
+bool set<Key>::empty() const {
   return num_elements == 0;
 }
 
 template <typename Key>
-typename Set<Key>::size_type Set<Key>::max_size() const {
+typename set<Key>::size_type set<Key>::max_size() const {
   size_type res = 230584300921369395;
   return res;
 }
 
 template <typename Key>
-void Set<Key>::clear() {
+void set<Key>::clear() {
   destroy(root);
   root = nullptr;
   num_elements = 0;
 }
 
 template <typename Key>
-typename Set<Key>::iterator Set<Key>::begin() {
+typename set<Key>::iterator set<Key>::begin() {
   Node *current = root;
   while (current != nullptr && current->left != nullptr)
     current = current->left;
@@ -153,12 +153,12 @@ typename Set<Key>::iterator Set<Key>::begin() {
 }
 
 template <typename Key>
-typename Set<Key>::iterator Set<Key>::end() {
+typename set<Key>::iterator set<Key>::end() {
   return iterator(nullptr);
 }
 
 template <typename Key>
-typename Set<Key>::const_iterator Set<Key>::begin() const {
+typename set<Key>::const_iterator set<Key>::begin() const {
   Node *current = root;
   while (current != nullptr && current->left != nullptr)
     current = current->left;
@@ -166,23 +166,23 @@ typename Set<Key>::const_iterator Set<Key>::begin() const {
 }
 
 template <typename Key>
-typename Set<Key>::const_iterator Set<Key>::end() const {
+typename set<Key>::const_iterator set<Key>::end() const {
   return const_iterator(nullptr);
 }
 
 template <typename Key>
-typename Set<Key>::iterator Set<Key>::find(const Key &key) {
+typename set<Key>::iterator set<Key>::find(const Key &key) {
   Node *node = find_node(key);
   return iterator(node);
 }
 
 template <typename Key>
-bool Set<Key>::contains(const Key &key) const {
+bool set<Key>::contains(const Key &key) const {
   return find_node(key) != nullptr;
 }
 
 template <typename Key>
-SetIterator<Key>::SetIterator(typename Set<Key>::Node *node) : current(node) {}
+SetIterator<Key>::SetIterator(typename set<Key>::Node *node) : current(node) {}
 
 template <typename Key>
 typename SetIterator<Key>::SetIterator &SetIterator<Key>::operator++() {
@@ -203,14 +203,14 @@ bool SetIterator<Key>::operator!=(const SetIterator &other) const {
 }
 
 template <typename Key>
-typename Set<Key>::Node *SetIterator<Key>::successor(
-    typename Set<Key>::Node *x) {
+typename set<Key>::Node *SetIterator<Key>::successor(
+    typename set<Key>::Node *x) {
   if (x->right != nullptr) {
     x = x->right;
     while (x->left != nullptr) x = x->left;
     return x;
   }
-  typename Set<Key>::Node *y = x->parent;
+  typename set<Key>::Node *y = x->parent;
   while (y != nullptr && x == y->right) {
     x = y;
     y = y->parent;
@@ -219,7 +219,7 @@ typename Set<Key>::Node *SetIterator<Key>::successor(
 }
 
 template <typename Key>
-SetConstIterator<Key>::SetConstIterator(typename Set<Key>::Node *node)
+SetConstIterator<Key>::SetConstIterator(typename set<Key>::Node *node)
     : current(node) {}
 
 template <typename Key>
@@ -242,14 +242,14 @@ bool SetConstIterator<Key>::operator!=(const SetConstIterator &other) const {
 }
 
 template <typename Key>
-typename Set<Key>::Node *SetConstIterator<Key>::successor(
-    typename Set<Key>::Node *x) {
+typename set<Key>::Node *SetConstIterator<Key>::successor(
+    typename set<Key>::Node *x) {
   if (x->right != nullptr) {
     x = x->right;
     while (x->left != nullptr) x = x->left;
     return x;
   }
-  typename Set<Key>::Node *y = x->parent;
+  typename set<Key>::Node *y = x->parent;
   while (y != nullptr && x == y->right) {
     x = y;
     y = y->parent;

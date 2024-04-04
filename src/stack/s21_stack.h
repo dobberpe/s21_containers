@@ -6,9 +6,9 @@
 namespace s21 {
 
 template <typename Key>
-class Stack {
+class stack {
  private:
-  List<Key> list;
+  list<Key> data;
 
  public:
   using value_type = Key;
@@ -16,18 +16,18 @@ class Stack {
   using const_reference = const Key&;
   using size_type = size_t;
 
-  Stack() = default;
-  Stack(Stack& other) = default;
-  Stack(Stack&& other) = default;
-  Stack(std::initializer_list<Key> const& items);
-  ~Stack() = default;
+  stack() = default;
+  stack(stack& other) = default;
+  stack(stack&& other) = default;
+  stack(std::initializer_list<Key> const& items);
+  ~stack() = default;
 
-  Stack& operator=(Stack& other) = default;
-  Stack& operator=(Stack&& other) = default;
+  stack& operator=(stack& other) = default;
+  stack& operator=(stack&& other) = default;
 
   void push(const_reference value);
   void pop();
-  void swap(Stack& other);
+  void swap(stack& other);
 
   const_reference top() const;
 
@@ -35,7 +35,7 @@ class Stack {
   size_type size() const;
 };
 
-template class Stack<int>;
+template class stack<int>;
 }  // namespace s21
 
 #endif

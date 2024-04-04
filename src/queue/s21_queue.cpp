@@ -3,45 +3,45 @@
 using namespace s21;
 
 template <typename Key>
-Queue<Key>::Queue(std::initializer_list<Key> const& items) {
+queue<Key>::queue(std::initializer_list<Key> const& items) {
   for (const auto& item : items) {
     push(item);
   }
 }
 
 template <typename Key>
-void Queue<Key>::push(const_reference value) {
-  list.push_back(value);
+void queue<Key>::push(const_reference value) {
+  data.push_back(value);
 }
 
 template <typename Key>
-void Queue<Key>::pop() {
+void queue<Key>::pop() {
   if (!empty()) {
-    list.pop_front();
+    data.pop_front();
   }
 }
 
 template <typename Key>
-typename Queue<Key>::const_reference Queue<Key>::front() const {
-  return list.front();
+typename queue<Key>::const_reference queue<Key>::front() const {
+  return data.front();
 }
 
 template <typename Key>
-typename Queue<Key>::const_reference Queue<Key>::back() const {
-  return list.back();
+typename queue<Key>::const_reference queue<Key>::back() const {
+  return data.back();
 }
 
 template <typename Key>
-bool Queue<Key>::empty() const {
-  return list.empty();
+bool queue<Key>::empty() const {
+  return data.empty();
 }
 
 template <typename Key>
-typename Queue<Key>::size_type Queue<Key>::size() const {
-  return list.size();
+typename queue<Key>::size_type queue<Key>::size() const {
+  return data.size();
 }
 
 template <typename Key>
-void Queue<Key>::swap(Queue& other) {
-  list.swap(other.list);
+void queue<Key>::swap(queue& other) {
+  data.swap(other.data);
 }

@@ -3,40 +3,40 @@
 using namespace s21;
 
 template <typename Key>
-Stack<Key>::Stack(std::initializer_list<Key> const& items) {
+stack<Key>::stack(std::initializer_list<Key> const& items) {
   for (const auto& item : items) {
     push(item);
   }
 }
 
 template <typename Key>
-void Stack<Key>::push(const_reference value) {
-  list.push_back(value);
+void stack<Key>::push(const_reference value) {
+  data.push_back(value);
 }
 
 template <typename Key>
-void Stack<Key>::pop() {
+void stack<Key>::pop() {
   if (!empty()) {
-    list.pop_back();
+    data.pop_back();
   }
 }
 
 template <typename Key>
-typename Stack<Key>::const_reference Stack<Key>::top() const {
-  return list.back();
+typename stack<Key>::const_reference stack<Key>::top() const {
+  return data.back();
 }
 
 template <typename Key>
-bool Stack<Key>::empty() const {
-  return list.empty();
+bool stack<Key>::empty() const {
+  return data.empty();
 }
 
 template <typename Key>
-typename Stack<Key>::size_type Stack<Key>::size() const {
-  return list.size();
+typename stack<Key>::size_type stack<Key>::size() const {
+  return data.size();
 }
 
 template <typename Key>
-void Stack<Key>::swap(Stack& other) {
-  list.swap(other.list);
+void stack<Key>::swap(stack& other) {
+  data.swap(other.data);
 }

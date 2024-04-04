@@ -4,14 +4,14 @@ using namespace s21;
 
 // Тест для конструктора по умолчанию
 TEST(SetConstructorTest, DefaultConstructor) {
-  Set<int> s;
+  set<int> s;
   EXPECT_EQ(0, s.size());
   EXPECT_TRUE(s.empty());
 }
 
 // Тест для конструктора с инициализационным списком
 TEST(SetConstructorTest, InitializerListConstructor) {
-  Set<int> s = {1, 2, 3};
+  set<int> s = {1, 2, 3};
   EXPECT_EQ(3, s.size());
   EXPECT_FALSE(s.empty());
   // Проверьте, что все элементы из списка были вставлены в множество
@@ -22,8 +22,8 @@ TEST(SetConstructorTest, InitializerListConstructor) {
 
 // Тест для конструктора копирования
 TEST(SetConstructorTest, CopyConstructor) {
-  Set<int> s1 = {1, 2, 3};
-  Set<int> s2 = s1;  // Копируем s1 в s2
+  set<int> s1 = {1, 2, 3};
+  set<int> s2 = s1;  // Копируем s1 в s2
   EXPECT_EQ(s1.size(), s2.size());
   // Проверяем, что s2 содержит те же элементы, что и s1
   SetIterator<int> i1 = s1.begin(), i2 = s2.begin();
@@ -36,8 +36,8 @@ TEST(SetConstructorTest, CopyConstructor) {
 
 // Тест для конструктора перемещения
 TEST(SetConstructorTest, MoveConstructor) {
-  Set<int> s1 = {1, 2, 3};
-  Set<int> s2 = std::move(s1);  // Перемещаем s1 в s2
+  set<int> s1 = {1, 2, 3};
+  set<int> s2 = std::move(s1);  // Перемещаем s1 в s2
   EXPECT_EQ(0, s1.size());  // Проверяем, что s1 теперь пустой
   // Проверяем, что s2 содержит те же элементы, что и s1 перед перемещением
   EXPECT_TRUE(s2.contains(1));
@@ -47,13 +47,13 @@ TEST(SetConstructorTest, MoveConstructor) {
 
 TEST(SetMoveAssignmentTest, BasicTest) {
   // Создаем первое множество и добавляем в него элементы
-  Set<int> s1;
+  set<int> s1;
   s1.insert(1);
   s1.insert(2);
   s1.insert(3);
 
   // Создаем второе множество и перемещаем в него содержимое первого
-  Set<int> s2;
+  set<int> s2;
   s2 = std::move(s1);
 
   // Проверяем, что первое множество теперь пусто
@@ -67,7 +67,7 @@ TEST(SetMoveAssignmentTest, BasicTest) {
 }
 
 TEST(SetMoveAssignmentTest, SelfAssignment) {
-  Set<int> s;
+  set<int> s;
   s.insert(1);
   s.insert(2);
 
@@ -80,7 +80,7 @@ TEST(SetMoveAssignmentTest, SelfAssignment) {
 }
 
 TEST(SetInsertTest, BasicTest) {
-  Set<int> s;
+  set<int> s;
 
   // Вставляем элементы в множество
   auto result1 = s.insert(1);
@@ -99,7 +99,7 @@ TEST(SetInsertTest, BasicTest) {
 }
 
 TEST(SetInsertTest, DuplicateTest) {
-  Set<int> s;
+  set<int> s;
 
   // Вставляем один и тот же элемент дважды
   s.insert(1);
@@ -112,7 +112,7 @@ TEST(SetInsertTest, DuplicateTest) {
 }
 
 TEST(SetCapacityTest, SizeTest) {
-  Set<int> s;
+  set<int> s;
 
   // Тестирование размера после вставки элементов
   s.insert(1);
@@ -123,7 +123,7 @@ TEST(SetCapacityTest, SizeTest) {
 }
 
 TEST(SetCapacityTest, EmptyTest) {
-  Set<int> s;
+  set<int> s;
 
   // Проверка пустого множества
   EXPECT_TRUE(s.empty());
@@ -134,14 +134,14 @@ TEST(SetCapacityTest, EmptyTest) {
 }
 
 TEST(SetCapacityTest, MaxSizeTest) {
-  Set<int> s;
+  set<int> s;
 
   // Проверка максимального размера множества
   EXPECT_EQ(230584300921369395, s.max_size());
 }
 
 TEST(SetModifiersTest, ClearTest) {
-  Set<int> s;
+  set<int> s;
 
   // Вставка элементов и очистка множества
   s.insert(1);
@@ -154,30 +154,30 @@ TEST(SetModifiersTest, ClearTest) {
 }
 
 TEST(SetIteratorTest, BeginEndTest) {
-  Set<int> s;
+  set<int> s;
   s.insert(1);
   s.insert(2);
   s.insert(3);
 
   // Получение итераторов на начало и конец множества
-  Set<int>::iterator begin_iter = s.begin();
+  set<int>::iterator begin_iter = s.begin();
 
   // Проверка значения первого элемента
   EXPECT_EQ(1, *begin_iter);
 }
 
 TEST(SetConstIteratorTest, ConstBeginEndTest) {
-  const Set<int> s = {1, 2, 3};
+  const set<int> s = {1, 2, 3};
 
   // Получение константных итераторов на начало и конец множества
-  Set<int>::const_iterator begin_iter = s.begin();
+  set<int>::const_iterator begin_iter = s.begin();
 
   // Проверка значения первого элемента
   EXPECT_EQ(1, *begin_iter);
 }
 
 TEST(SetFindTest, FindExistingElement) {
-  Set<int> s = {1, 2, 3};
+  set<int> s = {1, 2, 3};
 
   // Поиск существующего элемента
   auto it = s.find(2);
@@ -187,14 +187,14 @@ TEST(SetFindTest, FindExistingElement) {
 }
 
 TEST(SetContainsTest, ContainsExistingElement) {
-  Set<int> s = {1, 2, 3};
+  set<int> s = {1, 2, 3};
 
   // Проверка наличия существующего элемента
   EXPECT_TRUE(s.contains(2));
 }
 
 TEST(SetContainsTest, ContainsNonExistingElement) {
-  Set<int> s = {1, 2, 3};
+  set<int> s = {1, 2, 3};
 
   // Проверка отсутствия несуществующего элемента
   EXPECT_FALSE(s.contains(4));

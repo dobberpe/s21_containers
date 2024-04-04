@@ -6,9 +6,9 @@
 namespace s21 {
 
 template <typename Key>
-class Queue {
+class queue {
  private:
-  List<Key> list;
+  list<Key> data;
 
  public:
   using value_type = Key;
@@ -16,14 +16,14 @@ class Queue {
   using const_reference = const Key&;
   using size_type = size_t;
 
-  Queue() = default;
-  Queue(Queue& other) = default;
-  Queue(Queue&& other) = default;
-  Queue(std::initializer_list<Key> const& items);
-  ~Queue() = default;
+  queue() = default;
+  queue(queue& other) = default;
+  queue(queue&& other) = default;
+  queue(std::initializer_list<Key> const& items);
+  ~queue() = default;
 
-  Queue& operator=(Queue& other) = default;
-  Queue& operator=(Queue&& other) = default;
+  queue& operator=(queue& other) = default;
+  queue& operator=(queue&& other) = default;
 
   void push(const_reference value);
   void pop();
@@ -31,10 +31,10 @@ class Queue {
   const_reference back() const;
   bool empty() const;
   size_type size() const;
-  void swap(Queue& other);
+  void swap(queue& other);
 };
 
-template class Queue<int>;
+template class queue<int>;
 }  // namespace s21
 
 #endif

@@ -2,43 +2,43 @@
 using namespace s21;
 
 template <typename T>
-typename List<T>::iterator &List<T>::begin() {
+typename list<T>::iterator &list<T>::begin() {
   this->iter_head = head_node;
   return this->iter_head;
 }
 
 template <typename T>
-typename List<T>::iterator &List<T>::end() {
+typename list<T>::iterator &list<T>::end() {
   this->iter_tail = tail_node;
   return this->iter_tail;
 }
 
 template <typename T>
-typename List<T>::const_iterator List<T>::begin() const {
+typename list<T>::const_iterator list<T>::begin() const {
   return const_iterator(head_node);
 }
 
 template <typename T>
-typename List<T>::const_iterator List<T>::end() const {
+typename list<T>::const_iterator list<T>::end() const {
   return const_iterator(tail_node);
 }
 
 template <typename T>
-T &List<T>::front() {
+T &list<T>::front() {
   iterator iter = begin();
 
   return *iter;
 }
 
 template <typename T>
-const T &List<T>::front() const {
+const T &list<T>::front() const {
   const_iterator iter = begin();
 
   return *iter;
 }
 
 template <typename T>
-T &List<T>::back() {
+T &list<T>::back() {
   iterator iter = end();
   if (empty() == CONTAINER_NOT_EMPTY) --iter;
 
@@ -46,7 +46,7 @@ T &List<T>::back() {
 }
 
 template <typename T>
-const T &List<T>::back() const {
+const T &list<T>::back() const {
   const_iterator iter = end();
   if (empty() == CONTAINER_NOT_EMPTY) --iter;
 
@@ -54,7 +54,7 @@ const T &List<T>::back() const {
 }
 
 template <typename T>
-T &List<T>::operator()(const size_type i) {
+T &list<T>::operator()(const size_type i) {
   iterator pos = begin();
   if (i < size()) {
     size_type index = 0;

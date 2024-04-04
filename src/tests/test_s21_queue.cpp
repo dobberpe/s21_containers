@@ -3,7 +3,7 @@
 using namespace s21;
 
 TEST(QueueTest, Push) {
-  Queue<int> q;
+  queue<int> q;
   q.push(1);
   q.push(2);
   q.push(3);
@@ -14,7 +14,7 @@ TEST(QueueTest, Push) {
 }
 
 TEST(QueueTest, Pop) {
-  Queue<int> q;
+  queue<int> q;
   q.push(1);
   q.push(2);
   q.push(3);
@@ -32,12 +32,12 @@ TEST(QueueTest, Pop) {
 }
 
 TEST(QueueTest, Swap) {
-  Queue<int> q1;
+  queue<int> q1;
   q1.push(1);
   q1.push(2);
   q1.push(3);
 
-  Queue<int> q2;
+  queue<int> q2;
   q2.push(4);
   q2.push(5);
 

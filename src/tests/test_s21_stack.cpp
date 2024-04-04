@@ -3,7 +3,7 @@
 using namespace s21;
 
 TEST(StackTest, PushAndTop) {
-  Stack<int> s;
+  stack<int> s;
   s.push(1);
   s.push(2);
   s.push(3);
@@ -11,7 +11,7 @@ TEST(StackTest, PushAndTop) {
 }
 
 TEST(StackTest, Pop) {
-  Stack<int> s;
+  stack<int> s;
   s.push(1);
   s.push(2);
   s.push(3);
@@ -22,7 +22,7 @@ TEST(StackTest, Pop) {
 }
 
 TEST(StackTest, Empty) {
-  Stack<int> s;
+  stack<int> s;
   EXPECT_TRUE(s.empty());
   s.push(1);
   EXPECT_FALSE(s.empty());
@@ -31,7 +31,7 @@ TEST(StackTest, Empty) {
 }
 
 TEST(StackTest, Size) {
-  Stack<int> s;
+  stack<int> s;
   EXPECT_EQ(s.size(), 0);
   s.push(1);
   s.push(2);

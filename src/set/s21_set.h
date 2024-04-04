@@ -14,7 +14,7 @@ template <typename Key>
 class SetConstIterator;
 
 template <typename Key>
-class Set {
+class set {
  public:
   using key_type = Key;
   using value_type = Key;
@@ -43,13 +43,13 @@ class Set {
   Node* find_node(const_reference key) const;
 
  public:
-  Set();
-  Set(std::initializer_list<Key> const& items);
-  Set(const Set& s);
-  Set(Set&& s) noexcept;
-  ~Set();
+  set();
+  set(std::initializer_list<Key> const& items);
+  set(const set& s);
+  set(set&& s) noexcept;
+  ~set();
 
-  Set& operator=(Set&& s) noexcept;
+  set& operator=(set&& s) noexcept;
   std::pair<iterator, bool> insert(const_reference key);
   size_t size() const;
   bool empty() const;
@@ -65,8 +65,8 @@ class Set {
   bool contains(const Key& key) const;
 
   void erase(iterator pos);
-  void swap(Set& other);
-  void merge(Set& other);
+  void swap(set& other);
+  void merge(set& other);
 
   friend class SetIterator<Key>;
   friend class SetConstIterator<Key>;
@@ -75,30 +75,30 @@ class Set {
 template <typename Key>
 class SetIterator {
  public:
-  typename Set<Key>::Node* current;
-  SetIterator(typename Set<Key>::Node* node);
+  typename set<Key>::Node* current;
+  SetIterator(typename set<Key>::Node* node);
   SetIterator& operator++();
   Key& operator*() const;
   bool operator!=(const SetIterator& other) const;
 
  private:
-  typename Set<Key>::Node* successor(typename Set<Key>::Node* x);
+  typename set<Key>::Node* successor(typename set<Key>::Node* x);
 };
 
 template <typename Key>
 class SetConstIterator {
  public:
-  typename Set<Key>::Node* current;
-  SetConstIterator(typename Set<Key>::Node* node);
+  typename set<Key>::Node* current;
+  SetConstIterator(typename set<Key>::Node* node);
   SetConstIterator& operator++();
   const Key& operator*() const;
   bool operator!=(const SetConstIterator& other) const;
 
  private:
-  typename Set<Key>::Node* successor(typename Set<Key>::Node* x);
+  typename set<Key>::Node* successor(typename set<Key>::Node* x);
 };
 
-template class Set<int>;
+template class set<int>;
 template class SetIterator<int>;
 template class SetConstIterator<int>;
 

@@ -12,7 +12,7 @@
 
 namespace s21 {
 template <typename T>
-class List {
+class list {
  public:
   // typedef value_type = T;
   // typedef reference = T &;
@@ -86,7 +86,7 @@ class List {
   size_type size() const;
   size_type max_size() const;
   T &operator()(const size_type i);
-  bool operator==(List<T> &list_other);
+  bool operator==(list<T> &list_other);
 
   void clear();
   iterator insert(iterator pos, const T &value);
@@ -96,9 +96,9 @@ class List {
   void push_front(const T &value);
   void pop_front();
 
-  void swap(List &other);
-  void merge(List &other);
-  void splice(const iterator pos, List &other);
+  void swap(list &other);
+  void merge(list &other);
+  void splice(const iterator pos, list &other);
 
   void reverse();
   void unique();
@@ -106,28 +106,28 @@ class List {
 
   // iterator insert_many(const iterator pos, ...);
   // Inserts new elements into the container directly before pos.
-  // List, Vector.
+  // list, Vector.
 
   // void insert_many_back(Args&&... args);
-  // Appends new elements to the end of the container.	List, Vector, Queue.
+  // Appends new elements to the end of the container.	list, Vector, Queue.
   // void insert_many_front(Args&&... args);
 
-  List();
-  explicit List(const size_type count);
-  explicit List(std::initializer_list<T> const &items);
-  List(List<T> &copy);
-  List(List<T> &&moved);
-  ~List();
-  List<T> &operator=(List<T> &&moved);
+  list();
+  explicit list(const size_type count);
+  explicit list(std::initializer_list<T> const &items);
+  list(list<T> &copy);
+  list(list<T> &&moved);
+  ~list();
+  list<T> &operator=(list<T> &&moved);
 };
 
-template class List<int>;
-template class List<double>;
-// template class List<long double>;
-// template class List<short>;
-// template class List<char>;
-// template class List<unsigned char>;
-// template class List<unsigned short>;
-// template class List<unsigned int>;
+template class list<int>;
+template class list<double>;
+// template class list<long double>;
+// template class list<short>;
+// template class list<char>;
+// template class list<unsigned char>;
+// template class list<unsigned short>;
+// template class list<unsigned int>;
 }  // namespace s21
 #endif  //_S21_LIST_H_

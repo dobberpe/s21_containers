@@ -2,7 +2,7 @@
 using namespace s21;
 
 template <typename T>
-typename List<T>::iterator List<T>::insert(iterator pos, const T &value) {
+typename list<T>::iterator list<T>::insert(iterator pos, const T &value) {
   int exit_code = _NO_ERROR;
   list_node *save_pos = pos.get_iter_ptr();
   list_node *new_node = nullptr;
@@ -28,7 +28,7 @@ typename List<T>::iterator List<T>::insert(iterator pos, const T &value) {
 }
 
 template <typename T>
-void List<T>::erase(List<T>::iterator pos) {
+void list<T>::erase(list<T>::iterator pos) {
   if (empty() == CONTAINER_NOT_EMPTY && pos != end()) {
     list_node *removing_elem = pos.get_iter_ptr();
     list_node *before = removing_elem->prev;
@@ -48,30 +48,30 @@ void List<T>::erase(List<T>::iterator pos) {
 }
 
 template <typename T>
-void List<T>::push_back(const T &value) {
+void list<T>::push_back(const T &value) {
   insert(end(), value);
 }
 
 template <typename T>
-void List<T>::pop_back() {
+void list<T>::pop_back() {
   iterator iter = end();
   --iter;
   erase(iter);
 }
 
 template <typename T>
-void List<T>::push_front(const T &value) {
+void list<T>::push_front(const T &value) {
   insert(begin(), value);
 }
 
 template <typename T>
-void List<T>::pop_front() {
+void list<T>::pop_front() {
   erase(begin());
 }
 
 // template <typename T>
-// typename List<T>::iterator List<T>::insert_many(const
-// List<T>::iterator pos,
+// typename list<T>::iterator list<T>::insert_many(const
+// list<T>::iterator pos,
 //                                                ...) {
 //   va_list args;
 //   va_start(args, pos);
@@ -85,7 +85,7 @@ void List<T>::pop_front() {
 // }
 
 // template <typename T>
-// void List<T>::insert_many_back(Args &&...args) {}
+// void list<T>::insert_many_back(Args &&...args) {}
 
 // template <typename T>
-// void List<T>::insert_many_front(Args &&...args) {}
+// void list<T>::insert_many_front(Args &&...args) {}
