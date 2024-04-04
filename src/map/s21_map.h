@@ -10,10 +10,8 @@ namespace s21 {
     template <typename Key, typename T>
     class Map {
     public:
-        template <typename Key, typename T>
         class Iterator;
 
-        template <typename Key, typename T>
         class ConstIterator;
 
         using key_type = Key;
@@ -21,8 +19,8 @@ namespace s21 {
         using value_type = std::pair<const key_type, mapped_type>;
         using reference = value_type&;
         using const_reference = const value_type&;
-        using iterator = Iterator<Key, T>;
-        using const_iterator = ConstIterator<Key, T>;
+        using iterator = Iterator;
+        using const_iterator = ConstIterator;
         using size_type = size_t;
 
     private:
@@ -62,23 +60,25 @@ namespace s21 {
         const_iterator end() const;
 
         bool empty() const;
-        size_type size() const;
-        size_type max_size() const;
+        size_t size() const;
+        size_t max_size() const;
 
         void clear();
         std::pair<iterator, bool> insert(const_reference& value);
         std::pair<iterator, bool> insert(const Key& key, const T& obj);
         std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
         void erase(iterator pos);
-        void swap(map& other);
-        void merge(map& other);
+        void swap(Map& other);
+        void merge(Map& other);
 
         bool contains(const Key& key);
 
-        template <typename Key, typename T>
         class Iterator {
         private:
             Node* current;
+
+//        protected:
+//            Node* get_current();
 
         public:
             Iterator(Node* node);
@@ -90,10 +90,9 @@ namespace s21 {
             bool operator!=(const Iterator& other);
         };
 
-        template <typename Key, typename T>
         class ConstIterator : public Iterator {
         public:
-            using Iterator::Iterator(Node* node);
+//            using Iterator::Iterator(Node* node);
             const_reference operator*() const;
         };
     };

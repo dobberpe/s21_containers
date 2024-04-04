@@ -1,9 +1,9 @@
-#include "s21_Map.h"
+#include "s21_map.h"
 
 using namespace s21;
 
 template <typename Key, typename T>
-typename Map<Key, T>::iterator Map<Key, T>::Map<Key, T>::find_node(Node *node, const Key &key) const {
+typename Map<Key, T>::iterator Map<Key, T>::find_node(Node *node, const Key &key) const {
     while (node && key != node->value.first) node = key < node->value.first ? node->left : node->right;
 
     return iterator(node);
@@ -70,15 +70,7 @@ template <typename Key, typename T>
 Map<Key, T>::Map(const Map& m) { copy_tree(m.root); }
 
 template <typename Key, typename T>
-Map<Key, T>::Map(Map&& m) noexcept {
-    if (this != &m) {
-        clear();
-        root = s.root;
-        num_of_elems = s.num_of_elems;
-        s.root = nullptr;
-        s.num_of_elems = 0;
-    }
-}
+Map<Key, T>::Map(Map&& m) noexcept { *this = m; }
 
 template <typename Key, typename T>
 Map<Key, T>::~Map() {
@@ -89,10 +81,10 @@ template <typename Key, typename T>
 typename Map<Key, T>::Map &Map<Key, T>::operator=(Map &&m) noexcept {
     if (this != &m) {
         clear();
-        root = s.root;
-        num_of_elems = s.num_of_elems;
-        s.root = nullptr;
-        s.num_of_elems = 0;
+        root = m.root;
+        num_of_elems = m.num_of_elems;
+        m.root = nullptr;
+        m.num_of_elems = 0;
     }
     return *this;
 }
@@ -101,7 +93,7 @@ template <typename Key, typename T>
 T& Map<Key, T>::at(const Key& key) {
     auto it = find_node(root, key);
 
-    if (it == nullptr) throw std::out_of_range;
+    if (it == nullptr) throw std::out_of_range("Map::at");
     else return it->value.second;
 }
 
@@ -152,10 +144,10 @@ template <typename Key, typename T>
 bool Map<Key, T>::empty() const { return !num_of_elems; }
 
 template <typename Key, typename T>
-size_type Map<Key, T>::size() const { return num_of_elems; }
+size_t Map<Key, T>::size() const { return num_of_elems; }
 
 template <typename Key, typename T>
-size_type Map<Key, T>::max_size() const { return 230584300921369395; }
+size_t Map<Key, T>::max_size() const { return 230584300921369395; }
 
 template <typename Key, typename T>
 void Map<Key, T>::clear() {
@@ -178,7 +170,7 @@ std::pair<typename Map<Key, T>::iterator, bool> Map<Key, T>::insert(const_refere
 }
 
 template <typename Key, typename T>
-std::pair<typename Map<Key, T>::iterator, bool> Map<Key, T>::insert(const K& key, const T& obj) {
+std::pair<typename Map<Key, T>::iterator, bool> Map<Key, T>::insert(const Key& key, const T& obj) {
     bool inserted = false;
     auto it = find_node(root, key);
 
@@ -194,7 +186,7 @@ template <typename Key, typename T>
 std::pair<typename Map<Key, T>::iterator, bool> Map<Key, T>::insert_or_assign(const Key& key, const T& obj) {
     auto it = find_node(root, key);
 
-    if (it) node->value.second = obj;
+    if (it) it->value.second = obj;
     else it = insert_node(root, {key, obj});
 
     return std::make_pair(it, true);
@@ -209,7 +201,7 @@ void Map<Key, T>::erase(iterator pos) {
 }
 
 template <typename Key, typename T>
-void Map<Key, T>::swap(map& other) {
+void Map<Key, T>::swap(Map& other) {
     Node* tmp_root = root;
     size_t tmp_num = num_of_elems;
 
@@ -221,7 +213,7 @@ void Map<Key, T>::swap(map& other) {
 }
 
 template <typename Key, typename T>
-void Map<Key, T>::merge(map& other) {
+void Map<Key, T>::merge(Map& other) {
     for (auto i : other) {
         const auto [it, inserted] = insert(*i);
         if (inserted) other.erase(i);
@@ -231,11 +223,14 @@ void Map<Key, T>::merge(map& other) {
 template <typename Key, typename T>
 bool Map<Key, T>::contains(const Key& key) { return find_node(root, key) != nullptr; }
 
+//template <typename Key, typename T>
+//typename Map<Key, T>::Node* Map<Key, T>::iterator::get_current() { return current; }
+
 template <typename Key, typename T>
 Map<Key, T>::iterator::Iterator(Node* node) : current(node) {}
 
 template <typename Key, typename T>
-reference Map<Key, T>::iterator::operator*() { return current->value; }
+std::pair<const Key, T>& Map<Key, T>::iterator::operator*() { return current->value; }
 
 template <typename Key, typename T>
 typename Map<Key, T>::iterator::Iterator &Map<Key, T>::iterator::operator++() {
@@ -249,8 +244,8 @@ typename Map<Key, T>::iterator::Iterator &Map<Key, T>::iterator::operator++() {
         } while (tmp->parent && tmp == tmp->parent->right);
 
         if (tmp) current = tmp;
-        else throw std::out_of_range;
-    } else throw std::out_of_range;
+//        else throw std::out_of_range();
+    } // else throw std::out_of_range();
 
     return *this;
 }
@@ -267,17 +262,17 @@ typename Map<Key, T>::iterator::Iterator &Map<Key, T>::iterator::operator--() {
         } while (tmp->parent && tmp == tmp->parent->left);
 
         if (tmp) current = tmp;
-        else throw std::out_of_range;
-    } else throw std::out_of_range;
+//        else throw std::out_of_range();
+    } // else throw std::out_of_range();
 
     return *this;
 }
 
 template <typename Key, typename T>
-bool Map<Key, T>::iterator::operator==(Iterator& other) { return current == other.current; }
+bool Map<Key, T>::iterator::operator==(const Iterator& other) { return current == other.current; }
 
 template <typename Key, typename T>
-bool Map<Key, T>::iterator::operator!=(Iterator& other) { return current != other.current; }
+bool Map<Key, T>::iterator::operator!=(const Iterator& other) { return current != other.current; }
 
 template <typename Key, typename T>
-const_reference Map<Key, T>::iterator::operator*() const { return current->value; }
+const std::pair<const Key, T>& Map<Key, T>::const_iterator::operator*() const { return this->current->value; }
