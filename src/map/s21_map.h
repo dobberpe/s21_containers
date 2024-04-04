@@ -91,12 +91,12 @@ namespace s21 {
         };
 
         template <typename Key, typename T>
-        class ConstIterator {};
+        class ConstIterator : public Iterator {
+        public:
+            using Iterator::Iterator(Node* node);
+            const_reference operator*() const;
+        };
     };
-
-//    template class Map<int>;
-//    template class MapIterator<int>;
-//    template class MapConstIterator<int>;
 
 }  // namespace s21
 

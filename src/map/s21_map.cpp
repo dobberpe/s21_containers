@@ -278,3 +278,6 @@ bool Map<Key, T>::iterator::operator==(Iterator& other) { return current == othe
 
 template <typename Key, typename T>
 bool Map<Key, T>::iterator::operator!=(Iterator& other) { return current != other.current; }
+
+template <typename Key, typename T>
+const_reference Map<Key, T>::iterator::operator*() const { return current->value; }
