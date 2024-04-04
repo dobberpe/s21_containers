@@ -19,7 +19,7 @@ class queue {
   queue() = default;
   queue(queue& other) = default;
   queue(queue&& other) = default;
-  queue(std::initializer_list<Key> const& items);
+  explicit queue(std::initializer_list<Key> const& items);
   ~queue() = default;
 
   queue& operator=(queue& other) = default;

@@ -30,7 +30,7 @@ class set {
     Node* left;
     Node* right;
     Node* parent;
-    Node(const_reference k)
+    explicit Node(const_reference k)
         : key(k), left(nullptr), right(nullptr), parent(nullptr) {}
   };
   Node* root;
@@ -44,7 +44,7 @@ class set {
 
  public:
   set();
-  set(std::initializer_list<Key> const& items);
+  explicit set(std::initializer_list<Key> const& items);
   set(const set& s);
   set(set&& s) noexcept;
   ~set();
@@ -76,7 +76,7 @@ template <typename Key>
 class SetIterator {
  public:
   typename set<Key>::Node* current;
-  SetIterator(typename set<Key>::Node* node);
+  explicit SetIterator(typename set<Key>::Node* node);
   SetIterator& operator++();
   Key& operator*() const;
   bool operator!=(const SetIterator& other) const;
@@ -89,7 +89,7 @@ template <typename Key>
 class SetConstIterator {
  public:
   typename set<Key>::Node* current;
-  SetConstIterator(typename set<Key>::Node* node);
+  explicit SetConstIterator(typename set<Key>::Node* node);
   SetConstIterator& operator++();
   const Key& operator*() const;
   bool operator!=(const SetConstIterator& other) const;

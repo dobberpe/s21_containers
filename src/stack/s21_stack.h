@@ -19,7 +19,7 @@ class stack {
   stack() = default;
   stack(stack& other) = default;
   stack(stack&& other) = default;
-  stack(std::initializer_list<Key> const& items);
+  explicit stack(std::initializer_list<Key> const& items);
   ~stack() = default;
 
   stack& operator=(stack& other) = default;

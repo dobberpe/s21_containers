@@ -182,6 +182,42 @@ bool set<Key>::contains(const Key &key) const {
 }
 
 template <typename Key>
+void set<Key>::erase(iterator pos) {
+  Node *node = pos.current;
+  if (node != nullptr) {
+    if (node->left == nullptr) {
+      transplant(node, node->right);
+    } else if (node->right == nullptr) {
+      transplant(node, node->left);
+    } else {
+      Node *successor_node = min_node(node->right);
+      if (successor_node->parent != node) {
+        transplant(successor_node, successor_node->right);
+        successor_node->right = node->right;
+        successor_node->right->parent = successor_node;
+      }
+      transplant(node, successor_node);
+      successor_node->left = node->left;
+      successor_node->left->parent = successor_node;
+    }
+    --num_elements;
+  }
+  delete node;
+}
+
+template <typename Key>
+void set<Key>::swap(set &other) {
+  std::swap(root, other.root);
+  std::swap(num_elements, other.num_elements);
+}
+
+template <typename Key>
+void set<Key>::merge(set &other) {
+  for (auto it = other.begin(); it != other.end(); ++it) insert(*it);
+  other.clear();
+}
+
+template <typename Key>
 SetIterator<Key>::SetIterator(typename set<Key>::Node *node) : current(node) {}
 
 template <typename Key>

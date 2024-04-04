@@ -55,7 +55,7 @@ class list {
 
    public:
     ListConstIterator();
-    ListConstIterator(list_node *node);
+    explicit ListConstIterator(list_node *node);
     const T &operator*() const;
     ListConstIterator &operator++();
     ListConstIterator &operator--();

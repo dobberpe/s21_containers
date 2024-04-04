@@ -30,7 +30,7 @@ class multiset {
     Node* left;
     Node* right;
     Node* parent;
-    Node(const_reference k)
+    explicit Node(const_reference k)
         : key(k), left(nullptr), right(nullptr), parent(nullptr) {}
   };
   Node* root;
@@ -44,7 +44,7 @@ class multiset {
 
  public:
   multiset();
-  multiset(std::initializer_list<Key> const& items);
+  explicit multiset(std::initializer_list<Key> const& items);
   multiset(const multiset& s);
   multiset(multiset&& s) noexcept;
   ~multiset();
@@ -83,7 +83,7 @@ template <typename Key>
 class MultisetIterator {
  public:
   typename multiset<Key>::Node* current;
-  MultisetIterator(typename multiset<Key>::Node* node);
+  explicit MultisetIterator(typename multiset<Key>::Node* node);
   MultisetIterator& operator++();
   Key& operator*() const;
   bool operator!=(const MultisetIterator& other) const;
@@ -96,7 +96,7 @@ template <typename Key>
 class MultisetConstIterator {
  public:
   typename multiset<Key>::Node* current;
-  MultisetConstIterator(typename multiset<Key>::Node* node);
+  explicit MultisetConstIterator(typename multiset<Key>::Node* node);
   MultisetConstIterator& operator++();
   const Key& operator*() const;
   bool operator!=(const MultisetConstIterator& other) const;

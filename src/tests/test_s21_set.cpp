@@ -11,7 +11,7 @@ TEST(SetConstructorTest, DefaultConstructor) {
 
 // Тест для конструктора с инициализационным списком
 TEST(SetConstructorTest, InitializerListConstructor) {
-  set<int> s = {1, 2, 3};
+  set<int> s{1, 2, 3};
   EXPECT_EQ(3, s.size());
   EXPECT_FALSE(s.empty());
   // Проверьте, что все элементы из списка были вставлены в множество
@@ -22,7 +22,7 @@ TEST(SetConstructorTest, InitializerListConstructor) {
 
 // Тест для конструктора копирования
 TEST(SetConstructorTest, CopyConstructor) {
-  set<int> s1 = {1, 2, 3};
+  set<int> s1{1, 2, 3};
   set<int> s2 = s1;  // Копируем s1 в s2
   EXPECT_EQ(s1.size(), s2.size());
   // Проверяем, что s2 содержит те же элементы, что и s1
@@ -36,7 +36,7 @@ TEST(SetConstructorTest, CopyConstructor) {
 
 // Тест для конструктора перемещения
 TEST(SetConstructorTest, MoveConstructor) {
-  set<int> s1 = {1, 2, 3};
+  set<int> s1{1, 2, 3};
   set<int> s2 = std::move(s1);  // Перемещаем s1 в s2
   EXPECT_EQ(0, s1.size());  // Проверяем, что s1 теперь пустой
   // Проверяем, что s2 содержит те же элементы, что и s1 перед перемещением
@@ -167,7 +167,7 @@ TEST(SetIteratorTest, BeginEndTest) {
 }
 
 TEST(SetConstIteratorTest, ConstBeginEndTest) {
-  const set<int> s = {1, 2, 3};
+  const set<int> s{1, 2, 3};
 
   // Получение константных итераторов на начало и конец множества
   set<int>::const_iterator begin_iter = s.begin();
@@ -177,7 +177,7 @@ TEST(SetConstIteratorTest, ConstBeginEndTest) {
 }
 
 TEST(SetFindTest, FindExistingElement) {
-  set<int> s = {1, 2, 3};
+  set<int> s{1, 2, 3};
 
   // Поиск существующего элемента
   auto it = s.find(2);
@@ -187,20 +187,55 @@ TEST(SetFindTest, FindExistingElement) {
 }
 
 TEST(SetContainsTest, ContainsExistingElement) {
-  set<int> s = {1, 2, 3};
+  set<int> s{1, 2, 3};
 
   // Проверка наличия существующего элемента
   EXPECT_TRUE(s.contains(2));
 }
 
 TEST(SetContainsTest, ContainsNonExistingElement) {
-  set<int> s = {1, 2, 3};
+  set<int> s{1, 2, 3};
 
   // Проверка отсутствия несуществующего элемента
   EXPECT_FALSE(s.contains(4));
 }
 
-// int main(int argc, char **argv) {
-//     ::testing::InitGoogleTest(&argc, argv);
-//     return RUN_ALL_TESTS();
-// }
+TEST(SetTest, Erase) {
+  set<int> s{1, 2, 3, 4, 5};
+
+  // Erase element 3
+  auto it = s.find(3);
+  ASSERT_NE(it, s.end());
+  s.erase(it);
+
+  EXPECT_EQ(s.size(), 4);
+  EXPECT_FALSE(s.contains(3));
+}
+
+// Test case for swap function
+TEST(SetTest, Swap) {
+  set<int> s1{1, 2, 3};
+  set<int> s2{4, 5, 6};
+
+  s1.swap(s2);
+
+  EXPECT_EQ(s1.size(), 3);
+  EXPECT_EQ(s2.size(), 3);
+
+  EXPECT_TRUE(s1.contains(4));
+  EXPECT_TRUE(s2.contains(1));
+}
+
+// Test case for merge function
+TEST(SetTest, Merge) {
+  set<int> s1{1, 2, 3};
+  set<int> s2{4, 5, 6};
+
+  s1.merge(s2);
+
+  EXPECT_EQ(s1.size(), 6);
+  EXPECT_TRUE(s2.empty());
+
+  EXPECT_TRUE(s1.contains(4));
+  EXPECT_TRUE(s1.contains(6));
+}
