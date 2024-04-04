@@ -68,6 +68,13 @@ class multiset {
   void swap(multiset& other);
   void merge(multiset& other);
 
+  iterator lower_bound(const Key& key);
+  iterator upper_bound(const Key& key);
+  std::pair<iterator,iterator> equal_range(const Key& key);
+  const_iterator lower_bound(const Key& key) const;
+  const_iterator upper_bound(const Key& key) const;
+  std::pair<const_iterator,const_iterator> equal_range(const Key& key) const;
+
   friend class MultisetIterator<Key>;
   friend class MultisetConstIterator<Key>;
 };

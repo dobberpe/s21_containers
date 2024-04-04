@@ -260,3 +260,59 @@ typename multiset<Key>::Node *MultisetConstIterator<Key>::successor(
   }
   return y;
 }
+
+
+template <typename Key>
+typename multiset<Key>::iterator multiset<Key>::lower_bound(const Key& key) {
+  for (auto it = begin(); it != end(); ++it) {
+      if (*it >= key) {
+          return it;
+      }
+  }
+  return end();
+}
+
+template <typename Key>
+typename multiset<Key>::iterator multiset<Key>::upper_bound(const Key& key) {
+  for (auto it = begin(); it != end(); ++it) {
+    if (*it > key) {
+        return it;
+    }
+  }
+  return end();
+}
+
+template <typename Key>
+std::pair<typename multiset<Key>::iterator, typename multiset<Key>::iterator> multiset<Key>::equal_range(const Key& key) {
+  auto lower = lower_bound(key);
+  auto upper = upper_bound(key);
+  return std::make_pair(lower, upper);
+}
+
+
+template <typename Key>
+typename multiset<Key>::const_iterator multiset<Key>::lower_bound(const Key& key) const {
+  for (auto it = begin(); it != end(); ++it) {
+      if (*it >= key) {
+          return it;
+      }
+  }
+  return end();
+}
+
+template <typename Key>
+typename multiset<Key>::const_iterator multiset<Key>::upper_bound(const Key& key) const {
+  for (auto it = begin(); it != end(); ++it) {
+    if (*it > key) {
+        return it;
+    }
+  }
+  return end();
+}
+
+template <typename Key>
+std::pair<typename multiset<Key>::const_iterator, typename multiset<Key>::const_iterator> multiset<Key>::equal_range(const Key& key) const {
+  auto lower = lower_bound(key);
+  auto upper = upper_bound(key);
+  return std::make_pair(lower, upper);
+}
