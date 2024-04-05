@@ -12,93 +12,61 @@
 
 namespace s21 {
 template <typename T>
+class ListIterator;
+
+template <typename T>
+class ListConstIterator;
+
+template <typename T>
 class list {
  public:
-  // typedef value_type = T;
-  // typedef reference = T &;
-  // typedef const_reference = const & T;
+  using value_type = T;
+  using reference = value_type &;
+  using const_reference = const value_type &;
   using size_type = size_t;
+  using iterator = ListIterator<value_type>;
+  using const_iterator = ListConstIterator<value_type>;
 
  private:
   class list_node {
    public:
-    T data;
+    value_type data;
     list_node *prev;
     list_node *next;
-    explicit list_node(const T data_node);
+    explicit list_node(value_type data_node);
   };
-
   list_node *head_node;
   list_node *tail_node;
   size_type number;
+  void create_empty_list();
 
  public:
-  class ListIterator {
-   private:
-    list_node *index_ptr;
-
-   public:
-    ListIterator();
-    T &operator*();
-    ListIterator &operator++();
-    ListIterator &operator--();
-    bool operator==(const ListIterator &pos);
-    bool operator!=(const ListIterator &pos);
-
-    ListIterator &operator=(list_node *node);
-    list_node *get_iter_ptr();
-  };
-
-  class ListConstIterator {
-   private:
-    list_node *index_ptr;
-
-   public:
-    ListConstIterator();
-    explicit ListConstIterator(list_node *node);
-    const T &operator*() const;
-    ListConstIterator &operator++();
-    ListConstIterator &operator--();
-    bool operator==(const ListConstIterator &pos);
-    bool operator!=(const ListConstIterator &pos);
-
-    ListConstIterator &operator=(list_node *node);
-    list_node *get_iter_ptr();
-  };
-
-  using iterator = ListIterator;
-  using const_iterator = ListConstIterator;
-
- private:
-  iterator iter_head;
-  iterator iter_tail;
-
- public:
-  T &front();
-  const T &front() const;
-  T &back();
-  const T &back() const;
-  iterator &begin();
-  iterator &end();
+  reference front();
+  reference back();
+  const_reference back() const;
+  const_reference front() const;
+  iterator begin();
+  iterator end();
   const_iterator begin() const;
   const_iterator end() const;
   bool empty() const;
   size_type size() const;
   size_type max_size() const;
-  T &operator()(const size_type i);
-  bool operator==(list<T> &list_other);
+  reference operator()(size_type i);
+  const_reference operator()(size_type i) const;
+  bool operator==(const list<value_type> &list_other) const;
 
   void clear();
-  iterator insert(iterator pos, const T &value);
+  iterator insert(iterator pos, const_reference value);
   void erase(iterator pos);
-  void push_back(const T &value);
+  void push_back(const_reference value);
   void pop_back();
-  void push_front(const T &value);
+  void push_front(const_reference value);
   void pop_front();
 
   void swap(list &other);
-  void merge(list &other);
-  void splice(const iterator pos, list &other);
+  void merge(list &merge);
+  void splice(const_iterator pos, list &other);
 
   void reverse();
   void unique();
@@ -110,24 +78,64 @@ class list {
 
   // void insert_many_back(Args&&... args);
   // Appends new elements to the end of the container.	list, Vector, Queue.
+  
   // void insert_many_front(Args&&... args);
 
   list();
   explicit list(const size_type count);
-  explicit list(std::initializer_list<T> const &items);
-  list(list<T> &copy);
-  list(list<T> &&moved);
+  explicit list(std::initializer_list<value_type> const &items);
+  list(const list<value_type> &copy);
+  list(list<value_type> &&moved);
+  list<value_type> &operator=(list<value_type> &&moved);
   ~list();
-  list<T> &operator=(list<T> &&moved);
+
+  friend ListIterator<value_type>;
+  friend ListConstIterator<value_type>;
+};  // list<T>
+
+template <typename value_type>
+class ListConstIterator {
+ private:
+  typename list<value_type>::list_node *index_ptr;
+
+ public:
+  ListConstIterator();
+  ListConstIterator(typename list<value_type>::list_node *copy);
+  ListConstIterator(const ListConstIterator &copy);
+  ListConstIterator(const ListIterator<value_type> &copy);
+  ListConstIterator &operator++();
+  ListConstIterator &operator--();
+  typename list<value_type>::const_reference operator*() const;
+  bool operator==(const ListConstIterator &pos);
+  bool operator!=(const ListConstIterator &pos);
+  ListConstIterator &operator=(ListIterator<value_type> pos);
+  typename list<value_type>::list_node *get_iter_ptr() const;
+};
+
+template <typename value_type>
+class ListIterator {
+ private:
+  typename list<value_type>::list_node *index_ptr;
+
+ public:
+  ListIterator();
+  ListIterator(typename list<value_type>::list_node *copy);
+  ListIterator(ListConstIterator<value_type> &copy);
+  ListIterator(const ListIterator &copy);
+  ListIterator &operator++();
+  ListIterator &operator--();
+  typename list<value_type>::reference operator*();
+  bool operator==(const ListIterator &pos);
+  bool operator!=(const ListIterator &pos);
+  ListIterator &operator=(ListIterator pos);
+  typename list<value_type>::list_node *get_iter_ptr() const;
 };
 
 template class list<int>;
 template class list<double>;
-// template class list<long double>;
-// template class list<short>;
-// template class list<char>;
-// template class list<unsigned char>;
-// template class list<unsigned short>;
-// template class list<unsigned int>;
+template class ListIterator<int>;
+template class ListIterator<double>;
+template class ListConstIterator<int>;
+template class ListConstIterator<double>;
 }  // namespace s21
 #endif  //_S21_LIST_H_

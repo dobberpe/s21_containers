@@ -3,7 +3,7 @@ CFLAGS = -Wall -Werror -Wextra -std=c++17
 TFLAGS = -lgtest -lsubunit
 GFLAGS = -fprofile-arcs -ftest-coverage
 LIB_NAME = s21_containers.a
-LIB_SRC = $(wildcard ./set/*.cpp) $(wildcard ./list/*.cpp) $(wildcard ./queue/*.cpp) $(wildcard ./stack/*.cpp) $(wildcard ./multiset/*.cpp)
+LIB_SRC = $(wildcard ./set/*.cpp) $(wildcard ./list/*.cpp) $(wildcard ./vector/*.cpp) $(wildcard ./array/*.cpp) $(wildcard ./queue/*.cpp) $(wildcard ./stack/*.cpp) $(wildcard ./multiset/*.cpp)
 LIB_OBJ = $(LIB_SRC:.cpp=.o)
 TEST_SRC = $(wildcard ./tests/*.cpp)
 TEST_GCDA = $(LIB_SRC:.cpp=.gcda)
@@ -36,10 +36,11 @@ style_check:
 	cp ../materials/linters/.clang-format .
 	clang-format -n *.h tests/* list/* queue/* set/*
 	cppcheck --enable=all --suppress=missingIncludeSystem .
-
+	
 style_fix:
-	cp ../materials/linters/.clang-format .
-	clang-format -i *.h tests/* list/* queue/* set/*
+#	cp ../materials/linters/.clang-format .
+#	clang-format -i *.h tests/* list/* queue/* set/*
+	find . -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i --style=file:../materials/linters/.clang-format {} \;
 
 leak_check: test
 	valgrind --tool=memcheck --leak-check=yes ./test
