@@ -36,7 +36,7 @@ ListIterator<value_type> &ListIterator<value_type>::operator--() {
 }
 
 template <typename value_type>
-typename List<value_type>::reference ListIterator<value_type>::operator*() {
+typename list<value_type>::reference ListIterator<value_type>::operator*() {
   return this->index_ptr->data;
 }
 

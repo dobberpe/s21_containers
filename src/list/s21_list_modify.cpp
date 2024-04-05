@@ -7,7 +7,7 @@ void qiucksort(list<value_type> &data,
                typename list<value_type>::iterator finish);  // qiuck sort
 
 template <typename value_type>
-void List<value_type>::clear() {
+void list<value_type>::clear() {
   while (empty() == CONTAINER_NOT_EMPTY) pop_back();
 }
 
@@ -29,8 +29,8 @@ bool list<value_type>::operator==(const list<value_type> &list_other) const {
 template <typename value_type>
 void list<value_type>::swap(list &other) {
   if (this != &other) {
-    List_node *save_head = other.head_node;
-    List_node *save_tail = other.tail_node;
+    list_node *save_head = other.head_node;
+    list_node *save_tail = other.tail_node;
     size_type save_num = number;
     number = other.number;
     other.number = save_num;

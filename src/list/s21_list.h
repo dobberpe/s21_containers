@@ -28,7 +28,7 @@ class list {
   using const_iterator = ListConstIterator<value_type>;
 
  private:
-  class List_node {
+  class list_node {
    public:
     value_type data;
     list_node *prev;
