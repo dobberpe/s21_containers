@@ -94,21 +94,11 @@ class MultisetIterator {
 };
 
 template <typename Key>
-class MultisetConstIterator {
+class MultisetConstIterator : public MultisetIterator<Key> {
  public:
-  typename multiset<Key>::Node* current;
-  explicit MultisetConstIterator(typename multiset<Key>::Node* node);
-  MultisetConstIterator& operator++();
+  using MultisetIterator<Key>::MultisetIterator;
   const Key& operator*() const;
-  bool operator!=(const MultisetConstIterator& other) const;
-
- private:
-  typename multiset<Key>::Node* successor(typename multiset<Key>::Node* x);
 };
-
-template class multiset<int>;
-template class MultisetIterator<int>;
-template class MultisetConstIterator<int>;
 
 }  // namespace s21
 

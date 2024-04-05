@@ -42,6 +42,7 @@ class set {
   void destroy(Node *node);
   Node *copy_nodes(Node *other, Node *parent);
   Node *find_node(const_reference key) const;
+  Node *get_max() const;
 
  public:
   set();
@@ -85,31 +86,29 @@ template <typename Key>
 class SetIterator {
  public:
   typename set<Key>::Node *current;
-  explicit SetIterator(typename set<Key>::Node *node);
+  typename set<Key>::Node *last;
+  explicit SetIterator(typename set<Key>::Node *node,
+                       typename set<Key>::Node *back);
   SetIterator &operator++();
+  SetIterator &operator--();
+  bool operator==(const SetIterator &other) const;
   Key &operator*() const;
   bool operator!=(const SetIterator &other) const;
 
+  friend class set<Key>;
+
  private:
   typename set<Key>::Node *successor(typename set<Key>::Node *x);
+  typename set<Key>::Node *predecessor(typename set<Key>::Node *x);
+  typename set<Key>::Node *maximum(typename set<Key>::Node *x);
 };
 
 template <typename Key>
-class SetConstIterator {
+class SetConstIterator : public SetIterator<Key> {
  public:
-  typename set<Key>::Node *current;
-  explicit SetConstIterator(typename set<Key>::Node *node);
-  SetConstIterator &operator++();
+  using SetIterator<Key>::SetIterator;
   const Key &operator*() const;
-  bool operator!=(const SetConstIterator &other) const;
-
- private:
-  typename set<Key>::Node *successor(typename set<Key>::Node *x);
 };
-
-template class set<int>;
-template class SetIterator<int>;
-template class SetConstIterator<int>;
 
 }  // namespace s21
 

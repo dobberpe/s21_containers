@@ -103,7 +103,7 @@ std::pair<typename set<Key>::iterator, bool> set<Key>::insert(
       current = current->right;
     else {
       delete new_node;
-      return std::make_pair(iterator(current), false);
+      return std::make_pair(iterator(current, get_max()), false);
     }
   }
   new_node->parent = parent;
@@ -115,7 +115,7 @@ std::pair<typename set<Key>::iterator, bool> set<Key>::insert(
     parent->right = new_node;
 
   ++num_elements;
-  return std::make_pair(iterator(new_node), true);
+  return std::make_pair(iterator(new_node, get_max()), true);
 }
 
 template <typename Key>
@@ -142,16 +142,25 @@ void set<Key>::clear() {
 }
 
 template <typename Key>
+typename set<Key>::Node *set<Key>::get_max() const {
+  Node *max = root;
+  while (max && max->right) {
+    max = max->right;
+  }
+  return max;
+}
+
+template <typename Key>
 typename set<Key>::iterator set<Key>::begin() {
   Node *current = root;
   while (current != nullptr && current->left != nullptr)
     current = current->left;
-  return iterator(current);
+  return iterator(current, get_max());
 }
 
 template <typename Key>
 typename set<Key>::iterator set<Key>::end() {
-  return iterator(nullptr);
+  return iterator(nullptr, get_max());
 }
 
 template <typename Key>
@@ -159,18 +168,18 @@ typename set<Key>::const_iterator set<Key>::begin() const {
   Node *current = root;
   while (current != nullptr && current->left != nullptr)
     current = current->left;
-  return const_iterator(current);
+  return const_iterator(current, get_max());
 }
 
 template <typename Key>
 typename set<Key>::const_iterator set<Key>::end() const {
-  return const_iterator(nullptr);
+  return const_iterator(nullptr, get_max());
 }
 
 template <typename Key>
 typename set<Key>::iterator set<Key>::find(const Key &key) {
   Node *node = find_node(key);
-  return iterator(node);
+  return iterator(node, get_max());
 }
 
 template <typename Key>
@@ -215,12 +224,56 @@ void set<Key>::merge(set &other) {
 }
 
 template <typename Key>
-SetIterator<Key>::SetIterator(typename set<Key>::Node *node) : current(node) {}
+SetIterator<Key>::SetIterator(typename set<Key>::Node *node,
+                              typename set<Key>::Node *back)
+    : current(node), last(back) {}
 
 template <typename Key>
 typename SetIterator<Key>::SetIterator &SetIterator<Key>::operator++() {
   current = successor(current);
   return *this;
+}
+
+template <typename Key>
+typename SetIterator<Key>::SetIterator &SetIterator<Key>::operator--() {
+  if (current == nullptr) {
+    current = last;
+    return *this;
+  }
+  if (current->left != nullptr) {
+    current = maximum(current->left);
+  } else {
+    typename set<Key>::Node *y = current->parent;
+    while (y != nullptr && current == y->left) {
+      current = y;
+      y = y->parent;
+    }
+    current = y;
+  }
+  return *this;
+}
+
+template <typename Key>
+bool SetIterator<Key>::operator==(const SetIterator<Key> &other) const {
+  return current == other.current;
+}
+
+template <typename Key>
+typename set<Key>::Node *SetIterator<Key>::predecessor(
+    typename set<Key>::Node *x) {
+  if (x->left != nullptr) return maximum(x->left);
+  typename set<Key>::Node *y = x->parent;
+  while (y != nullptr && x == y->left) {
+    x = y;
+    y = y->parent;
+  }
+  return y;
+}
+
+template <typename Key>
+typename set<Key>::Node *SetIterator<Key>::maximum(typename set<Key>::Node *x) {
+  while (x->right != nullptr) x = x->right;
+  return x;
 }
 
 template <typename Key>
@@ -250,38 +303,6 @@ typename set<Key>::Node *SetIterator<Key>::successor(
 }
 
 template <typename Key>
-SetConstIterator<Key>::SetConstIterator(typename set<Key>::Node *node)
-    : current(node) {}
-
-template <typename Key>
-typename SetConstIterator<Key>::SetConstIterator &
-SetConstIterator<Key>::operator++() {
-  current = successor(current);
-  return *this;
-}
-
-template <typename Key>
 const Key &SetConstIterator<Key>::operator*() const {
-  return current->key;
-}
-
-template <typename Key>
-bool SetConstIterator<Key>::operator!=(const SetConstIterator &other) const {
-  return current != other.current;
-}
-
-template <typename Key>
-typename set<Key>::Node *SetConstIterator<Key>::successor(
-    typename set<Key>::Node *x) {
-  if (x->right != nullptr) {
-    x = x->right;
-    while (x->left != nullptr) x = x->left;
-    return x;
-  }
-  typename set<Key>::Node *y = x->parent;
-  while (y != nullptr && x == y->right) {
-    x = y;
-    y = y->parent;
-  }
-  return y;
+  return this->current->key;
 }

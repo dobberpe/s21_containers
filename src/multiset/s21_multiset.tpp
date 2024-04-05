@@ -269,42 +269,8 @@ typename multiset<Key>::Node *MultisetIterator<Key>::successor(
 }
 
 template <typename Key>
-MultisetConstIterator<Key>::MultisetConstIterator(
-    typename multiset<Key>::Node *node)
-    : current(node) {}
-
-template <typename Key>
-typename MultisetConstIterator<Key>::MultisetConstIterator &
-MultisetConstIterator<Key>::operator++() {
-  current = successor(current);
-  return *this;
-}
-
-template <typename Key>
 const Key &MultisetConstIterator<Key>::operator*() const {
-  return current->key;
-}
-
-template <typename Key>
-bool MultisetConstIterator<Key>::operator!=(
-    const MultisetConstIterator &other) const {
-  return current != other.current;
-}
-
-template <typename Key>
-typename multiset<Key>::Node *MultisetConstIterator<Key>::successor(
-    typename multiset<Key>::Node *x) {
-  if (x->right != nullptr) {
-    x = x->right;
-    while (x->left != nullptr) x = x->left;
-    return x;
-  }
-  typename multiset<Key>::Node *y = x->parent;
-  while (y != nullptr && x == y->right) {
-    x = y;
-    y = y->parent;
-  }
-  return y;
+  return this->current->key;
 }
 
 template <typename Key>

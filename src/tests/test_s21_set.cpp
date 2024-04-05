@@ -270,3 +270,59 @@ TEST(SetTest, InsertMany) {
     ++i;
   }
 }
+
+TEST(SetIteratorTest, DecrementOperator) {
+  // Создаем пустое множество
+  set<int> mySet;
+
+  // Вставляем элементы в множество
+  mySet.insert(10);
+  mySet.insert(5);
+  mySet.insert(15);
+  mySet.insert(3);
+  mySet.insert(7);
+
+  // Создаем итераторы для множества
+  SetIterator<int> it = mySet.begin();
+  SetIterator<int> last = mySet.end();
+
+  // Тестируем метод operator--
+  --last;
+  ASSERT_EQ(*last, 15);
+
+  --last;
+  ASSERT_EQ(*last, 10);
+
+  --last;
+  ASSERT_EQ(*last, 7);
+
+  --last;
+  ASSERT_EQ(*last, 5);
+
+  --last;
+  ASSERT_EQ(*last, 3);
+
+  ASSERT_EQ(*last, *it);  // Должно быть равно начальному итератору
+}
+
+TEST(IteratorComparisonTest, OperatorEqual) {
+  // Создаем множество и вставляем в него несколько элементов
+  set<int> mySet;
+  mySet.insert(10);
+  mySet.insert(20);
+
+  // Создаем два итератора, указывающих на одинаковый элемент в множестве
+  SetIterator<int> it1 = mySet.begin();
+  SetIterator<int> it2 = mySet.begin();
+
+  // Проверяем, что они равны
+  ASSERT_TRUE(it1 == it2);
+
+  // Создаем два итератора, указывающих на разные элементы в множестве
+  SetIterator<int> it3 = mySet.begin();
+  SetIterator<int> it4 = mySet.begin();
+  ++it4;
+
+  // Проверяем, что они не равны
+  ASSERT_FALSE(it3 == it4);
+}
