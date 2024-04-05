@@ -184,17 +184,17 @@ TEST_F(test_array, test_array_5) {
 
 // swap()
 TEST_F(test_array, test_array_swap) {
-  // _SPCE_::array<int, 9> a1{1, 4, 2, 5, 7, 13, 56, 11, 5914};
-  // _SPCE_::array<int, 1> a2{1};
+  _SPCE_::array<int, 9> a1{1, 4, 2, 5, 7, 13, 56, 11, 5914};
+  _SPCE_::array<int, 9> a2{1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-  // _SPCE_::array answ1(a1);
-  // _SPCE_::array answ2(a2);
-  // a1.swap(a2);
-  // ASSERT_EQ(a1 == answ2, SUCCESS);
-  // ASSERT_EQ(a2 == answ1, SUCCESS);
-  // a2.swap(a1);
-  // ASSERT_EQ(a1 == answ1, SUCCESS);
-  // ASSERT_EQ(a2 == answ2, SUCCESS);
+  _SPCE_::array answ1(a1);
+  _SPCE_::array answ2(a2);
+  a1.swap(a2);
+  ASSERT_EQ(a1 == answ2, SUCCESS);
+  ASSERT_EQ(a2 == answ1, SUCCESS);
+  a2.swap(a1);
+  ASSERT_EQ(a1 == answ1, SUCCESS);
+  ASSERT_EQ(a2 == answ2, SUCCESS);
 }
 
 // fill()

@@ -12,12 +12,10 @@ VectorIterator<T>::VectorIterator(T *node) {
   index_ptr = node;
 }
 
-
 template <typename T>
 VectorIterator<T>::VectorIterator(const VectorIterator &copy) {
   index_ptr = copy.index_ptr;
 }
-
 
 template <typename T>
 VectorIterator<T> &VectorIterator<T>::operator++() {
@@ -43,6 +41,6 @@ typename vector<T>::reference VectorIterator<T>::operator*() {
 }
 
 template <typename T>
-bool VectorIterator<T>::operator!=(const VectorIterator &pos) {
+bool VectorIterator<T>::operator!=(const VectorIterator &pos) const {
   return (index_ptr != pos.index_ptr);
 }

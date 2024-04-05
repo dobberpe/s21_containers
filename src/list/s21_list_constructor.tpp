@@ -8,9 +8,7 @@ void list<value_type>::create_empty_list() {
   number = 0;
   tail_node->prev = head_node;
   tail_node->next = nullptr;
-
 }
-
 
 template <typename value_type>
 list<value_type>::list() {
@@ -44,7 +42,7 @@ list<value_type>::list(list<value_type> &&moved) {
     moved.head_node = moved.tail_node = nullptr;
     moved.number = 0;
   } else {
-  create_empty_list();
+    create_empty_list();
   }
 }
 

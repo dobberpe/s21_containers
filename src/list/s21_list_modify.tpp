@@ -31,11 +31,11 @@ void list<value_type>::swap(list &other) {
   if (this != &other) {
     list_node *save_head = other.head_node;
     list_node *save_tail = other.tail_node;
-    size_type save_num = number;
-    number = other.number;
-    other.number = save_num;
+    size_type save_num = other.number;
+    other.number = number;
     other.head_node = head_node;
     other.tail_node = tail_node;
+    number = save_num;
     head_node = save_head;
     tail_node = save_tail;
   }
@@ -66,6 +66,7 @@ template <typename value_type>
 void list<value_type>::splice(const_iterator pos, list &other) {
   if (this != &other && other.empty() == CONTAINER_NOT_EMPTY) {
     push_front(0);
+
     while (other.empty() == CONTAINER_NOT_EMPTY) {
       insert(pos, *other.begin());
       other.pop_front();

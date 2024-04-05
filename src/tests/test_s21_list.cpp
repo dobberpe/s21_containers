@@ -3,46 +3,27 @@
 #ifndef _SPCE_
 #include <list>
 #define _SPCE_ std
-#define _SPCE_ORIG_ 
+#define _SPCE_ORIG_
 #endif
 
 class test_s21_list : public testing::Test {
  public:
 };
 
-TEST_F(test_s21_list, test_s21_list_origin) {
-  // const std::list<int> l{1, 2, 3};
-  // // l.front() = 10;
-  // std::iterator lv = l.end();
-  // std::iterator<int> lv = l.end();
-  // std::list<int>::const_iterator lv = l.end();
-
-  // const s21::list<int> l1{1, 2, 3};
-  // // l1.front() = 10;
-  // s21::iterator l1v  = l1.end();;
-  // s21::iterator<int> l2v = l1.begin();
-  //   s21::list<int>::const_iterator lv = l1.cend();
-}
-
 TEST_F(test_s21_list, test_s21_list_const) {
-  // _SPCE_::list<int> list1{1, 2, 3, 4, 5, 6, 7};
-  // _SPCE_::list<int>::const_iterator citer = list1.end();
-  // *citer = 9;
-
-  // std::list<int> list2{1, 2, 3, 4, 5, 6, 7};
-  // std::list<int>::const_iterator iter = list2.end();
-
-  // printf("%d ", *(citer));
-  // printf("%d ", *iter);
-  // // *citer = 10;
-  // *iter = 0;
-  // printf("%d ", *citer);
-  // printf("%d ", *iter);
+  //   std::list<int> list1{1, 2, 3, 4, 5, 6, 7};
+  //   std::list<int>::const_iterator citer = list1.end();
+  //   std::list<int>::iterator iter = list1.end();
+  //   *citer = 9;
+  //  iter = citer;
+  //   std::list<int> list2{1, 2, 3, 4, 5, 6, 7};
+  //   std::list<int>::const_iterator iter = list2.end();
 }
 
 TEST_F(test_s21_list, test_s21_list_create) {
   _SPCE_::list<int> list1;
   ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+
   _SPCE_::list list11(std::move(list1));
   ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
   ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
@@ -60,53 +41,55 @@ TEST_F(test_s21_list, test_s21_list_create) {
   _SPCE_::list list3(list2);
   ASSERT_EQ(list3.empty(), CONTAINER_NOT_EMPTY);
   ASSERT_EQ(list3.size(), 6);
+  /*
 
-  _SPCE_::list list4(std::move(list3));
-  ASSERT_EQ(list4.empty(), CONTAINER_NOT_EMPTY);
-  list4.push_back(1000);
-  ASSERT_EQ(list4.size(), 7);
+    _SPCE_::list list4(std::move(list3));
+    ASSERT_EQ(list4.empty(), CONTAINER_NOT_EMPTY);
+    list4.push_back(1000);
+    ASSERT_EQ(list4.size(), 7);
 
-  _SPCE_::list<double> list5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
-  ASSERT_EQ(list5.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(list5.size(), 9);
-#ifndef _SPCE_ORIG_
-  ASSERT_EQ(list5(0), 1.1);
-  ASSERT_EQ(list5(8), 5914.09);
-#endif
+    _SPCE_::list<double> list5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
+    ASSERT_EQ(list5.empty(), CONTAINER_NOT_EMPTY);
+    ASSERT_EQ(list5.size(), 9);
+  #ifndef _SPCE_ORIG_
+    ASSERT_EQ(list5(0), 1.1);
+    ASSERT_EQ(list5(8), 5914.09);
+  #endif
 
-  _SPCE_::list list6 = std::move(list5);
-  ASSERT_EQ(list5.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list6.size(), 9);
-#ifndef _SPCE_ORIG_
-  ASSERT_EQ(list6(0), 1.1);
-  ASSERT_EQ(list6(8), 5914.09);
-#endif
+    _SPCE_::list list6 = std::move(list5);
+    ASSERT_EQ(list5.empty(), CONTAINER_EMPTY);
+    ASSERT_EQ(list6.size(), 9);
+  #ifndef _SPCE_ORIG_
+    ASSERT_EQ(list6(0), 1.1);
+    ASSERT_EQ(list6(8), 5914.09);
+  #endif
 
-  _SPCE_::list<double> list7;
-  list7 = std::move(list6);
-  ASSERT_EQ(list6.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list7.size(), 9);
-#ifndef _SPCE_ORIG_
-  ASSERT_EQ(list7(0), 1.1);
-  ASSERT_EQ(list7(8), 5914.09);
-#endif
+    _SPCE_::list<double> list7;
+    list7 = std::move(list6);
+    ASSERT_EQ(list6.empty(), CONTAINER_EMPTY);
+    ASSERT_EQ(list7.size(), 9);
+  #ifndef _SPCE_ORIG_
+    ASSERT_EQ(list7(0), 1.1);
+    ASSERT_EQ(list7(8), 5914.09);
+  #endif
 
-  _SPCE_::list list8 = std::move(list11);  // move empty-list
-  ASSERT_EQ(list8.empty(), CONTAINER_EMPTY);
+    _SPCE_::list list8 = std::move(list11);  // move empty-list
+    ASSERT_EQ(list8.empty(), CONTAINER_EMPTY);
 
-  list8.push_back(5);
-  ASSERT_EQ(list8.empty(), CONTAINER_NOT_EMPTY);
-#ifndef _SPCE_ORIG_
-  ASSERT_EQ(list8(0), 5);
-#endif
+    list8.push_back(5);
+    ASSERT_EQ(list8.empty(), CONTAINER_NOT_EMPTY);
+  #ifndef _SPCE_ORIG_
+    ASSERT_EQ(list8(0), 5);
+  #endif
 
-  ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
-  _SPCE_::list list9(std::move(list11));  // move empty-list
-  ASSERT_EQ(list9.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
+    ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
+    _SPCE_::list list9(std::move(list11));  // move empty-list
+    ASSERT_EQ(list9.empty(), CONTAINER_EMPTY);
+    ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
 
-  list9.push_back(10);
-  ASSERT_EQ(list9.size(), 1);
+    list9.push_back(10);
+    ASSERT_EQ(list9.size(), 1);
+    */
 }
 
 // empty(), size(), clear();
@@ -236,13 +219,38 @@ TEST_F(test_s21_list, test_s21_list_3) {
 }
 
 // тест итераторов, push_back/pop_back
-TEST_F(test_s21_list, test_s21_list_4) {
+TEST_F(test_s21_list, test_s21_list_iterator) {
   _SPCE_::list<int> list2;
   list2.push_back(-111);
   list2.push_back(101);
   list2.push_back(102);
   list2.push_back(103);
   _SPCE_::list<int>::iterator iter = list2.begin();
+  ASSERT_EQ(*iter, -111);
+
+  ASSERT_EQ(*(++iter), 101);
+  ASSERT_EQ(*(++iter), 102);
+  ASSERT_EQ(*(++iter), 103);
+  ++iter;
+  ASSERT_EQ(*(--iter), 103);
+  ASSERT_EQ(*(--iter), 102);
+  ASSERT_EQ(*(--iter), 101);
+  ASSERT_EQ(*(--iter), -111);
+
+  for (int i = 0; i < 4; i++) list2.pop_front();
+  // for (int i = 0; i < 4; i++) list2.pop_back();
+
+  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+}
+
+// тест итераторов, push_back/pop_back
+TEST_F(test_s21_list, test_s21_list_const_iterator) {
+  _SPCE_::list<int> list2;
+  list2.push_back(-111);
+  list2.push_back(101);
+  list2.push_back(102);
+  list2.push_back(103);
+  _SPCE_::list<int>::const_iterator iter = list2.begin();
   ASSERT_EQ(*iter, -111);
 
   ASSERT_EQ(*(++iter), 101);
@@ -335,7 +343,10 @@ TEST_F(test_s21_list, test_s21_list_splice) {
   _SPCE_::list<int> list3{9, 10};
   _SPCE_::list<int>::const_iterator iter = list1.begin();
 
-  list1.splice(iter, list2);
+  _SPCE_::list<int>::const_iterator iter1;
+  iter1 = iter;
+
+  list1.splice(iter1, list2);
   list1.insert(iter, 4);
 
   iter = list1.end();

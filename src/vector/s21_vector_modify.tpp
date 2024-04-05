@@ -26,7 +26,7 @@ typename vector<value_type>::iterator vector<value_type>::insert(
 
   size_type i = 0;
   value_type last_vect = value;
-  if (empty() ==  CONTAINER_NOT_EMPTY) {
+  if (empty() == CONTAINER_NOT_EMPTY) {
     iterator curr = end();
     iterator prev_iter = --end();
     last_vect = *prev_iter;

@@ -61,8 +61,8 @@ template <typename value_type, size_t _MAX>
 array<value_type, _MAX> &array<value_type, _MAX>::operator=(
     array<value_type, _MAX> &&a) {
   if (&a != this) {
-      allocate_array(a.number);
-  for (size_type i = 0; i < a.number; i++) *(head_node + i) = a[i];
+    allocate_array(a.number);
+    for (size_type i = 0; i < a.number; i++) *(head_node + i) = a[i];
 
     // if (head_node) free(head_node);
 
@@ -76,8 +76,8 @@ array<value_type, _MAX> &array<value_type, _MAX>::operator=(
 }
 
 // template <typename value_type, size_t _MAX>
-// bool array<value_type, _MAX>::operator==(const array<value_type, _MAX> &arr_other)
-// const {
+// bool array<value_type, _MAX>::operator==(const array<value_type, _MAX>
+// &arr_other) const {
 //   size_type size1 = size();
 //   size_type size2 = arr_other.size();
 //   short result = SUCCESS;

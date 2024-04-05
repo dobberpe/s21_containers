@@ -53,7 +53,7 @@ class vector : public list<T> {
   size_type size() const;
   void reserve(size_type size);
   size_type capacity() const;
-  void shrink_to_fit(); 
+  void shrink_to_fit();
 
   // *Vector Modifiers*
   void clear();
@@ -63,13 +63,12 @@ class vector : public list<T> {
   void pop_back();
   void swap(vector &other);
 
-    // iterator insert_many(const iterator pos, ...);
+  // iterator insert_many(const iterator pos, ...);
   // Inserts new elements into the container directly before pos.
   // list, Vector.
 
   // void insert_many_back(Args&&... args);
   // Appends new elements to the end of the container.	list, Vector, Queue.
-  
 
   vector();
   vector(const size_type n);
@@ -85,7 +84,7 @@ class vector : public list<T> {
 
 template <typename T>
 class VectorIterator {
- private:  
+ private:
   T *index_ptr;
 
  public:
@@ -96,8 +95,7 @@ class VectorIterator {
   VectorIterator &operator--();
   VectorIterator &operator=(const VectorIterator &iter);
   typename vector<T>::reference operator*();
-  bool operator!=(const VectorIterator &pos);
-  T *get_iter_ptr() {return index_ptr;};
+  bool operator!=(const VectorIterator &pos) const;
 };
 
 template <typename T>
@@ -106,24 +104,18 @@ class VectorConstIterator {
   T *index_ptr;
 
  public:
-  VectorConstIterator();
-  VectorConstIterator(const VectorConstIterator &copy);
-  VectorConstIterator(T *node);
-  VectorConstIterator &operator++();
-  VectorConstIterator &operator--();
-  VectorConstIterator &operator=(const VectorConstIterator &iter);
-  VectorConstIterator &operator=(VectorIterator<T> iter);
+  using VectorIterator<T>::VectorIterator;
   typename vector<T>::const_reference operator*() const;
-  bool operator!=(const VectorConstIterator &pos);
 };
 
-template class vector<int>;
-template class vector<double>;
-template class VectorIterator<int>;
-template class VectorIterator<double>;
-template class VectorConstIterator<int>;
-template class VectorConstIterator<double>;
-
 }  // namespace s21
+
+#include "s21_vector_access.tpp"
+#include "s21_vector_begin_end.tpp"
+#include "s21_vector_capacity.tpp"
+#include "s21_vector_const_iterator.tpp"
+#include "s21_vector_constructor.tpp"
+#include "s21_vector_iterator.tpp"
+#include "s21_vector_modify.tpp"
 
 #endif  //_S21_VECTOR_H_

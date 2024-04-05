@@ -3,7 +3,7 @@
 #ifndef _SPCE_
 #include <vector>
 #define _SPCE_ std
-#define _SPCE_ORIG_ 
+#define _SPCE_ORIG_
 #endif
 
 class test_vector : public testing::Test {

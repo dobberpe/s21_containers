@@ -7,7 +7,7 @@
 
 namespace s21 {
 
-template <typename T, size_t _MAX=0>
+template <typename T, size_t _MAX = 0>
 class array : public vector<T> {
  public:
   using value_type = T;
@@ -40,7 +40,7 @@ class array : public vector<T> {
   // *Array Capacity*
   bool empty() const;
   size_type size() const;
-  // size_type max_size() ; // from vector-->list
+  size_type max_size() const;
 
   // *Array Modifiers*
   void swap(array<value_type, _MAX> &other);
@@ -54,29 +54,12 @@ class array : public vector<T> {
   ~array();
 };
 
-template class array<int,1>;
-template class array<double, 1>;
-template class array<int, 2>;
-template class array<double, 2>;
-template class array<int, 3>;
-template class array<double, 3>;
-template class array<int, 4>;
-template class array<double, 4>;
-template class array<int, 5>;
-template class array<double, 5>;
-template class array<int, 6>;
-template class array<double, 6>;
-template class array<int, 7>;
-template class array<double, 7>;
-template class array<int, 8>;
-template class array<double, 8>;
-template class array<int, 9>;
-template class array<double, 9>;
-template class array<int, 10000>;
-template class array<double, 10000>;
-template class array<int, 0>;
-template class array<double, 0>;
-
 }  // namespace s21
+
+#include "s21_array_access.tpp"
+#include "s21_array_begin_end.tpp"
+#include "s21_array_capacity.tpp"
+#include "s21_array_constructor.tpp"
+#include "s21_array_modify.tpp"
 
 #endif  //_S21_ARRAY_H_

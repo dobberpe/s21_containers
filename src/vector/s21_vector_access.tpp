@@ -30,7 +30,6 @@ typename vector<value_type>::value_type *vector<value_type>::data() {
 template <typename value_type>
 typename vector<value_type>::reference vector<value_type>::operator[](
     size_type pos) {
-  
   return *(this->head_node + pos);
 }
 

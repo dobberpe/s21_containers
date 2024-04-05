@@ -3,7 +3,7 @@
 using namespace s21;
 
 template <typename value_type, size_t _MAX>
-void array<value_type, _MAX>::swap(array<value_type,  _MAX> &other) {
+void array<value_type, _MAX>::swap(array<value_type, _MAX> &other) {
   if (this != &other) {
     value_type *save = head_node;
     head_node = other.head_node;

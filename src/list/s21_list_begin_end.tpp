@@ -8,6 +8,7 @@ typename list<value_type>::iterator list<value_type>::begin() {
 
 template <typename value_type>
 typename list<value_type>::iterator list<value_type>::end() {
+  // printf("here\n");
   return iterator(tail_node);
 }
 
@@ -50,7 +51,7 @@ typename list<value_type>::reference list<value_type>::back() {
 template <typename value_type>
 typename list<value_type>::reference list<value_type>::operator()(size_type i) {
   iterator pos = begin();
-  if (i > 0 && i < size()) {
+  if (i < size()) {
     for (; i > 0; ++pos, i--)
       ;
   }
@@ -60,8 +61,8 @@ typename list<value_type>::reference list<value_type>::operator()(size_type i) {
 template <typename value_type>
 typename list<value_type>::const_reference list<value_type>::operator()(
     size_type i) const {
-  const_iterator pos = begin();
-  if (i > 0 && i < size()) {
+  iterator pos = begin();
+  if (i < size()) {
     for (; i > 0; ++pos, i--)
       ;
   }

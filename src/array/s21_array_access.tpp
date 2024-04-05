@@ -12,14 +12,12 @@ typename array<value_type, _MAX>::reference array<value_type, _MAX>::at(
 template <typename value_type, size_t _MAX>
 typename array<value_type, _MAX>::reference array<value_type, _MAX>::operator[](
     size_type pos) {
-      
   return *(head_node + pos);
 }
 
-
 template <typename value_type, size_t _MAX>
-typename array<value_type, _MAX>::const_reference array<value_type, _MAX>::operator[](
-    size_type pos) const {
+typename array<value_type, _MAX>::const_reference
+array<value_type, _MAX>::operator[](size_type pos) const {
   return *(head_node + pos);
 }
 
@@ -33,7 +31,7 @@ typename array<value_type, _MAX>::reference array<value_type, _MAX>::back() {
   if (empty() == CONTAINER_EMPTY)
     return *end();
   else
-    return *(end()-1);
+    return *(end() - 1);
 }
 
 template <typename value_type, size_t _MAX>

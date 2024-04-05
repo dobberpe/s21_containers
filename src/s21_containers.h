@@ -9,10 +9,8 @@
 #include "set/s21_set.h"
 #include "stack/s21_stack.h"
 // #include "s21_map.h"
-#include "vector/s21_vector.h"
-#include "multiset/s21_multiset.h"
-
 #include "array/s21_array.h"
-
+#include "multiset/s21_multiset.h"
+#include "vector/s21_vector.h"
 
 #endif  //_S21_CONTAINERS_H_

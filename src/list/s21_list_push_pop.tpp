@@ -5,6 +5,7 @@ template <typename value_type>
 typename list<value_type>::iterator list<value_type>::insert(
     iterator pos, const_reference value) {
   int exit_code = _NO_ERROR;
+  // list_node *save_pos = pos.index_ptr;
   list_node *save_pos = pos.get_iter_ptr();
   list_node *new_node = nullptr;
   try {
@@ -31,6 +32,7 @@ typename list<value_type>::iterator list<value_type>::insert(
 template <typename value_type>
 void list<value_type>::erase(list<value_type>::iterator pos) {
   if (empty() == CONTAINER_NOT_EMPTY && pos != end()) {
+    // list_node *removing_elem = pos.index_ptr;
     list_node *removing_elem = pos.get_iter_ptr();
     list_node *before = removing_elem->prev;
     list_node *after = removing_elem->next;
@@ -71,9 +73,8 @@ void list<value_type>::pop_front() {
 }
 
 // template <typename value_type>
-// typename list<value_type>::iterator list<value_type>::insert_many(const
-// list<value_type>::iterator pos,
-//                                                ...) {
+// typename list<value_type>::iterator list<value_type>::insert_many(
+//     const list<value_type>::iterator pos, Args &&...args) {
 //   va_List args;
 //   va_start(args, pos);
 
