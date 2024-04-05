@@ -1,4 +1,3 @@
-#include "s21_list.h"
 using namespace s21;
 
 #define CREATE_EMPTY_LIST                \

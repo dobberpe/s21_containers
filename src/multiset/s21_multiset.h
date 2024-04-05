@@ -61,7 +61,6 @@ class multiset {
   const_iterator begin() const;
   const_iterator end() const;
 
-
   size_type count(const Key& key);
   iterator find(const Key& key);
   bool contains(const Key& key) const;
@@ -72,10 +71,10 @@ class multiset {
 
   iterator lower_bound(const Key& key);
   iterator upper_bound(const Key& key);
-  std::pair<iterator,iterator> equal_range(const Key& key);
+  std::pair<iterator, iterator> equal_range(const Key& key);
   const_iterator lower_bound(const Key& key) const;
   const_iterator upper_bound(const Key& key) const;
-  std::pair<const_iterator,const_iterator> equal_range(const Key& key) const;
+  std::pair<const_iterator, const_iterator> equal_range(const Key& key) const;
 
   friend class MultisetIterator<Key>;
   friend class MultisetConstIterator<Key>;
@@ -112,5 +111,7 @@ template class MultisetIterator<int>;
 template class MultisetConstIterator<int>;
 
 }  // namespace s21
+
+#include "s21_multiset.tpp"
 
 #endif

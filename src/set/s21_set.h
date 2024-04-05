@@ -113,4 +113,6 @@ template class SetConstIterator<int>;
 
 }  // namespace s21
 
+#include "s21_set.tpp"
+
 #endif

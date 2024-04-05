@@ -130,4 +130,13 @@ template class list<double>;
 // template class list<unsigned short>;
 // template class list<unsigned int>;
 }  // namespace s21
+
+#include "s21_list_begin_end.tpp"
+#include "s21_list_capacity.tpp"
+#include "s21_list_const_iterator.tpp"
+#include "s21_list_constructor.tpp"
+#include "s21_list_iterator.tpp"
+#include "s21_list_modify.tpp"
+#include "s21_list_push_pop.tpp"
+
 #endif  //_S21_LIST_H_

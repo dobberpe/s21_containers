@@ -1,6 +1,3 @@
-#include "s21_set.h"
-
-// namespace s21 {
 using namespace s21;
 
 template <typename Key>
@@ -222,8 +219,6 @@ SetIterator<Key>::SetIterator(typename set<Key>::Node *node) : current(node) {}
 
 template <typename Key>
 typename SetIterator<Key>::SetIterator &SetIterator<Key>::operator++() {
-  if (current == nullptr)
-    throw std::out_of_range("Iterator cannot be incremented beyond the end");
   current = successor(current);
   return *this;
 }
@@ -261,8 +256,6 @@ SetConstIterator<Key>::SetConstIterator(typename set<Key>::Node *node)
 template <typename Key>
 typename SetConstIterator<Key>::SetConstIterator &
 SetConstIterator<Key>::operator++() {
-  if (current == nullptr)
-    throw std::out_of_range("Iterator cannot be incremented beyond the end");
   current = successor(current);
   return *this;
 }

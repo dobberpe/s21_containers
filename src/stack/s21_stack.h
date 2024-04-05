@@ -38,4 +38,6 @@ class stack {
 template class stack<int>;
 }  // namespace s21
 
+#include "s21_stack.tpp"
+
 #endif

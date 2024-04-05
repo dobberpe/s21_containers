@@ -45,4 +45,6 @@ class queue {
 template class queue<int>;
 }  // namespace s21
 
+#include "s21_queue.tpp"
+
 #endif

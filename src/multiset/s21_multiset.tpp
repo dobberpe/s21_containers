@@ -1,6 +1,3 @@
-#include "s21_multiset.h"
-
-
 using namespace s21;
 
 template <typename Key>
@@ -19,7 +16,8 @@ multiset<Key>::multiset(const multiset &s) : root(nullptr), num_elements(0) {
 }
 
 template <typename Key>
-multiset<Key>::multiset(multiset &&s) noexcept : root(s.root), num_elements(s.num_elements) {
+multiset<Key>::multiset(multiset &&s) noexcept
+    : root(s.root), num_elements(s.num_elements) {
   s.root = nullptr;
   s.num_elements = 0;
 }
@@ -30,8 +28,7 @@ multiset<Key>::~multiset() {
 }
 
 template <typename Key>
-typename multiset<Key>::iterator multiset<Key>::insert(
-    const_reference key) {
+typename multiset<Key>::iterator multiset<Key>::insert(const_reference key) {
   ++num_elements;
   Node *new_node = new Node(key);
   Node *parent = nullptr;
@@ -89,7 +86,8 @@ void multiset<Key>::destroy(Node *node) {
 }
 
 template <typename Key>
-typename multiset<Key>::Node *multiset<Key>::copy_nodes(Node *other, Node *parent) {
+typename multiset<Key>::Node *multiset<Key>::copy_nodes(Node *other,
+                                                        Node *parent) {
   if (other == nullptr) return nullptr;
   Node *new_node = new Node(other->key);
   new_node->parent = parent;
@@ -99,7 +97,8 @@ typename multiset<Key>::Node *multiset<Key>::copy_nodes(Node *other, Node *paren
 }
 
 template <typename Key>
-typename multiset<Key>::Node *multiset<Key>::find_node(const_reference key) const {
+typename multiset<Key>::Node *multiset<Key>::find_node(
+    const_reference key) const {
   Node *current = root;
   while (current != nullptr) {
     if (key == current->key)
@@ -113,7 +112,8 @@ typename multiset<Key>::Node *multiset<Key>::find_node(const_reference key) cons
 }
 
 template <typename Key>
-typename multiset<Key>::multiset &multiset<Key>::operator=(multiset &&s) noexcept {
+typename multiset<Key>::multiset &multiset<Key>::operator=(
+    multiset &&s) noexcept {
   if (this != &s) {
     clear();
     root = s.root;
@@ -174,14 +174,14 @@ typename multiset<Key>::const_iterator multiset<Key>::end() const {
 }
 
 template <typename Key>
-typename multiset<Key>::size_type multiset<Key>::count(const Key& key) {
-    size_type count = 0;
-    for (auto it = begin(); it != end(); ++it) {
-        if (*it == key) {
-            ++count;
-        }
+typename multiset<Key>::size_type multiset<Key>::count(const Key &key) {
+  size_type count = 0;
+  for (auto it = begin(); it != end(); ++it) {
+    if (*it == key) {
+      ++count;
     }
-    return count;
+  }
+  return count;
 }
 
 template <typename Key>
@@ -231,15 +231,13 @@ void multiset<Key>::merge(multiset &other) {
   other.clear();
 }
 
-
+template <typename Key>
+MultisetIterator<Key>::MultisetIterator(typename multiset<Key>::Node *node)
+    : current(node) {}
 
 template <typename Key>
-MultisetIterator<Key>::MultisetIterator(typename multiset<Key>::Node *node) : current(node) {}
-
-template <typename Key>
-typename MultisetIterator<Key>::MultisetIterator &MultisetIterator<Key>::operator++() {
-  if (current == nullptr)
-    throw std::out_of_range("Iterator cannot be incremented beyond the end");
+typename MultisetIterator<Key>::MultisetIterator &
+MultisetIterator<Key>::operator++() {
   current = successor(current);
   return *this;
 }
@@ -271,14 +269,13 @@ typename multiset<Key>::Node *MultisetIterator<Key>::successor(
 }
 
 template <typename Key>
-MultisetConstIterator<Key>::MultisetConstIterator(typename multiset<Key>::Node *node)
+MultisetConstIterator<Key>::MultisetConstIterator(
+    typename multiset<Key>::Node *node)
     : current(node) {}
 
 template <typename Key>
 typename MultisetConstIterator<Key>::MultisetConstIterator &
 MultisetConstIterator<Key>::operator++() {
-  if (current == nullptr)
-    throw std::out_of_range("Iterator cannot be incremented beyond the end");
   current = successor(current);
   return *this;
 }
@@ -289,7 +286,8 @@ const Key &MultisetConstIterator<Key>::operator*() const {
 }
 
 template <typename Key>
-bool MultisetConstIterator<Key>::operator!=(const MultisetConstIterator &other) const {
+bool MultisetConstIterator<Key>::operator!=(
+    const MultisetConstIterator &other) const {
   return current != other.current;
 }
 
@@ -309,57 +307,60 @@ typename multiset<Key>::Node *MultisetConstIterator<Key>::successor(
   return y;
 }
 
-
 template <typename Key>
-typename multiset<Key>::iterator multiset<Key>::lower_bound(const Key& key) {
+typename multiset<Key>::iterator multiset<Key>::lower_bound(const Key &key) {
   for (auto it = begin(); it != end(); ++it) {
-      if (*it >= key) {
-          return it;
-      }
-  }
-  return end();
-}
-
-template <typename Key>
-typename multiset<Key>::iterator multiset<Key>::upper_bound(const Key& key) {
-  for (auto it = begin(); it != end(); ++it) {
-    if (*it > key) {
-        return it;
+    if (*it >= key) {
+      return it;
     }
   }
   return end();
 }
 
 template <typename Key>
-std::pair<typename multiset<Key>::iterator, typename multiset<Key>::iterator> multiset<Key>::equal_range(const Key& key) {
+typename multiset<Key>::iterator multiset<Key>::upper_bound(const Key &key) {
+  for (auto it = begin(); it != end(); ++it) {
+    if (*it > key) {
+      return it;
+    }
+  }
+  return end();
+}
+
+template <typename Key>
+std::pair<typename multiset<Key>::iterator, typename multiset<Key>::iterator>
+multiset<Key>::equal_range(const Key &key) {
   auto lower = lower_bound(key);
   auto upper = upper_bound(key);
   return std::make_pair(lower, upper);
 }
 
-
 template <typename Key>
-typename multiset<Key>::const_iterator multiset<Key>::lower_bound(const Key& key) const {
+typename multiset<Key>::const_iterator multiset<Key>::lower_bound(
+    const Key &key) const {
   for (auto it = begin(); it != end(); ++it) {
-      if (*it >= key) {
-          return it;
-      }
-  }
-  return end();
-}
-
-template <typename Key>
-typename multiset<Key>::const_iterator multiset<Key>::upper_bound(const Key& key) const {
-  for (auto it = begin(); it != end(); ++it) {
-    if (*it > key) {
-        return it;
+    if (*it >= key) {
+      return it;
     }
   }
   return end();
 }
 
 template <typename Key>
-std::pair<typename multiset<Key>::const_iterator, typename multiset<Key>::const_iterator> multiset<Key>::equal_range(const Key& key) const {
+typename multiset<Key>::const_iterator multiset<Key>::upper_bound(
+    const Key &key) const {
+  for (auto it = begin(); it != end(); ++it) {
+    if (*it > key) {
+      return it;
+    }
+  }
+  return end();
+}
+
+template <typename Key>
+std::pair<typename multiset<Key>::const_iterator,
+          typename multiset<Key>::const_iterator>
+multiset<Key>::equal_range(const Key &key) const {
   auto lower = lower_bound(key);
   auto upper = upper_bound(key);
   return std::make_pair(lower, upper);
