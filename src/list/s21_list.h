@@ -1,5 +1,5 @@
-#ifndef _S21_LIST_H_
-#define _S21_LIST_H_
+#ifndef _S21_List_H_
+#define _S21_List_H_
 
 #define _NO_ERROR 0
 #define SUCCESS 1
@@ -28,7 +28,7 @@ class list {
   using const_iterator = ListConstIterator<value_type>;
 
  private:
-  class list_node {
+  class List_node {
    public:
     value_type data;
     list_node *prev;
@@ -138,4 +138,4 @@ template class ListIterator<double>;
 template class ListConstIterator<int>;
 template class ListConstIterator<double>;
 }  // namespace s21
-#endif  //_S21_LIST_H_
+#endif  //_S21_List_H_
