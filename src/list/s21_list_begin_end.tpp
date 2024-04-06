@@ -1,63 +1,69 @@
+#include "s21_list.h"
 using namespace s21;
 
-template <typename T>
-typename list<T>::iterator &list<T>::begin() {
-  this->iter_head = head_node;
-  return this->iter_head;
+template <typename value_type>
+typename list<value_type>::iterator list<value_type>::begin() {
+  return iterator(head_node);
 }
 
-template <typename T>
-typename list<T>::iterator &list<T>::end() {
-  this->iter_tail = tail_node;
-  return this->iter_tail;
+template <typename value_type>
+typename list<value_type>::iterator list<value_type>::end() {
+  // printf("here\n");
+  return iterator(tail_node);
 }
 
-template <typename T>
-typename list<T>::const_iterator list<T>::begin() const {
+template <typename value_type>
+typename list<value_type>::const_iterator list<value_type>::begin() const {
   return const_iterator(head_node);
 }
 
-template <typename T>
-typename list<T>::const_iterator list<T>::end() const {
+template <typename value_type>
+typename list<value_type>::const_iterator list<value_type>::end() const {
   return const_iterator(tail_node);
 }
 
-template <typename T>
-T &list<T>::front() {
-  iterator iter = begin();
-
-  return *iter;
+template <typename value_type>
+typename list<value_type>::const_reference list<value_type>::front() const {
+  return *begin();
 }
 
-template <typename T>
-const T &list<T>::front() const {
-  const_iterator iter = begin();
-
-  return *iter;
-}
-
-template <typename T>
-T &list<T>::back() {
-  iterator iter = end();
-  if (empty() == CONTAINER_NOT_EMPTY) --iter;
-
-  return *iter;
-}
-
-template <typename T>
-const T &list<T>::back() const {
+template <typename value_type>
+typename list<value_type>::const_reference list<value_type>::back() const {
   const_iterator iter = end();
   if (empty() == CONTAINER_NOT_EMPTY) --iter;
 
   return *iter;
 }
 
-template <typename T>
-T &list<T>::operator()(const size_type i) {
+template <typename value_type>
+typename list<value_type>::reference list<value_type>::front() {
+  return *begin();
+}
+
+template <typename value_type>
+typename list<value_type>::reference list<value_type>::back() {
+  iterator iter = end();
+  if (empty() == CONTAINER_NOT_EMPTY) --iter;
+
+  return *iter;
+}
+
+template <typename value_type>
+typename list<value_type>::reference list<value_type>::operator()(size_type i) {
   iterator pos = begin();
   if (i < size()) {
-    size_type index = 0;
-    for (; index < i; ++pos, index++)
+    for (; i > 0; ++pos, i--)
+      ;
+  }
+  return *pos;
+}
+
+template <typename value_type>
+typename list<value_type>::const_reference list<value_type>::operator()(
+    size_type i) const {
+  iterator pos = begin();
+  if (i < size()) {
+    for (; i > 0; ++pos, i--)
       ;
   }
   return *pos;

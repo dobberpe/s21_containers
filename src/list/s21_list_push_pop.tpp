@@ -1,8 +1,11 @@
+#include "s21_list.h"
 using namespace s21;
 
-template <typename T>
-typename list<T>::iterator list<T>::insert(iterator pos, const T &value) {
+template <typename value_type>
+typename list<value_type>::iterator list<value_type>::insert(
+    iterator pos, const_reference value) {
   int exit_code = _NO_ERROR;
+  // list_node *save_pos = pos.index_ptr;
   list_node *save_pos = pos.get_iter_ptr();
   list_node *new_node = nullptr;
   try {
@@ -26,9 +29,10 @@ typename list<T>::iterator list<T>::insert(iterator pos, const T &value) {
   return pos;
 }
 
-template <typename T>
-void list<T>::erase(list<T>::iterator pos) {
+template <typename value_type>
+void list<value_type>::erase(list<value_type>::iterator pos) {
   if (empty() == CONTAINER_NOT_EMPTY && pos != end()) {
+    // list_node *removing_elem = pos.index_ptr;
     list_node *removing_elem = pos.get_iter_ptr();
     list_node *before = removing_elem->prev;
     list_node *after = removing_elem->next;
@@ -46,33 +50,32 @@ void list<T>::erase(list<T>::iterator pos) {
   }
 }
 
-template <typename T>
-void list<T>::push_back(const T &value) {
+template <typename value_type>
+void list<value_type>::push_back(const_reference value) {
   insert(end(), value);
 }
 
-template <typename T>
-void list<T>::pop_back() {
+template <typename value_type>
+void list<value_type>::pop_back() {
   iterator iter = end();
   --iter;
   erase(iter);
 }
 
-template <typename T>
-void list<T>::push_front(const T &value) {
+template <typename value_type>
+void list<value_type>::push_front(const_reference value) {
   insert(begin(), value);
 }
 
-template <typename T>
-void list<T>::pop_front() {
+template <typename value_type>
+void list<value_type>::pop_front() {
   erase(begin());
 }
 
-// template <typename T>
-// typename list<T>::iterator list<T>::insert_many(const
-// list<T>::iterator pos,
-//                                                ...) {
-//   va_list args;
+// template <typename value_type>
+// typename list<value_type>::iterator list<value_type>::insert_many(
+//     const list<value_type>::iterator pos, Args &&...args) {
+//   va_List args;
 //   va_start(args, pos);
 
 //   // for (int i = 0; i < 10; i++) {
@@ -80,11 +83,11 @@ void list<T>::pop_front() {
 //   //   args.
 //   // }
 
-//   va_end(va_list);
+//   va_end(va_List);
 // }
 
-// template <typename T>
-// void list<T>::insert_many_back(Args &&...args) {}
+// template <typename value_type>
+// void list<value_type>::insert_many_back(Args &&...args) {}
 
-// template <typename T>
-// void list<T>::insert_many_front(Args &&...args) {}
+// template <typename value_type>
+// void list<value_type>::insert_many_front(Args &&...args) {}
