@@ -1,113 +1,25 @@
 #ifndef S21_SET
 #define S21_SET
 
-#include <initializer_list>
-#include <iostream>
-#include <utility>
-#include <vector>
+#include "../tree_node/s21_tree.h"
 
 namespace s21 {
 
 template <typename Key>
-class SetIterator;
-
-template <typename Key>
-class SetConstIterator;
-
-template <typename Key>
-class set {
+class set : public Tree<Key> {
  public:
   using key_type = Key;
   using value_type = Key;
   using reference = value_type &;
   using const_reference = const value_type &;
-  using iterator = SetIterator<Key>;
-  using const_iterator = SetConstIterator<Key>;
+  using iterator = typename Tree<Key>::Iterator;
+  using const_iterator = typename Tree<Key>::ConstIterator;
   using size_type = size_t;
 
- private:
-  struct Node {
-    Key key;
-    Node *left;
-    Node *right;
-    Node *parent;
-    explicit Node(const_reference k)
-        : key(k), left(nullptr), right(nullptr), parent(nullptr) {}
-  };
-  Node *root;
-  size_t num_elements;
-
-  void transplant(Node *u, Node *v);
-  Node *min_node(Node *node);
-  void destroy(Node *node);
-  Node *copy_nodes(Node *other, Node *parent);
-  Node *find_node(const_reference key) const;
-  Node *get_max() const;
-
- public:
-  set();
-  explicit set(std::initializer_list<Key> const &items);
-  set(const set &s);
-  set(set &&s) noexcept;
-  ~set();
-
-  set &operator=(set &&s) noexcept;
-  std::pair<iterator, bool> insert(const_reference key);
-  size_t size() const;
-  bool empty() const;
-  size_type max_size() const;
-  void clear();
-
-  iterator begin();
-  iterator end();
-  const_iterator begin() const;
-  const_iterator end() const;
-
-  iterator find(const Key &key);
-  bool contains(const Key &key) const;
-
-  void erase(iterator pos);
-  void swap(set &other);
-  void merge(set &other);
+  using Tree<Key>::Tree;
 
   template <typename... Args>
-  std::vector<std::pair<typename set<Key>::iterator, bool>> insert_many(
-      Args &&...args) {
-    std::vector<std::pair<typename set<Key>::iterator, bool>> results;
-    ((void)results.emplace_back(this->insert(std::forward<Args>(args))), ...);
-    return results;
-  }
-
-  friend class SetIterator<Key>;
-  friend class SetConstIterator<Key>;
-};
-
-template <typename Key>
-class SetIterator {
- public:
-  typename set<Key>::Node *current;
-  typename set<Key>::Node *last;
-  explicit SetIterator(typename set<Key>::Node *node,
-                       typename set<Key>::Node *back);
-  SetIterator &operator++();
-  SetIterator &operator--();
-  bool operator==(const SetIterator &other) const;
-  Key &operator*() const;
-  bool operator!=(const SetIterator &other) const;
-
-  friend class set<Key>;
-
- private:
-  typename set<Key>::Node *successor(typename set<Key>::Node *x);
-  typename set<Key>::Node *predecessor(typename set<Key>::Node *x);
-  typename set<Key>::Node *maximum(typename set<Key>::Node *x);
-};
-
-template <typename Key>
-class SetConstIterator : public SetIterator<Key> {
- public:
-  using SetIterator<Key>::SetIterator;
-  const Key &operator*() const;
+  std::vector<std::pair<iterator, bool>> insert_many(Args &&...args);
 };
 
 }  // namespace s21

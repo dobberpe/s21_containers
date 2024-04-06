@@ -26,7 +26,7 @@ TEST(SetConstructorTest, CopyConstructor) {
   set<int> s2 = s1;  // Копируем s1 в s2
   EXPECT_EQ(s1.size(), s2.size());
   // Проверяем, что s2 содержит те же элементы, что и s1
-  SetIterator<int> i1 = s1.begin(), i2 = s2.begin();
+  Tree<int>::Iterator i1 = s1.begin(), i2 = s2.begin();
   for (int i = 0; i < 2; i++) {
     ++i1;
     ++i2;
@@ -283,8 +283,8 @@ TEST(SetIteratorTest, DecrementOperator) {
   mySet.insert(7);
 
   // Создаем итераторы для множества
-  SetIterator<int> it = mySet.begin();
-  SetIterator<int> last = mySet.end();
+  Tree<int>::Iterator it = mySet.begin();
+  Tree<int>::Iterator last = mySet.end();
 
   // Тестируем метод operator--
   --last;
@@ -312,15 +312,15 @@ TEST(IteratorComparisonTest, OperatorEqual) {
   mySet.insert(20);
 
   // Создаем два итератора, указывающих на одинаковый элемент в множестве
-  SetIterator<int> it1 = mySet.begin();
-  SetIterator<int> it2 = mySet.begin();
+  Tree<int>::Iterator it1 = mySet.begin();
+  Tree<int>::Iterator it2 = mySet.begin();
 
   // Проверяем, что они равны
   ASSERT_TRUE(it1 == it2);
 
   // Создаем два итератора, указывающих на разные элементы в множестве
-  SetIterator<int> it3 = mySet.begin();
-  SetIterator<int> it4 = mySet.begin();
+  Tree<int>::Iterator it3 = mySet.begin();
+  Tree<int>::Iterator it4 = mySet.begin();
   ++it4;
 
   // Проверяем, что они не равны
