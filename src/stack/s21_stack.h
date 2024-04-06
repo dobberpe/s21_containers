@@ -33,9 +33,11 @@ class stack {
 
   bool empty() const;
   size_type size() const;
+
+  template <typename... Args>
+  void insert_many_front(Args&&... args);
 };
 
-template class stack<int>;
 }  // namespace s21
 
 #include "s21_stack.tpp"

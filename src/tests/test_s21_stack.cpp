@@ -40,3 +40,19 @@ TEST(StackTest, Size) {
   s.pop();
   EXPECT_EQ(s.size(), 2);
 }
+
+TEST(StackTest, InsertManyFront) {
+  // Создаем стек и вставляем несколько элементов в начало
+  stack<int> s;
+  s.insert_many_front(3, 2, 1);
+
+  // Проверяем, что элементы вставлены в правильном порядке
+  EXPECT_EQ(s.top(), 1);
+  s.pop();
+  EXPECT_EQ(s.top(), 2);
+  s.pop();
+  EXPECT_EQ(s.top(), 3);
+
+  // Проверяем размер стека
+  EXPECT_EQ(s.size(), 1);
+}

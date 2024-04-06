@@ -29,6 +29,9 @@ class multiset : public Tree<Key> {
   const_iterator lower_bound(const Key& key) const;
   const_iterator upper_bound(const Key& key) const;
   std::pair<const_iterator, const_iterator> equal_range(const Key& key) const;
+
+  template <typename... Args>
+  std::vector<iterator> insert_many(Args&&... args);
 };
 
 }  // namespace s21

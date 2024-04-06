@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <utility>
+#include <vector>
 
 namespace s21 {
 
@@ -86,34 +87,6 @@ class Tree {
     const Key &operator*() const;
   };
 };
-
-// template <typename Key>
-// class Iterator {
-//  public:
-//   typename Tree<Key>::Node *current;
-//   typename Tree<Key>::Node *last;
-//   explicit Iterator(typename Tree<Key>::Node *node,
-//                        typename Tree<Key>::Node *back);
-//   Iterator &operator++();
-//   Iterator &operator--();
-//   bool operator==(const Iterator &other) const;
-//   Key &operator*() const;
-//   bool operator!=(const Iterator &other) const;
-
-//   friend class Tree<Key>;
-
-//  private:
-//   typename Tree<Key>::Node *successor(typename Tree<Key>::Node *x);
-//   typename Tree<Key>::Node *predecessor(typename Tree<Key>::Node *x);
-//   typename Tree<Key>::Node *maximum(typename Tree<Key>::Node *x);
-// };
-
-// template <typename Key>
-// class ConstIterator : public Iterator<Key> {
-//  public:
-//   using Iterator<Key>::Iterator;
-//   const Key &operator*() const;
-// };
 
 }  // namespace s21
 

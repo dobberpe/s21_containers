@@ -326,3 +326,32 @@ TEST(IteratorComparisonTest, OperatorEqual) {
   // Проверяем, что они не равны
   ASSERT_FALSE(it3 == it4);
 }
+
+TEST(TreeTest, Erase) {
+  set<int> tree;
+  tree.insert(5);
+  tree.insert(3);
+  tree.insert(8);
+  tree.insert(2);
+  tree.insert(4);
+  tree.insert(7);
+  tree.insert(9);
+
+  // Удаляем узел со значением 5
+  auto it = tree.find(5);
+  tree.erase(it);
+
+  // Проверяем, что значение 5 больше нет в дереве
+  EXPECT_FALSE(tree.contains(5));
+
+  // Проверяем размер дерева после удаления
+  EXPECT_EQ(tree.size(), 6);
+
+  // Проверяем, что другие значения остаются в дереве
+  EXPECT_TRUE(tree.contains(3));
+  EXPECT_TRUE(tree.contains(8));
+  EXPECT_TRUE(tree.contains(2));
+  EXPECT_TRUE(tree.contains(4));
+  EXPECT_TRUE(tree.contains(7));
+  EXPECT_TRUE(tree.contains(9));
+}

@@ -1,5 +1,3 @@
-#include "s21_multiset.h"
-
 using namespace s21;
 
 template <typename Key>
@@ -109,4 +107,13 @@ multiset<Key>::equal_range(const Key &key) const {
   auto lower = lower_bound(key);
   auto upper = upper_bound(key);
   return std::make_pair(lower, upper);
+}
+
+template <typename Key>
+template <typename... Args>
+std::vector<typename multiset<Key>::iterator> multiset<Key>::insert_many(
+    Args &&...args) {
+  std::vector<typename set<Key>::iterator> results;
+  ((void)results.push_back(insert(std::forward<Args>(args))), ...);
+  return results;
 }

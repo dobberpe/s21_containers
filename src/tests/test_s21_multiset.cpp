@@ -124,3 +124,17 @@ TEST(MultisetTest, Merge) {
   EXPECT_TRUE(ms1.count(4) == 1 && ms1.count(5) == 1 && ms1.count(6) == 1);
   EXPECT_TRUE(ms1.count(1) == 1 && ms1.count(2) == 1 && ms1.count(3) == 1);
 }
+
+TEST(MultisetTest, InsertMany) {
+  // Создаем мультимножество и вставляем несколько элементов
+  multiset<int> ms;
+  auto inserted = ms.insert_many(1, 2, 2, 3, 3, 3, 4, 5);
+
+  // Проверяем размер мультимножества
+  EXPECT_EQ(ms.size(), 8);
+  EXPECT_EQ(inserted.size(), 8);
+  // Проверяем количество вставленных элементов
+  EXPECT_EQ(ms.count(2), 2);
+  EXPECT_EQ(ms.count(3), 3);
+  EXPECT_EQ(ms.count(6), 0);
+}
