@@ -28,7 +28,7 @@ gcov_report: clean add_coverage $(LIB_OBJ)
 style_check:
 	find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.tpp" \) -exec clang-format -n --style=file:../materials/linters/.clang-format {} \;
 	cppcheck --enable=all --suppress=missingIncludeSystem .
-
+	
 style_fix:
 	find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.tpp" \) -exec clang-format -i --style=file:../materials/linters/.clang-format {} \;
 
