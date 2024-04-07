@@ -198,25 +198,54 @@ TEST(MapModifiersTest, Clear) {
 TEST(MapModifiersTest, InsertPair) {
   map<int, int> m{{1, 1}, {1, 2}, {2, 1}, {3, 5}};
   EXPECT_EQ(3, m.size());
-  m.insert({4, 16});
+  auto [it, inserted] = m.insert({4, 16});
   EXPECT_EQ(4, m.size());
-  EXPECT_TRUE(m.contains(4));
-  EXPECT_EQ(16, m[4]);
-  m.insert({3, 9});
+  EXPECT_TRUE(inserted);
+  EXPECT_EQ(4, it->first);
+  EXPECT_EQ(16, it->second);
+  std::tie(it, inserted) = m.insert({3, 9});
   EXPECT_EQ(4, m.size());
-  EXPECT_EQ(5, m[3]);
+  EXPECT_FALSE(inserted);
+  EXPECT_EQ(3, it->first);
+  EXPECT_EQ(5, it->second);
 }
 
 TEST(MapModifiersTest, InsertSeparately) {
   map<int, int> m{{1, 1}, {1, 2}, {2, 1}, {3, 5}};
   EXPECT_EQ(3, m.size());
-  m.insert(4, 16);
+  auto [it, inserted] = m.insert(4, 16);
   EXPECT_EQ(4, m.size());
-  EXPECT_TRUE(m.contains(4));
-  EXPECT_EQ(16, m[4]);
-  m.insert(3, 9);
+  EXPECT_TRUE(inserted);
+  EXPECT_EQ(4, it->first);
+  EXPECT_EQ(16, it->second);
+  std::tie(it, inserted) = m.insert(3, 9);
   EXPECT_EQ(4, m.size());
-  EXPECT_EQ(5, m[3]);
+  EXPECT_FALSE(inserted);
+  EXPECT_EQ(3, it->first);
+  EXPECT_EQ(5, it->second);
+}
+
+TEST(MapModifiersTest, InsertMany) {
+  map<int, int> m;
+  auto res = m.insert_many(std::make_pair(1, 1), std::make_pair(1, 2),
+                           std::make_pair(2, 1), std::make_pair(3, 5));
+  EXPECT_EQ(3, m.size());
+  auto it = res.begin();
+  EXPECT_TRUE(it->second);
+  EXPECT_EQ(1, it->first->first);
+  EXPECT_EQ(1, it->first->second);
+  ++it;
+  EXPECT_FALSE(it->second);
+  EXPECT_EQ(1, it->first->first);
+  EXPECT_EQ(1, it->first->second);
+  ++it;
+  EXPECT_TRUE(it->second);
+  EXPECT_EQ(2, it->first->first);
+  EXPECT_EQ(1, it->first->second);
+  ++it;
+  EXPECT_TRUE(it->second);
+  EXPECT_EQ(3, it->first->first);
+  EXPECT_EQ(5, it->first->second);
 }
 
 TEST(MapModifiersTest, InsertOrAssign) {

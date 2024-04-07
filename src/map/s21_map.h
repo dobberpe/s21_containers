@@ -3,6 +3,7 @@
 #include <initializer_list>
 #include <iostream>
 #include <utility>
+#include <vector>
 
 #include "s21_binary_tree.h"
 
@@ -45,12 +46,12 @@ class map {
   //        void copy_tree(Node* tree);
   //        void clear_tree(Node* node);
 
- public:
-  map();
-  map(std::initializer_list<value_type> const& items);
-  map(const map& m);
-  map(map&& m) noexcept;
-  ~map();
+    public:
+        map();
+        map(std::initializer_list<value_type> const& items);
+        map(const map& m);
+        map(map&& m) noexcept;
+        ~map();
 
   map& operator=(map&& m) noexcept;
 
@@ -66,13 +67,13 @@ class map {
   size_t size() const;
   size_t max_size() const;
 
-  void clear();
-  std::pair<iterator, bool> insert(const_reference& value);
-  std::pair<iterator, bool> insert(const Key& key, const T& obj);
-  std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
-  void erase(iterator pos);
-  void swap(map& other);
-  void merge(map& other);
+        void clear();
+        std::pair<iterator, bool> insert(const_reference& value);
+        std::pair<iterator, bool> insert(const Key& key, const T& obj);
+        std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
+        void erase(iterator pos);
+        void swap(map& other);
+        void merge(map& other);
 
   bool contains(const Key& key);
 

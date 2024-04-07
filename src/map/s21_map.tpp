@@ -176,6 +176,17 @@ std::pair<typename map<Key, T>::iterator, bool> map<Key, T>::insert(
 }
 
 template <typename Key, typename T>
+template <typename... Args>
+std::vector<std::pair<typename map<Key, T>::iterator, bool>>
+map<Key, T>::insert_many(Args&&... args) {
+  std::vector<std::pair<typename map<Key, T>::iterator, bool>> res;
+
+  (res.push_back(insert(std::forward<Args>(args))), ...);
+
+  return res;
+}
+
+template <typename Key, typename T>
 std::pair<typename map<Key, T>::iterator, bool> map<Key, T>::insert_or_assign(
     const Key& key, const T& obj) {
   Node<Key, T>* node = tree.find_node(key);

@@ -11,7 +11,7 @@ struct Node {
   Node* right;
   Node* parent;
 
-  Node(const value_type& v)
+  explicit Node(const value_type& v)
       : value(v), left(nullptr), right(nullptr), parent(nullptr) {}
   size_t size() {
     return 1 + (left ? left->size() : 0) + (right ? right->size() : 0);
