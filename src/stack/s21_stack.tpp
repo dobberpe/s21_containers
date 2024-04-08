@@ -1,5 +1,3 @@
-#include "s21_stack.h"
-
 using namespace s21;
 
 template <typename Key>
@@ -39,4 +37,10 @@ typename stack<Key>::size_type stack<Key>::size() const {
 template <typename Key>
 void stack<Key>::swap(stack& other) {
   data.swap(other.data);
+}
+
+template <typename Key>
+template <typename... Args>
+void stack<Key>::insert_many_front(Args&&... args) {
+  ((void)data.push_back(std::forward<Args>(args)), ...);
 }

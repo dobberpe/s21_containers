@@ -1,10 +1,9 @@
-#include "s21_set.h"
+#include "s21_tree.h"
 
-// namespace s21 {
 using namespace s21;
 
 template <typename Key>
-void set<Key>::transplant(Node *u, Node *v) {
+void Tree<Key>::transplant(Node *u, Node *v) {
   if (u->parent == nullptr)
     root = v;
   else if (u == u->parent->left)
@@ -15,13 +14,13 @@ void set<Key>::transplant(Node *u, Node *v) {
 }
 
 template <typename Key>
-typename set<Key>::Node *set<Key>::min_node(Node *node) {
+typename Tree<Key>::Node *Tree<Key>::min_node(Node *node) {
   while (node->left != nullptr) node = node->left;
   return node;
 }
 
 template <typename Key>
-void set<Key>::destroy(Node *node) {
+void Tree<Key>::destroy(Node *node) {
   if (node != nullptr) {
     destroy(node->left);
     destroy(node->right);
@@ -30,7 +29,7 @@ void set<Key>::destroy(Node *node) {
 }
 
 template <typename Key>
-typename set<Key>::Node *set<Key>::copy_nodes(Node *other, Node *parent) {
+typename Tree<Key>::Node *Tree<Key>::copy_nodes(Node *other, Node *parent) {
   if (other == nullptr) return nullptr;
   Node *new_node = new Node(other->key);
   new_node->parent = parent;
@@ -40,7 +39,7 @@ typename set<Key>::Node *set<Key>::copy_nodes(Node *other, Node *parent) {
 }
 
 template <typename Key>
-typename set<Key>::Node *set<Key>::find_node(const_reference key) const {
+typename Tree<Key>::Node *Tree<Key>::find_node(const_reference key) const {
   Node *current = root;
   while (current != nullptr) {
     if (key == current->key)
@@ -54,33 +53,34 @@ typename set<Key>::Node *set<Key>::find_node(const_reference key) const {
 }
 
 template <typename Key>
-set<Key>::set() : root(nullptr), num_elements(0) {}
+Tree<Key>::Tree() : root(nullptr), num_elements(0) {}
 
 template <typename Key>
-set<Key>::set(std::initializer_list<Key> const &items)
+Tree<Key>::Tree(std::initializer_list<Key> const &items)
     : root(nullptr), num_elements(0) {
   for (const auto &item : items) insert(item);
 }
 
 template <typename Key>
-set<Key>::set(const set &s) : root(nullptr), num_elements(0) {
+Tree<Key>::Tree(const Tree &s) : root(nullptr), num_elements(0) {
   root = copy_nodes(s.root, nullptr);
   num_elements = s.num_elements;
 }
 
 template <typename Key>
-set<Key>::set(set &&s) noexcept : root(s.root), num_elements(s.num_elements) {
+Tree<Key>::Tree(Tree &&s) noexcept
+    : root(s.root), num_elements(s.num_elements) {
   s.root = nullptr;
   s.num_elements = 0;
 }
 
 template <typename Key>
-set<Key>::~set() {
+Tree<Key>::~Tree() {
   clear();
 }
 
 template <typename Key>
-typename set<Key>::set &set<Key>::operator=(set &&s) noexcept {
+typename Tree<Key>::Tree &Tree<Key>::operator=(Tree &&s) noexcept {
   if (this != &s) {
     clear();
     root = s.root;
@@ -92,7 +92,7 @@ typename set<Key>::set &set<Key>::operator=(set &&s) noexcept {
 }
 
 template <typename Key>
-std::pair<typename set<Key>::iterator, bool> set<Key>::insert(
+std::pair<typename Tree<Key>::iterator, bool> Tree<Key>::insert(
     const_reference key) {
   Node *new_node = new Node(key);
   Node *parent = nullptr;
@@ -106,7 +106,7 @@ std::pair<typename set<Key>::iterator, bool> set<Key>::insert(
       current = current->right;
     else {
       delete new_node;
-      return std::make_pair(iterator(current), false);
+      return std::make_pair(iterator(current, get_max()), false);
     }
   }
   new_node->parent = parent;
@@ -118,71 +118,80 @@ std::pair<typename set<Key>::iterator, bool> set<Key>::insert(
     parent->right = new_node;
 
   ++num_elements;
-  return std::make_pair(iterator(new_node), true);
+  return std::make_pair(iterator(new_node, get_max()), true);
 }
 
 template <typename Key>
-size_t set<Key>::size() const {
+size_t Tree<Key>::size() const {
   return num_elements;
 }
 
 template <typename Key>
-bool set<Key>::empty() const {
+bool Tree<Key>::empty() const {
   return num_elements == 0;
 }
 
 template <typename Key>
-typename set<Key>::size_type set<Key>::max_size() const {
+typename Tree<Key>::size_type Tree<Key>::max_size() const {
   size_type res = 230584300921369395;
   return res;
 }
 
 template <typename Key>
-void set<Key>::clear() {
+void Tree<Key>::clear() {
   destroy(root);
   root = nullptr;
   num_elements = 0;
 }
 
 template <typename Key>
-typename set<Key>::iterator set<Key>::begin() {
+typename Tree<Key>::Node *Tree<Key>::get_max() const {
+  Node *max = root;
+  while (max && max->right) {
+    max = max->right;
+  }
+  return max;
+}
+
+template <typename Key>
+typename Tree<Key>::iterator Tree<Key>::begin() {
   Node *current = root;
   while (current != nullptr && current->left != nullptr)
     current = current->left;
-  return iterator(current);
+  return iterator(current, get_max());
 }
 
 template <typename Key>
-typename set<Key>::iterator set<Key>::end() {
-  return iterator(nullptr);
+typename Tree<Key>::iterator Tree<Key>::end() {
+  return iterator(nullptr, get_max());
 }
 
 template <typename Key>
-typename set<Key>::const_iterator set<Key>::begin() const {
+typename Tree<Key>::const_iterator Tree<Key>::begin() const {
   Node *current = root;
   while (current != nullptr && current->left != nullptr)
     current = current->left;
-  return const_iterator(current);
+  return const_iterator(current, get_max());
 }
 
 template <typename Key>
-typename set<Key>::const_iterator set<Key>::end() const {
-  return const_iterator(nullptr);
+typename Tree<Key>::const_iterator Tree<Key>::end() const {
+  return const_iterator(nullptr, get_max());
 }
 
 template <typename Key>
-typename set<Key>::iterator set<Key>::find(const Key &key) {
+typename Tree<Key>::iterator Tree<Key>::find(const Key &key) {
   Node *node = find_node(key);
-  return iterator(node);
+  return iterator(node, get_max());
 }
 
 template <typename Key>
-bool set<Key>::contains(const Key &key) const {
+bool Tree<Key>::contains(const Key &key) const {
   return find_node(key) != nullptr;
 }
 
 template <typename Key>
-void set<Key>::erase(iterator pos) {
+void Tree<Key>::erase(iterator pos) {
   Node *node = pos.current;
   if (node != nullptr) {
     if (node->left == nullptr) {
@@ -206,47 +215,78 @@ void set<Key>::erase(iterator pos) {
 }
 
 template <typename Key>
-void set<Key>::swap(set &other) {
+void Tree<Key>::swap(Tree &other) {
   std::swap(root, other.root);
   std::swap(num_elements, other.num_elements);
 }
 
 template <typename Key>
-void set<Key>::merge(set &other) {
+void Tree<Key>::merge(Tree &other) {
   for (auto it = other.begin(); it != other.end(); ++it) insert(*it);
   other.clear();
 }
 
 template <typename Key>
-SetIterator<Key>::SetIterator(typename set<Key>::Node *node) : current(node) {}
+Tree<Key>::Iterator::Iterator(typename Tree<Key>::Node *node,
+                              typename Tree<Key>::Node *back)
+    : current(node), last(back) {}
 
 template <typename Key>
-typename SetIterator<Key>::SetIterator &SetIterator<Key>::operator++() {
-  if (current == nullptr)
-    throw std::out_of_range("Iterator cannot be incremented beyond the end");
+typename Tree<Key>::Iterator &Tree<Key>::Iterator::operator++() {
   current = successor(current);
   return *this;
 }
 
 template <typename Key>
-Key &SetIterator<Key>::operator*() const {
+typename Tree<Key>::Iterator &Tree<Key>::Iterator::operator--() {
+  if (current == nullptr) {
+    current = last;
+    return *this;
+  }
+  if (current->left != nullptr) {
+    current = maximum(current->left);
+  } else {
+    typename Tree<Key>::Node *y = current->parent;
+    while (y != nullptr && current == y->left) {
+      current = y;
+      y = y->parent;
+    }
+    current = y;
+  }
+  return *this;
+}
+
+template <typename Key>
+bool Tree<Key>::Iterator::operator==(const Tree<Key>::Iterator &other) const {
+  return current == other.current;
+}
+
+template <typename Key>
+typename Tree<Key>::Node *Tree<Key>::Iterator::maximum(
+    typename Tree<Key>::Node *x) {
+  while (x->right != nullptr) x = x->right;
+  return x;
+}
+
+template <typename Key>
+Key &Tree<Key>::Iterator::operator*() const {
   return current->key;
 }
 
 template <typename Key>
-bool SetIterator<Key>::operator!=(const SetIterator &other) const {
+bool Tree<Key>::Iterator::operator!=(const Tree<Key>::Iterator &other) const {
   return current != other.current;
 }
 
 template <typename Key>
-typename set<Key>::Node *SetIterator<Key>::successor(
-    typename set<Key>::Node *x) {
+typename Tree<Key>::Node *Tree<Key>::Iterator::successor(
+    typename Tree<Key>::Node *x) {
   if (x->right != nullptr) {
     x = x->right;
     while (x->left != nullptr) x = x->left;
     return x;
   }
-  typename set<Key>::Node *y = x->parent;
+  typename Tree<Key>::Node *y = x->parent;
   while (y != nullptr && x == y->right) {
     x = y;
     y = y->parent;
@@ -255,40 +295,6 @@ typename set<Key>::Node *SetIterator<Key>::successor(
 }
 
 template <typename Key>
-SetConstIterator<Key>::SetConstIterator(typename set<Key>::Node *node)
-    : current(node) {}
-
-template <typename Key>
-typename SetConstIterator<Key>::SetConstIterator &
-SetConstIterator<Key>::operator++() {
-  if (current == nullptr)
-    throw std::out_of_range("Iterator cannot be incremented beyond the end");
-  current = successor(current);
-  return *this;
-}
-
-template <typename Key>
-const Key &SetConstIterator<Key>::operator*() const {
-  return current->key;
-}
-
-template <typename Key>
-bool SetConstIterator<Key>::operator!=(const SetConstIterator &other) const {
-  return current != other.current;
-}
-
-template <typename Key>
-typename set<Key>::Node *SetConstIterator<Key>::successor(
-    typename set<Key>::Node *x) {
-  if (x->right != nullptr) {
-    x = x->right;
-    while (x->left != nullptr) x = x->left;
-    return x;
-  }
-  typename set<Key>::Node *y = x->parent;
-  while (y != nullptr && x == y->right) {
-    x = y;
-    y = y->parent;
-  }
-  return y;
+const Key &Tree<Key>::ConstIterator::operator*() const {
+  return this->current->key;
 }

@@ -36,13 +36,11 @@ class queue {
   void swap(queue& other);
 
   template <typename... Args>
-  void insert_many_back(Args&&... args) {
-    (void)std::initializer_list<int>{
-        (data.push_back(std::forward<Args>(args)), 0)...};
-  }
+  void insert_many_back(Args&&... args);
 };
 
-template class queue<int>;
 }  // namespace s21
+
+#include "s21_queue.tpp"
 
 #endif
