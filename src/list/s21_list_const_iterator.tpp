@@ -10,6 +10,5 @@ ListConstIterator<value_type>::ListConstIterator(
 template <typename value_type>
 typename list<value_type>::const_reference
 ListConstIterator<value_type>::operator*() const {
-  return ListIterator<value_type>::get_iter_ptr()->data;
-  // return ListIterator<value_type>::operator*();
+  return ListIterator<value_type>::operator*();
 }

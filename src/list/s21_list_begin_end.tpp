@@ -8,7 +8,6 @@ typename list<value_type>::iterator list<value_type>::begin() {
 
 template <typename value_type>
 typename list<value_type>::iterator list<value_type>::end() {
-  // printf("here\n");
   return iterator(tail_node);
 }
 

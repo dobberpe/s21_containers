@@ -63,12 +63,11 @@ class vector : public list<T> {
   void pop_back();
   void swap(vector &other);
 
-  // iterator insert_many(const iterator pos, ...);
-  // Inserts new elements into the container directly before pos.
-  // list, Vector.
+  template <typename... Args>
+  iterator insert_many(const_iterator pos, Args &&...args);
 
-  // void insert_many_back(Args&&... args);
-  // Appends new elements to the end of the container.	list, Vector, Queue.
+  template <typename... Args>
+  void insert_many_back(Args &&...args);
 
   vector();
   vector(const size_type n);
@@ -94,17 +93,15 @@ class VectorIterator {
   VectorIterator &operator++();
   VectorIterator &operator--();
   VectorIterator &operator=(const VectorIterator &iter);
-  typename vector<T>::reference operator*();
+  typename vector<T>::reference operator*() const;
   bool operator!=(const VectorIterator &pos) const;
 };
 
 template <typename T>
-class VectorConstIterator {
- private:
-  T *index_ptr;
-
+class VectorConstIterator : public VectorIterator<T> {
  public:
   using VectorIterator<T>::VectorIterator;
+  VectorConstIterator(const VectorIterator<T> &copy);
   typename vector<T>::const_reference operator*() const;
 };
 

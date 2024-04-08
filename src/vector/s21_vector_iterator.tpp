@@ -36,7 +36,7 @@ VectorIterator<T> &VectorIterator<T>::operator=(const VectorIterator &iter) {
 }
 
 template <typename T>
-typename vector<T>::reference VectorIterator<T>::operator*() {
+typename vector<T>::reference VectorIterator<T>::operator*() const {
   return *(this->index_ptr);
 }
 

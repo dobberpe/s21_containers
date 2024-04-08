@@ -10,16 +10,6 @@ class test_s21_list : public testing::Test {
  public:
 };
 
-TEST_F(test_s21_list, test_s21_list_const) {
-  //   std::list<int> list1{1, 2, 3, 4, 5, 6, 7};
-  //   std::list<int>::const_iterator citer = list1.end();
-  //   std::list<int>::iterator iter = list1.end();
-  //   *citer = 9;
-  //  iter = citer;
-  //   std::list<int> list2{1, 2, 3, 4, 5, 6, 7};
-  //   std::list<int>::const_iterator iter = list2.end();
-}
-
 TEST_F(test_s21_list, test_s21_list_create) {
   _SPCE_::list<int> list1;
   ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
@@ -41,55 +31,61 @@ TEST_F(test_s21_list, test_s21_list_create) {
   _SPCE_::list list3(list2);
   ASSERT_EQ(list3.empty(), CONTAINER_NOT_EMPTY);
   ASSERT_EQ(list3.size(), 6);
-  /*
 
-    _SPCE_::list list4(std::move(list3));
-    ASSERT_EQ(list4.empty(), CONTAINER_NOT_EMPTY);
-    list4.push_back(1000);
-    ASSERT_EQ(list4.size(), 7);
+  _SPCE_::list list4(std::move(list3));
+  ASSERT_EQ(list4.empty(), CONTAINER_NOT_EMPTY);
+  list4.push_back(1000);
+  ASSERT_EQ(list4.size(), 7);
 
-    _SPCE_::list<double> list5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
-    ASSERT_EQ(list5.empty(), CONTAINER_NOT_EMPTY);
-    ASSERT_EQ(list5.size(), 9);
-  #ifndef _SPCE_ORIG_
-    ASSERT_EQ(list5(0), 1.1);
-    ASSERT_EQ(list5(8), 5914.09);
-  #endif
+  _SPCE_::list<double> list5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
+  ASSERT_EQ(list5.empty(), CONTAINER_NOT_EMPTY);
+  ASSERT_EQ(list5.size(), 9);
+#ifndef _SPCE_ORIG_
+  ASSERT_EQ(list5(0), 1.1);
+  ASSERT_EQ(list5(8), 5914.09);
+#endif
 
-    _SPCE_::list list6 = std::move(list5);
-    ASSERT_EQ(list5.empty(), CONTAINER_EMPTY);
-    ASSERT_EQ(list6.size(), 9);
-  #ifndef _SPCE_ORIG_
-    ASSERT_EQ(list6(0), 1.1);
-    ASSERT_EQ(list6(8), 5914.09);
-  #endif
+  _SPCE_::list list6 = std::move(list5);
+  ASSERT_EQ(list5.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(list6.size(), 9);
+#ifndef _SPCE_ORIG_
+  ASSERT_EQ(list6(0), 1.1);
+  ASSERT_EQ(list6(8), 5914.09);
+#endif
 
-    _SPCE_::list<double> list7;
-    list7 = std::move(list6);
-    ASSERT_EQ(list6.empty(), CONTAINER_EMPTY);
-    ASSERT_EQ(list7.size(), 9);
-  #ifndef _SPCE_ORIG_
-    ASSERT_EQ(list7(0), 1.1);
-    ASSERT_EQ(list7(8), 5914.09);
-  #endif
+  _SPCE_::list<double> list7;
+  list7 = std::move(list6);
+  ASSERT_EQ(list6.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(list7.size(), 9);
+#ifndef _SPCE_ORIG_
+  ASSERT_EQ(list7(0), 1.1);
+  ASSERT_EQ(list7(8), 5914.09);
+#endif
 
-    _SPCE_::list list8 = std::move(list11);  // move empty-list
-    ASSERT_EQ(list8.empty(), CONTAINER_EMPTY);
+  _SPCE_::list list8 = std::move(list11);  // move empty-list
+  ASSERT_EQ(list8.empty(), CONTAINER_EMPTY);
 
-    list8.push_back(5);
-    ASSERT_EQ(list8.empty(), CONTAINER_NOT_EMPTY);
-  #ifndef _SPCE_ORIG_
-    ASSERT_EQ(list8(0), 5);
-  #endif
+  list8.push_back(5);
+  ASSERT_EQ(list8.empty(), CONTAINER_NOT_EMPTY);
+#ifndef _SPCE_ORIG_
+  ASSERT_EQ(list8(0), 5);
+#endif
 
-    ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
-    _SPCE_::list list9(std::move(list11));  // move empty-list
-    ASSERT_EQ(list9.empty(), CONTAINER_EMPTY);
-    ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
+  _SPCE_::list list9(std::move(list11));  // move empty-list
+  ASSERT_EQ(list9.empty(), CONTAINER_EMPTY);
+  ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
 
-    list9.push_back(10);
-    ASSERT_EQ(list9.size(), 1);
-    */
+  list9.push_back(10);
+  ASSERT_EQ(list9.size(), 1);
+
+  // тест конструктор перемещения и параметризированного конструктора
+  // конструктор "со списком" и опрератором присваивания
+  _SPCE_::list<int> list10(4);
+  ASSERT_EQ(list10.size(), 4);
+  _SPCE_::list listcpy = std::move(list10);
+  ASSERT_EQ(listcpy.size(), 4);
+  ASSERT_EQ(list10.empty(), CONTAINER_EMPTY);
 }
 
 // empty(), size(), clear();
@@ -171,8 +167,8 @@ TEST_F(test_s21_list, test_s21_list_insert_erase) {
   ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
 }
 
-// тест конструктора по умолчанию, empty(), push_back/pop_back
-TEST_F(test_s21_list, test_s21_list_2) {
+// push_back/pop_back
+TEST_F(test_s21_list, test_s21_list_pushback_popback) {
   _SPCE_::list<int> list2;
   ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
   list2.push_back(100);
@@ -184,7 +180,7 @@ TEST_F(test_s21_list, test_s21_list_2) {
 }
 
 // тест push_back/pop_back, доступ по индексу()
-TEST_F(test_s21_list, test_s21_list_3) {
+TEST_F(test_s21_list, test_s21_list_index) {
   _SPCE_::list<double> list1;
   list1.push_back(-20.4);
   ASSERT_EQ(list1.size(), 1);
@@ -266,19 +262,6 @@ TEST_F(test_s21_list, test_s21_list_const_iterator) {
   // for (int i = 0; i < 4; i++) list2.pop_back();
 
   ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
-}
-
-// тест конструктор перемещения и параметризированного конструктора
-// конструктор "со списком" и опрератором присваивания
-TEST_F(test_s21_list, test_s21_list_5) {
-  _SPCE_::list<int> list2(4);
-  ASSERT_EQ(list2.size(), 4);
-  _SPCE_::list listcpy = std::move(list2);
-  ASSERT_EQ(listcpy.size(), 4);
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
-
-  _SPCE_::list<int> list3{1, 4, 2, 5, 7, 13, 56, 11, 5914};
-  ASSERT_EQ(list3.size(), 9);
 }
 
 // swap()
@@ -454,3 +437,47 @@ TEST_F(test_s21_list, test_s21_list_sort) {
   ASSERT_EQ(list6 == answ6, SUCCESS);
   ASSERT_EQ(list7 == answ7, SUCCESS);
 }
+
+#ifndef _SPCE_ORIG_
+
+// insert_many()
+TEST_F(test_s21_list, test_s21_list_insert_many) {
+  _SPCE_::list<int> answ1{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  _SPCE_::list<int> list1{5, 6, 7, 8, 11};
+  _SPCE_::list<int>::const_iterator iter = list1.begin();
+
+  list1.insert_many(iter, 1, 2, 3, 4);
+  iter = list1.end();
+  --iter;
+
+  list1.insert_many(iter, 9, 10);
+  iter = list1.end();
+  list1.insert_many(iter, 12);
+  ASSERT_EQ(list1 == answ1, SUCCESS);
+}
+
+// insert_many_back()
+TEST_F(test_s21_list, test_s21_list_insert_back) {
+  _SPCE_::list<int> answ1{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+  _SPCE_::list<int> list1{1, 2, 3};
+
+  list1.insert_many_back(4);
+  list1.insert_many_back(5, 6, 7, 8);
+  list1.insert_many_back(9, 10, 11);
+
+  ASSERT_EQ(list1 == answ1, SUCCESS);
+}
+
+// insert_many_front()
+TEST_F(test_s21_list, test_s21_list_insert_front) {
+  _SPCE_::list<int> answ1{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+  _SPCE_::list<int> list1{11};
+
+  list1.insert_many_front(8, 9, 10);
+  list1.insert_many_front(2, 3, 4, 5, 6, 7);
+  list1.insert_many_front(1);
+
+  ASSERT_EQ(list1 == answ1, SUCCESS);
+}
+
+#endif

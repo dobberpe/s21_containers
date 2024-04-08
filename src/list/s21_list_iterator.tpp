@@ -31,7 +31,7 @@ ListIterator<value_type> &ListIterator<value_type>::operator--() {
 }
 
 template <typename value_type>
-typename list<value_type>::reference ListIterator<value_type>::operator*() {
+typename list<value_type>::reference ListIterator<value_type>::operator*() const{
   return this->index_ptr->data;
 }
 
@@ -50,10 +50,4 @@ ListIterator<value_type> &ListIterator<value_type>::operator=(
     ListIterator pos) {
   index_ptr = pos.index_ptr;
   return *this;
-}
-
-template <typename value_type>
-typename list<value_type>::list_node *ListIterator<value_type>::get_iter_ptr()
-    const {
-  return index_ptr;
 }
