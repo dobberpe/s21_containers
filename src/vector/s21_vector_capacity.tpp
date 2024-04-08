@@ -16,7 +16,7 @@ void vector<value_type>::reserve(size_type size) {
       else
         throw ERROR_MEM;
     }
-  } else if (size == 0) {
+  } else {
     if (head_node) free(head_node);
     head_node = nullptr;
   }
