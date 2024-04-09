@@ -6,9 +6,10 @@ template <typename value_type>
 vector<value_type>::vector() : max_number(0), number(0), head_node(nullptr) {}
 
 template <typename value_type>
-vector<value_type>::vector(const size_type n) : head_node(nullptr) {
-  if (n > 0 && n <= this->max_size()) reserve(n);
-  max_number = number = n;
+vector<value_type>::vector(const size_type n)
+    : max_number(0), number(0), head_node(nullptr) {
+  reserve(n);
+  number = n;
 }
 
 template <typename value_type>
@@ -19,11 +20,8 @@ vector<value_type>::vector(std::initializer_list<value_type> const &items)
 
 template <typename value_type>
 vector<value_type>::vector(const vector<value_type> &v)
-    : list<value_type>(v),
-      max_number(v.max_number),
-      number(0),
-      head_node(nullptr) {
-  reserve(max_number);
+    : max_number(0), number(0), head_node(nullptr) {
+  reserve(v.max_number);
   for (size_type i = 0; i < v.number; i++) vector<value_type>::push_back(v[i]);
 }
 
@@ -46,7 +44,7 @@ vector<value_type>::~vector() {
 }
 
 template <typename value_type>
-vector<value_type> &vector<value_type>::operator=(vector &&v) {
+vector<value_type> &vector<value_type>::operator=(vector<value_type> &&v) {
   if (&v != this) {
     clear();
     if (head_node) free(head_node);
@@ -62,7 +60,8 @@ vector<value_type> &vector<value_type>::operator=(vector &&v) {
 }
 
 template <typename value_type>
-bool vector<value_type>::operator==(const vector<value_type> &vect) const {
+bool vector<value_type>::operator==(
+    const vector<value_type> &vect) const noexcept {
   size_type size1 = size();
   size_type size2 = vect.size();
   short result = SUCCESS;

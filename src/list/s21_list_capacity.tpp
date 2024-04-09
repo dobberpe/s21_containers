@@ -13,6 +13,5 @@ typename list<value_type>::size_type list<value_type>::size() const {
 
 template <typename value_type>
 typename list<value_type>::size_type list<value_type>::max_size() const {
-  // size_type size = ;
-  return 384307168202282325;
+  return std::numeric_limits<size_type>::max() / sizeof(list_node) / 2;
 }

@@ -23,21 +23,21 @@ array<value_type, _MAX>::array(std::initializer_list<value_type> const &items) {
   allocate_array(_MAX);
   size_type i = 0;
   for (auto digit : items) {
-    *(head_node + i) = digit;
-    i++;
+    *(head_node + i++) = digit;
+    // i++;
   }
 }
 
 template <typename value_type, size_t _MAX>
-array<value_type, _MAX>::array(const array<value_type, _MAX> &a){
+array<value_type, _MAX>::array(const array<value_type, _MAX> &a) {
   allocate_array(a.number);
-  for (size_type i = 0; i < a.number; i++) *(head_node + i) = a[i];
+  for (size_type i = 0; i < a.number; ++i) *(head_node + i) = a[i];
 }
 
 template <typename value_type, size_t _MAX>
 array<value_type, _MAX>::array(array<value_type, _MAX> &&a) {
   allocate_array(a.number);
-  for (size_type i = 0; i < a.number; i++) *(head_node + i) = a[i];
+  for (size_type i = 0; i < a.number; ++i) *(head_node + i) = a[i];
 }
 
 template <typename value_type, size_t _MAX>
@@ -50,7 +50,7 @@ array<value_type, _MAX> &array<value_type, _MAX>::operator=(
     array<value_type, _MAX> &&a) {
   if (&a != this) {
     allocate_array(a.number);
-    for (size_type i = 0; i < a.number; i++) *(head_node + i) = a[i];
+    for (size_type i = 0; i < a.number; --i) *(head_node + i) = a[i];
   }
   return *this;
 }
@@ -62,7 +62,7 @@ bool array<value_type, _MAX>::operator==(
   size_type size2 = arr_other.size();
   short result = SUCCESS;
   if (size1 == size2) {
-    for (size_type i = 0; i < size1 && result; i++) {
+    for (size_type i = 0; i < size1 && result; ++i) {
       if (operator[](i) != arr_other[i]) result = FAILURE;
     }
   } else
