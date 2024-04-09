@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <iostream>
 #include <utility>
-#include <vector>
+// #include <vector>
 
 #include "s21_binary_tree.h"
 
@@ -71,7 +71,7 @@ class map {
   std::pair<iterator, bool> insert(const_reference& value);
   std::pair<iterator, bool> insert(const Key& key, const T& obj);
   template <typename... Args>
-  std::vector<std::pair<iterator, bool>> insert_many(Args&&... args);
+  s21::vector<std::pair<iterator, bool>> insert_many(Args&&... args);
   std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
   void erase(iterator pos);
   void swap(map& other);

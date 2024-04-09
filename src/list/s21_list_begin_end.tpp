@@ -51,7 +51,7 @@ template <typename value_type>
 typename list<value_type>::reference list<value_type>::operator()(size_type i) {
   iterator pos = begin();
   if (i < size()) {
-    for (; i > 0; ++pos, i--)
+    for (; i > 0; ++pos, --i)
       ;
   }
   return *pos;
