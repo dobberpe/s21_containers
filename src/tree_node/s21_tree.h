@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <utility>
-#include <vector>
+
+#include "../vector/s21_vector.h"
 
 namespace s21 {
 

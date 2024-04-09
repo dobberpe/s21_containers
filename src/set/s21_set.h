@@ -19,7 +19,7 @@ class set : public Tree<Key> {
   using Tree<Key>::Tree;
 
   template <typename... Args>
-  std::vector<std::pair<iterator, bool>> insert_many(Args &&...args);
+  vector<std::pair<iterator, bool>> insert_many(Args &&...args);
 };
 
 }  // namespace s21
