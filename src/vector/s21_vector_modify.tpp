@@ -43,7 +43,7 @@ typename vector<value_type>::iterator vector<value_type>::insert(
   else
     last_vect = value;
 
-  if (size() + 1 > capacity()) reserve(capacity() * 2);
+  if (number + 1 > max_number) reserve(max_number * 2);
   *end() = last_vect;
   number += 1;
   return iterator(head_node + i);
@@ -60,6 +60,7 @@ void vector<value_type>::erase(vector<value_type>::iterator pos) {
       *curr = *(++new_iter);
       curr = new_iter;
     }
+    *(--end()) = 0;
     number -= 1;
   }
 }

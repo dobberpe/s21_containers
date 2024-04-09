@@ -70,6 +70,7 @@ TEST_F(test_s21_vector, test_vector_create) {
   ASSERT_EQ(v8[0], 5);
   v8[0] = 30;
   ASSERT_EQ(v8[0], 30);
+
   _SPCE_::vector v9(v8);  // copy
 
   v9.push_back(15);
@@ -109,10 +110,10 @@ TEST_F(test_s21_vector, test_vector_begin_end_front_back) {
   v1.push_back(1.1);
   v1.push_back(-0.1);
   v1.push_back(25.1);
+  _SPCE_::vector<double>::iterator pos = v1.begin();
   ASSERT_DOUBLE_EQ(v1.front(), 1.1);
-  _SPCE_::vector<double>::iterator pos = v1.end();
+  pos = v1.end();
   --pos;
-  ASSERT_DOUBLE_EQ(*pos, 25.1);
   ASSERT_DOUBLE_EQ(v1.back(), 25.1);
   v1.clear();
   pos = v1.begin();

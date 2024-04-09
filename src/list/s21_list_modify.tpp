@@ -17,7 +17,7 @@ bool list<value_type>::operator==(const list<value_type> &list_other) const {
   size_type size2 = list_other.size();
   short result = SUCCESS;
   if (size1 == size2) {
-    for (size_type i = 0; (i < size1) && result; ++i) {
+    for (size_type i = 0; (i < size1) && result; i++) {
       if (operator()(i) != list_other(i)) result = FAILURE;
     }
   } else
@@ -80,7 +80,7 @@ void list<value_type>::reverse() {
   if (size() > 1) {
     size_type back_list = size() - 1;
     size_type half = size() / 2;
-    for (size_type i = 0; i < half; ++i) {
+    for (size_type i = 0; i < half; i++) {
       value_type save = operator()(i);
       operator()(i) = operator()(back_list);
       operator()(back_list--) = save;

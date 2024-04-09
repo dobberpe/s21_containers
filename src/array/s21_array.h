@@ -1,6 +1,8 @@
 #ifndef _S21_ARRAY_H_
 #define _S21_ARRAY_H_
 
+#include <stdlib.h>
+
 #include "../vector/s21_vector.h"
 
 namespace s21 {

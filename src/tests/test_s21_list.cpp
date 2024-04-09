@@ -40,18 +40,17 @@ TEST_F(test_s21_list, test_s21_list_create) {
   _SPCE_::list<double> list5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
   ASSERT_EQ(list5.empty(), CONTAINER_NOT_EMPTY);
   ASSERT_EQ(list5.size(), 9);
-
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list5(0), 1.1);
-  ASSERT_DOUBLE_EQ(list5(8), 5914.09);
+  ASSERT_EQ(list5(0), 1.1);
+  ASSERT_EQ(list5(8), 5914.09);
 #endif
 
   _SPCE_::list list6 = std::move(list5);
   ASSERT_EQ(list5.empty(), CONTAINER_EMPTY);
   ASSERT_EQ(list6.size(), 9);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list6(0), 1.1);
-  ASSERT_DOUBLE_EQ(list6(8), 5914.09);
+  ASSERT_EQ(list6(0), 1.1);
+  ASSERT_EQ(list6(8), 5914.09);
 #endif
 
   _SPCE_::list<double> list7;
@@ -59,8 +58,8 @@ TEST_F(test_s21_list, test_s21_list_create) {
   ASSERT_EQ(list6.empty(), CONTAINER_EMPTY);
   ASSERT_EQ(list7.size(), 9);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list7(0), 1.1);
-  ASSERT_DOUBLE_EQ(list7(8), 5914.09);
+  ASSERT_EQ(list7(0), 1.1);
+  ASSERT_EQ(list7(8), 5914.09);
 #endif
 
   _SPCE_::list list8 = std::move(list11);  // move empty-list
@@ -69,7 +68,7 @@ TEST_F(test_s21_list, test_s21_list_create) {
   list8.push_back(5);
   ASSERT_EQ(list8.empty(), CONTAINER_NOT_EMPTY);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list8(0), 5);
+  ASSERT_EQ(list8(0), 5);
 #endif
 
   ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);

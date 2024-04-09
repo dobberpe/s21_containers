@@ -19,7 +19,7 @@ template <typename value_type>
 list<value_type>::list(const size_type count) {
   create_empty_list();
   if (count < max_size())
-    for (size_type i = 0; i < count; ++i) push_back(0);
+    for (size_type i = 0; i < count; i++) push_back(0);
 }
 
 template <typename value_type>
@@ -76,5 +76,6 @@ list<value_type>::~list() {
 }
 
 template <typename value_type>
-list<value_type>::list_node::list_node(value_type data_node)
-    : data(data_node), prev(nullptr), next(nullptr) {}
+list<value_type>::list_node::list_node(value_type data_node) {
+  data = data_node;
+}

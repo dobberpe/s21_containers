@@ -23,7 +23,7 @@ typename list<value_type>::iterator list<value_type>::insert(
     } else {
       new_node->prev->next = new_node;
     }
-    ++number;
+    number++;
   }
 
   return pos;
@@ -45,7 +45,7 @@ void list<value_type>::erase(list<value_type>::iterator pos) {
     removing_elem->data = 0;
     removing_elem->prev = removing_elem->next = nullptr;
     delete removing_elem;
-    --number;
+    number--;
   }
 }
 
@@ -89,5 +89,6 @@ void list<value_type>::insert_many_back(Args &&...args) {
 template <typename value_type>
 template <typename... Args>
 void list<value_type>::insert_many_front(Args &&...args) {
-  insert_many(begin(), args...);
+    insert_many(begin(), args...);
+
 }

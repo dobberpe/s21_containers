@@ -1,6 +1,8 @@
 #ifndef _S21_VECTOR_H_
 #define _S21_VECTOR_H_
 
+#include <stdlib.h>
+
 #include "../list/s21_list.h"
 
 #define ERROR_MEM 128
@@ -15,7 +17,7 @@ template <typename T>
 class VectorConstIterator;
 
 template <typename T>
-class vector {
+class vector : public list<T> {
  public:
   typedef T value_type;
   typedef value_type &reference;
@@ -30,7 +32,7 @@ class vector {
   value_type *head_node;
 
  public:
-  bool operator==(const vector<value_type> &list_other) const noexcept;
+  bool operator==(const vector<value_type> &list_other) const;
 
   // *Vector Element access*
   reference at(size_type pos);
@@ -47,12 +49,11 @@ class vector {
   const_iterator end() const;
 
   // *Vector Capacity*
-  bool empty() const noexcept;
-  size_type size() const noexcept;
-  size_type max_size() const noexcept;
-  void reserve(size_type new_size);
-  size_type capacity() const noexcept;
-  void shrink_to_fit() noexcept;
+  bool empty() const;
+  size_type size() const;
+  void reserve(size_type size);
+  size_type capacity() const;
+  void shrink_to_fit();
 
   // *Vector Modifiers*
   void clear();
@@ -73,7 +74,7 @@ class vector {
   vector(std::initializer_list<value_type> const &items);
   vector(const vector<value_type> &v);
   vector(vector<value_type> &&v);
-  vector<value_type> &operator=(vector<value_type> &&v);
+  vector<value_type> &operator=(vector &&v);
   ~vector();
 
   friend VectorIterator<value_type>;
