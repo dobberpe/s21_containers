@@ -17,5 +17,5 @@ void array<value_type, _MAX>::swap(array<value_type, _MAX> &other) {
 
 template <typename value_type, size_t _MAX>
 void array<value_type, _MAX>::fill(const_reference value) {
-  for (size_type i = 0; i < size(); i++) operator[](i) = value;
+  for (size_type i = 0; i < size(); ++i) operator[](i) = value;
 }

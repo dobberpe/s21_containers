@@ -43,10 +43,10 @@ typename vector<value_type>::iterator vector<value_type>::insert(
   else
     last_vect = value;
 
-  if (number + 1 > max_number) reserve(max_number * 2);
+  if (size() + 1 > capacity()) reserve(capacity() * 2);
   *end() = last_vect;
   number += 1;
-  return pos;
+  return iterator(head_node + i);
 }
 
 template <typename value_type>
@@ -60,7 +60,6 @@ void vector<value_type>::erase(vector<value_type>::iterator pos) {
       *curr = *(++new_iter);
       curr = new_iter;
     }
-    *(--end()) = 0;
     number -= 1;
   }
 }
@@ -80,23 +79,19 @@ void vector<value_type>::pop_back() {
   if (size() > 0) erase(--end());
 }
 
-// template <typename value_type>
-// typename vector<value_type>::iterator vector<value_type>::insert_many(const
-// vector<value_type>::iterator pos,
-//                                                ...) {
-//   va_list args;
-//   va_start(args, pos);
+template <typename value_type>
+template <typename... Args>
+typename vector<value_type>::iterator vector<value_type>::insert_many(
+    const_iterator pos, Args &&...args) {
+  vector tmp{args...};
+  for (size_type i = 0; i < tmp.size(); i++, ++pos) {
+    pos = insert(pos, tmp[i]);
+  }
+  return pos;
+}
 
-//   // for (int i = 0; i < 10; i++) {
-//   //   va_arg(args, type);
-//   //   args.
-//   // }
-
-//   va_end(va_list);
-// }
-
-// template <typename value_type>
-// void vector<value_type>::insert_many_back(Args &&...args) {}
-
-// template <typename value_type>
-// void vector<value_type>::insert_many_front(Args &&...args) {}
+template <typename value_type>
+template <typename... Args>
+void vector<value_type>::insert_many_back(Args &&...args) {
+  insert_many(end(), args...);
+}

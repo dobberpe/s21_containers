@@ -5,8 +5,8 @@ template <typename value_type>
 typename list<value_type>::iterator list<value_type>::insert(
     iterator pos, const_reference value) {
   int exit_code = _NO_ERROR;
-  // list_node *save_pos = pos.index_ptr;
-  list_node *save_pos = pos.get_iter_ptr();
+  list_node *save_pos = pos.index_ptr;
+
   list_node *new_node = nullptr;
   try {
     new_node = new list_node(value);
@@ -23,7 +23,7 @@ typename list<value_type>::iterator list<value_type>::insert(
     } else {
       new_node->prev->next = new_node;
     }
-    number++;
+    ++number;
   }
 
   return pos;
@@ -32,8 +32,7 @@ typename list<value_type>::iterator list<value_type>::insert(
 template <typename value_type>
 void list<value_type>::erase(list<value_type>::iterator pos) {
   if (empty() == CONTAINER_NOT_EMPTY && pos != end()) {
-    // list_node *removing_elem = pos.index_ptr;
-    list_node *removing_elem = pos.get_iter_ptr();
+    list_node *removing_elem = pos.index_ptr;
     list_node *before = removing_elem->prev;
     list_node *after = removing_elem->next;
     if (removing_elem != head_node) {
@@ -46,7 +45,7 @@ void list<value_type>::erase(list<value_type>::iterator pos) {
     removing_elem->data = 0;
     removing_elem->prev = removing_elem->next = nullptr;
     delete removing_elem;
-    number--;
+    --number;
   }
 }
 
@@ -72,22 +71,23 @@ void list<value_type>::pop_front() {
   erase(begin());
 }
 
-// template <typename value_type>
-// typename list<value_type>::iterator list<value_type>::insert_many(
-//     const list<value_type>::iterator pos, Args &&...args) {
-//   va_List args;
-//   va_start(args, pos);
+template <typename value_type>
+template <typename... Args>
+typename list<value_type>::iterator list<value_type>::insert_many(
+    const_iterator pos, Args &&...args) {
+  list tmp{args...};
+  this->splice(pos, tmp);
+  return pos;
+}
 
-//   // for (int i = 0; i < 10; i++) {
-//   //   va_arg(args, type);
-//   //   args.
-//   // }
+template <typename value_type>
+template <typename... Args>
+void list<value_type>::insert_many_back(Args &&...args) {
+  insert_many(end(), args...);
+}
 
-//   va_end(va_List);
-// }
-
-// template <typename value_type>
-// void list<value_type>::insert_many_back(Args &&...args) {}
-
-// template <typename value_type>
-// void list<value_type>::insert_many_front(Args &&...args) {}
+template <typename value_type>
+template <typename... Args>
+void list<value_type>::insert_many_front(Args &&...args) {
+  insert_many(begin(), args...);
+}

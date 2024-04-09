@@ -3,42 +3,49 @@
 using namespace s21;
 
 template <typename value_type>
-void vector<value_type>::reserve(size_type size) {
-  if (size > 0) {
-    if (head_node == NULL) {
-      head_node = (value_type *)calloc(1, sizeof(value_type) * size);
-      if (!head_node) throw ERROR_MEM;
-    } else {
-      value_type *new_head =
-          (value_type *)realloc(head_node, sizeof(value_type) * size);
-      if (new_head)
-        head_node = new_head;
-      else
-        throw ERROR_MEM;
+void vector<value_type>::reserve(size_type new_size) {
+  if (new_size > 0 && new_size <= this->max_size()) {
+    value_type *new_mem =
+        (value_type *)calloc(1, sizeof(value_type) * new_size);
+    if (!new_mem) throw ERROR_MEM;
+
+    if (head_node != NULL) {
+      for (size_type i = 0; i < this->size(); i++) new_mem[i] = head_node[i];
+      if (head_node) free(head_node);
     }
-  } else if (size == 0) {
+    head_node = new_mem;
+    max_number = new_size;
+  } else if (new_size == 0) {
     if (head_node) free(head_node);
     head_node = nullptr;
+    max_number = new_size;
   }
-  max_number = size;
 }
 
 template <typename value_type>
-typename vector<value_type>::size_type vector<value_type>::capacity() const {
+typename vector<value_type>::size_type vector<value_type>::capacity()
+    const noexcept {
   return this->max_number;
 }
 
 template <typename value_type>
-void vector<value_type>::shrink_to_fit() {
+void vector<value_type>::shrink_to_fit() noexcept {
   if (capacity() > size()) reserve(size());
 }
 
 template <typename value_type>
-typename vector<value_type>::size_type vector<value_type>::size() const {
+typename vector<value_type>::size_type vector<value_type>::size()
+    const noexcept {
   return this->number;
 }
 
 template <typename value_type>
-bool vector<value_type>::empty() const {
+typename vector<value_type>::size_type vector<value_type>::max_size()
+    const noexcept {
+  return std::numeric_limits<size_type>::max() / sizeof(value_type) / 2;
+}
+
+template <typename value_type>
+bool vector<value_type>::empty() const noexcept {
   return (size() == 0);
 }

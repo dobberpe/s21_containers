@@ -1,14 +1,12 @@
 #ifndef _S21_ARRAY_H_
 #define _S21_ARRAY_H_
 
-#include <stdlib.h>
-
 #include "../vector/s21_vector.h"
 
 namespace s21 {
 
 template <typename T, size_t _MAX = 0>
-class array : public vector<T> {
+class array {
  public:
   using value_type = T;
   using reference = value_type &;
@@ -23,7 +21,7 @@ class array : public vector<T> {
   void allocate_array(size_type n);
 
  public:
-  // bool operator==(const array<value_type, _MAX> &arr_other) const;
+  bool operator==(const array<value_type, _MAX> &arr_other) const;
 
   // *Array Element access*
   reference at(size_type pos);

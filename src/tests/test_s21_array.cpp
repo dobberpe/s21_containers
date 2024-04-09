@@ -33,7 +33,6 @@ TEST_F(test_array, test_array_create) {
   ASSERT_EQ(arr2.size(), 6);
 
   _SPCE_::array a3(std::move(arr2));
-  // printf("%p %p\n", a3.data(),arr2.data());
 
   ASSERT_EQ(arr2.empty(), CONTAINER_NOT_EMPTY);
   ASSERT_EQ(a3.empty(), CONTAINER_NOT_EMPTY);
@@ -62,12 +61,6 @@ TEST_F(test_array, test_array_create) {
   ASSERT_DOUBLE_EQ(a7[8], 5914.09);
 
   _SPCE_::array a8 = std::move(a6);  // std::move empty-list
-  // a6[0] = 4;
-  // a6[1] = -40;
-  // a6[2] = 32;
-  // a6[3] = 12;
-  // ASSERT_EQ(a6[0], 1.1);
-  // ASSERT_EQ(a6[3], 5);
 
   ASSERT_EQ(a8.empty(), CONTAINER_NOT_EMPTY);
 
@@ -76,6 +69,17 @@ TEST_F(test_array, test_array_create) {
   ASSERT_EQ(a9.empty(), CONTAINER_NOT_EMPTY);
   ASSERT_EQ(a9.size(), 9);
   ASSERT_DOUBLE_EQ(a9[0], 1.1);
+
+  // тест конструктор перемещения и параметризированного конструктора
+  // конструктор "со списком" и опрератором присваивания
+
+  _SPCE_::array<int, 4> a2;
+  _SPCE_::array listcpy = std::move(a2);
+  ASSERT_EQ(listcpy.size(), 4);
+  ASSERT_EQ(a2.size(), 4);
+
+  _SPCE_::array<int, 9> list3{1, 4, 2, 5, 7, 13, 56, 11, 5914};
+  ASSERT_EQ(list3.size(), 9);
 }
 
 // empty(), size(), доступ по индексу[]
@@ -96,20 +100,21 @@ TEST_F(test_array, test_array_empty_size) {
 
 // begin(), end(), front(), back()
 TEST_F(test_array, test_array_begin_end_front_back) {
-  _SPCE_::array<double, 3> a1;
+  _SPCE_::array<double, 3> a1{0};
   a1[0] = 1.1;
   a1[1] = -0.1;
   a1[2] = 25.1;
   ASSERT_EQ(a1.front(), 1.1);
   ASSERT_EQ(a1.back(), 25.1);
 
-  _SPCE_::array<double, 0>::iterator pos = a1.begin();
+  _SPCE_::array<double>::iterator pos = a1.begin();
   pos = a1.begin();
   ASSERT_EQ(a1.front(), *pos);
-  pos = a1.end() - 1;
+  pos = a1.end();
+  --pos;
   ASSERT_EQ(a1.back(), *pos);
 
-  _SPCE_::array<int, 4> a2{0};
+  _SPCE_::array<int, 4> a2{0, 0, 0, 0};
   ASSERT_EQ(a2.front(), 0);
   ASSERT_EQ(a2.back(), 0);
 
@@ -168,18 +173,6 @@ TEST_F(test_array, test_array_const_iterator) {
   ASSERT_EQ(*(--iter), -111);
 
   ASSERT_EQ(a2.size(), 4);
-}
-
-// тест конструктор перемещения и параметризированного конструктора
-// конструктор "со списком" и опрератором присваивания
-TEST_F(test_array, test_array_5) {
-  _SPCE_::array<int, 4> a2;
-  _SPCE_::array listcpy = std::move(a2);
-  ASSERT_EQ(listcpy.size(), 4);
-  ASSERT_EQ(a2.size(), 4);
-
-  _SPCE_::array<int, 9> list3{1, 4, 2, 5, 7, 13, 56, 11, 5914};
-  ASSERT_EQ(list3.size(), 9);
 }
 
 // swap()

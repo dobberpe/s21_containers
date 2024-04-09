@@ -177,9 +177,9 @@ std::pair<typename map<Key, T>::iterator, bool> map<Key, T>::insert(
 
 template <typename Key, typename T>
 template <typename... Args>
-std::vector<std::pair<typename map<Key, T>::iterator, bool>>
+s21::vector<std::pair<typename map<Key, T>::iterator, bool>>
 map<Key, T>::insert_many(Args&&... args) {
-  std::vector<std::pair<typename map<Key, T>::iterator, bool>> res;
+  s21::vector<std::pair<typename map<Key, T>::iterator, bool>> res;
 
   (res.push_back(insert(std::forward<Args>(args))), ...);
 

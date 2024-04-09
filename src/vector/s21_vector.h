@@ -1,8 +1,6 @@
 #ifndef _S21_VECTOR_H_
 #define _S21_VECTOR_H_
 
-#include <stdlib.h>
-
 #include "../list/s21_list.h"
 
 #define ERROR_MEM 128
@@ -17,7 +15,7 @@ template <typename T>
 class VectorConstIterator;
 
 template <typename T>
-class vector : public list<T> {
+class vector {
  public:
   typedef T value_type;
   typedef value_type &reference;
@@ -32,7 +30,7 @@ class vector : public list<T> {
   value_type *head_node;
 
  public:
-  bool operator==(const vector<value_type> &list_other) const;
+  bool operator==(const vector<value_type> &list_other) const noexcept;
 
   // *Vector Element access*
   reference at(size_type pos);
@@ -49,11 +47,12 @@ class vector : public list<T> {
   const_iterator end() const;
 
   // *Vector Capacity*
-  bool empty() const;
-  size_type size() const;
-  void reserve(size_type size);
-  size_type capacity() const;
-  void shrink_to_fit();
+  bool empty() const noexcept;
+  size_type size() const noexcept;
+  size_type max_size() const noexcept;
+  void reserve(size_type new_size);
+  size_type capacity() const noexcept;
+  void shrink_to_fit() noexcept;
 
   // *Vector Modifiers*
   void clear();
@@ -63,19 +62,18 @@ class vector : public list<T> {
   void pop_back();
   void swap(vector &other);
 
-  // iterator insert_many(const iterator pos, ...);
-  // Inserts new elements into the container directly before pos.
-  // list, Vector.
+  template <typename... Args>
+  iterator insert_many(const_iterator pos, Args &&...args);
 
-  // void insert_many_back(Args&&... args);
-  // Appends new elements to the end of the container.	list, Vector, Queue.
+  template <typename... Args>
+  void insert_many_back(Args &&...args);
 
   vector();
   vector(const size_type n);
   vector(std::initializer_list<value_type> const &items);
   vector(const vector<value_type> &v);
   vector(vector<value_type> &&v);
-  vector<value_type> &operator=(vector &&v);
+  vector<value_type> &operator=(vector<value_type> &&v);
   ~vector();
 
   friend VectorIterator<value_type>;
@@ -94,17 +92,15 @@ class VectorIterator {
   VectorIterator &operator++();
   VectorIterator &operator--();
   VectorIterator &operator=(const VectorIterator &iter);
-  typename vector<T>::reference operator*();
+  typename vector<T>::reference operator*() const;
   bool operator!=(const VectorIterator &pos) const;
 };
 
 template <typename T>
-class VectorConstIterator {
- private:
-  T *index_ptr;
-
+class VectorConstIterator : public VectorIterator<T> {
  public:
   using VectorIterator<T>::VectorIterator;
+  VectorConstIterator(const VectorIterator<T> &copy);
   typename vector<T>::const_reference operator*() const;
 };
 

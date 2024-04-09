@@ -8,9 +8,7 @@
 #define CONTAINER_NOT_EMPTY 0
 
 #include <cstddef>
-#include <cstdio>
 #include <initializer_list>
-#include <iostream>
 
 namespace s21 {
 template <typename T>
@@ -76,14 +74,14 @@ class list {
   void unique();
   void sort();
 
-  // iterator insert_many(const iterator pos, Args &&...args);
-  // Inserts new elements into the container directly before pos.
-  // list, Vector.
+  template <typename... Args>
+  iterator insert_many(const_iterator pos, Args &&...args);
 
-  // void insert_many_back(Args &&...args);
-  // Appends new elements to the end of the container.	list, Vector, Queue.
+  template <typename... Args>
+  void insert_many_back(Args &&...args);
 
-  // void insert_many_front(Args &&...args);
+  template <typename... Args>
+  void insert_many_front(Args &&...args);
 
   list();
   explicit list(const size_type count);
@@ -107,6 +105,8 @@ class ListConstIterator : public ListIterator<value_type> {
 
 template <typename value_type>
 class ListIterator {
+  friend list<value_type>;
+
  private:
   typename list<value_type>::list_node *index_ptr;
 
@@ -116,11 +116,10 @@ class ListIterator {
   ListIterator(const ListIterator &copy);
   ListIterator &operator++();
   ListIterator &operator--();
-  typename list<value_type>::reference operator*();
+  typename list<value_type>::reference operator*() const;
   bool operator==(const ListIterator &pos) const;
   bool operator!=(const ListIterator &pos) const;
   ListIterator &operator=(ListIterator pos);
-  typename list<value_type>::list_node *get_iter_ptr() const;
 };
 
 }  // namespace s21
