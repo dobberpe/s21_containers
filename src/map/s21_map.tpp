@@ -1,64 +1,5 @@
 using namespace s21;
 
-// template <typename Key, typename T>
-// typename map<Key, T>::iterator map<Key, T>::find_node(Node *node, const Key
-// &key) const {
-//     while (node && key != node->value.first) node = key < node->value.first ?
-//     node->left : node->right;
-//
-//     return iterator(node);
-// }
-//
-////template <typename Key, typename T>
-////void map<Key, T>::insert_node(Node *node, value_type v) {
-////    if (v.first > node->value.first) {
-////        if (node->right) insert_node(node->right, v);
-////        else node->right = new Node(v);
-////    } else if (v.first < node->value.first) {
-////        if (node->left) insert_node(node->left, v);
-////        else node->left = new Node(v);
-////    }
-////}
-//
-// template <typename Key, typename T>
-// typename map<Key, T>::iterator map<Key, T>::insert_node(Node *node,
-// value_type v) {
-//    while (!(v.first > node->value.first && !node->right) && !(v.first <
-//    node->value.first && !node->left)) {
-//        node = v.first > node->value.first ? node->right : node->left;
-//    }
-//
-//    if (v.first > node->value.first) {
-//        node->right = new Node(v);
-//        node->right->parent = node;
-//    } else {
-//        node->left = new Node(v);
-//        node->left->parent = node;
-//    }
-//
-//    ++num_of_elems;
-//
-//    return iterator(v.first > node->value.first ? node->right : node->left);
-//}
-//
-// template <typename Key, typename T>
-// void map<Key, T>::copy_tree(Node* node) {
-//    if (node) {
-//        insert(node->value);
-//        copy_tree(node->left);
-//        copy_tree(node->right);
-//    }
-//}
-//
-// template <typename Key, typename T>
-// void map<Key, T>::clear_tree(Node* node) {
-//    if (node) {
-//        clear_tree(node->left);
-//        clear_tree(node->right);
-//        delete node;
-//    }
-//}
-
 template <typename Key, typename T>
 map<Key, T>::map() : tree() {}
 
@@ -230,10 +171,6 @@ bool map<Key, T>::contains(const Key& key) {
   return tree.find_node(key) != nullptr;
 }
 
-// template <typename Key, typename T>
-// typename map<Key, T>::Node* map<Key, T>::iterator::get_current() { return
-// current; }
-
 template <typename Key, typename T>
 map<Key, T>::iterator::Iterator(Node<Key, T>* curr, Node<Key, T>* lst)
     : current(curr), last(lst) {}
@@ -306,9 +243,3 @@ template <typename Key, typename T>
 bool map<Key, T>::iterator::operator!=(const Iterator& other) {
   return current != other.current;
 }
-
-// template <typename Key, typename T>
-// void map<Key, T>::iterator::copy(const Iterator &other) {
-//     current = other.current;
-//     last = other.last;
-// }

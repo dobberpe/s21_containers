@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <iostream>
 #include <utility>
-// #include <vector>
+
 #include "../vector/s21_vector.h"
 #include "s21_binary_tree.h"
 
@@ -27,24 +27,6 @@ class map {
 
  private:
   b_tree<Key, T> tree;
-  //        struct Node {
-  //            value_type value;
-  //            Node* left;
-  //            Node* right;
-  //            Node* parent;
-  //
-  //            Node(const_reference v)
-  //                    : value(v), left(nullptr), right(nullptr),
-  //                    parent(nullptr) {}
-  //        };
-  //
-  //        Node* root;
-  //        size_t num_of_elems;
-  //
-  //        iterator find_node(Node *node, const Key &key) const;
-  //        iterator insert_node(Node* node, value_type v);
-  //        void copy_tree(Node* tree);
-  //        void clear_tree(Node* node);
 
  public:
   map();
@@ -84,9 +66,6 @@ class map {
     Node<Key, T>* current;
     Node<Key, T>* last;
 
-    //        protected:
-    //            Node<Key, T>* get_current() const { return current; }
-
    public:
     Iterator(Node<Key, T>* curr, Node<Key, T>* lst);
     Iterator(const Iterator& other);
@@ -98,27 +77,17 @@ class map {
     Iterator& operator=(const Iterator& other);
     bool operator==(const Iterator& other);
     bool operator!=(const Iterator& other);
-    //            void copy(const Iterator &other);
   };
 
   class ConstIterator : public Iterator {
    public:
     using Iterator::Iterator;
-    //            ConstIterator(Node<Key, T>* node) : Iterator(node) {};
     const_reference operator*() const {
       return this->current ? this->current->value : this->last->value;
     }
     const value_type* operator->() const {
       return this->current ? &(this->current->value) : &(this->last->value);
     }
-    //            Iterator& operator++() {
-    //                Iterator::operator++();
-    //                return *this;
-    //            }
-    //            Iterator& operator--() {
-    //                Iterator::operator--();
-    //                return *this;
-    //            }
   };
 };
 

@@ -227,35 +227,25 @@ TEST(MapModifiersTest, InsertSeparately) {
 
 TEST(MapModifiersTest, InsertMany) {
   s21::map<int, int> m;
-  using s21_map_pair = std::pair<s21::map<int, int>::iterator, bool>;
-  using s21_vect_map_pair = s21::vector<s21_map_pair>;
-
-  // auto res = m.insert_many(std::make_pair(1, 1), std::make_pair(1, 2),
-  //                          std::make_pair(2, 1), std::make_pair(3, 5));
-
-  s21_vect_map_pair res =
-      m.insert_many(std::make_pair(1, 1), std::make_pair(1, 2),
-                    std::make_pair(2, 1), std::make_pair(3, 5));
-
+  auto res = m.insert_many(std::make_pair(1, 1), std::make_pair(1, 2),
+                           std::make_pair(2, 1), std::make_pair(3, 5));
   EXPECT_EQ(3, m.size());
-  // auto it = res.begin();
-  s21_map_pair *it = &(*(res.begin()));
-
-  EXPECT_TRUE(it->second);
-  EXPECT_EQ(1, it->first->first);
-  EXPECT_EQ(1, it->first->second);
+  auto it = res.begin();
+  EXPECT_TRUE((*it).second);
+  EXPECT_EQ(1, (*it).first->first);
+  EXPECT_EQ(1, (*it).first->second);
   ++it;
-  EXPECT_FALSE(it->second);
-  EXPECT_EQ(1, it->first->first);
-  EXPECT_EQ(1, it->first->second);
+  EXPECT_FALSE((*it).second);
+  EXPECT_EQ(1, (*it).first->first);
+  EXPECT_EQ(1, (*it).first->second);
   ++it;
-  EXPECT_TRUE(it->second);
-  EXPECT_EQ(2, it->first->first);
-  EXPECT_EQ(1, it->first->second);
+  EXPECT_TRUE((*it).second);
+  EXPECT_EQ(2, (*it).first->first);
+  EXPECT_EQ(1, (*it).first->second);
   ++it;
-  EXPECT_TRUE(it->second);
-  EXPECT_EQ(3, it->first->first);
-  EXPECT_EQ(5, it->first->second);
+  EXPECT_TRUE((*it).second);
+  EXPECT_EQ(3, (*it).first->first);
+  EXPECT_EQ(5, (*it).first->second);
 }
 
 TEST(MapModifiersTest, InsertOrAssign) {
