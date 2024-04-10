@@ -67,7 +67,7 @@ void list<value_type>::splice(const_iterator pos, list &other) {
     push_front(0);
 
     while (other.empty() == CONTAINER_NOT_EMPTY) {
-      insert(pos, *other.begin());
+      insert(pos, std::forward<value_type>(*other.begin()));
       other.pop_front();
     }
     pop_front();
@@ -80,7 +80,7 @@ void list<value_type>::reverse() {
     size_type back_list = size() - 1;
     size_type half = size() / 2;
     for (size_type i = 0; i < half; ++i) {
-      value_type save = operator()(i);
+      value_type save = std::move(operator()(i));
       operator()(i) = operator()(back_list);
       operator()(back_list--) = save;
     }

@@ -23,8 +23,8 @@ array<value_type, _MAX>::array(std::initializer_list<value_type> const &items) {
   allocate_array(_MAX);
   size_type i = 0;
   for (auto digit : items) {
-    *(head_node + i++) = digit;
-    // i++;
+    *(head_node + i) = digit;
+    ++i;
   }
 }
 

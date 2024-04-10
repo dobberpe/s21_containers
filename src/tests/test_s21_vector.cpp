@@ -86,7 +86,6 @@ TEST_F(test_s21_vector, test_vector_empty_size) {
   _SPCE_::vector<int> v1(1);
   EXPECT_EQ(v1.empty(), CONTAINER_NOT_EMPTY);
 
-  // for (int i = 0; i < 100; i++) v1[i] = i;
   v1.pop_back();
   EXPECT_EQ(v1.size(), 0);
   EXPECT_EQ(v1.capacity(), 1);
@@ -371,5 +370,4 @@ TEST_F(test_s21_vector, test_s21_vector_insert_back) {
 
   EXPECT_EQ(vector1 == answ1, SUCCESS);
 }
-
 #endif

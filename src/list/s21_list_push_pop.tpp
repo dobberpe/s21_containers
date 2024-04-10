@@ -56,9 +56,7 @@ void list<value_type>::push_back(const_reference value) {
 
 template <typename value_type>
 void list<value_type>::pop_back() {
-  iterator iter = end();
-  --iter;
-  erase(iter);
+  erase(--end());
 }
 
 template <typename value_type>
@@ -83,7 +81,7 @@ typename list<value_type>::iterator list<value_type>::insert_many(
 template <typename value_type>
 template <typename... Args>
 void list<value_type>::insert_many_back(Args &&...args) {
-  insert_many(cend(), args...);
+  (insert_many(cend(), std::forward<value_type>(args)), ...);
 }
 
 template <typename value_type>

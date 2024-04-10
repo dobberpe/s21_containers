@@ -170,7 +170,6 @@ TEST_F(test_array, test_array_const_iterator) {
   EXPECT_EQ(iter == iter1, FAILURE);
   EXPECT_EQ(iter != iter1, SUCCESS);
 
-  // *iter = -111;
   a2[0] = -111;
   a2[1] = 101;
   a2[2] = 102;

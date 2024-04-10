@@ -22,19 +22,6 @@ typename list<value_type>::const_iterator list<value_type>::cend() const {
 }
 
 template <typename value_type>
-typename list<value_type>::const_reference list<value_type>::front() const {
-  return *cbegin();
-}
-
-template <typename value_type>
-typename list<value_type>::const_reference list<value_type>::back() const {
-  const_iterator iter = cend();
-  if (empty() == CONTAINER_NOT_EMPTY) --iter;
-
-  return *iter;
-}
-
-template <typename value_type>
 typename list<value_type>::reference list<value_type>::front() {
   return *begin();
 }
@@ -42,6 +29,19 @@ typename list<value_type>::reference list<value_type>::front() {
 template <typename value_type>
 typename list<value_type>::reference list<value_type>::back() {
   iterator iter = end();
+  if (empty() == CONTAINER_NOT_EMPTY) --iter;
+
+  return *iter;
+}
+
+template <typename value_type>
+typename list<value_type>::const_reference list<value_type>::front() const {
+  return *cbegin();
+}
+
+template <typename value_type>
+typename list<value_type>::const_reference list<value_type>::back() const {
+  const_iterator iter = cend();
   if (empty() == CONTAINER_NOT_EMPTY) --iter;
 
   return *iter;
@@ -62,7 +62,7 @@ typename list<value_type>::const_reference list<value_type>::operator()(
     size_type i) const {
   const_iterator pos = cbegin();
   if (i < size()) {
-    for (; i > 0; ++pos, i--)
+    for (; i > 0; ++pos, --i)
       ;
   }
   return *pos;
