@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -Wall -Werror -Wextra -std=c++17
 TFLAGS = -lgtest -lsubunit
 GFLAGS = -fprofile-arcs -ftest-coverage
-TEST_SRC = $(wildcard ./tests/test_s21_list.cpp) $(wildcard ./tests/test_s21_containers.cpp) 
+TEST_SRC = $(wildcard ./tests/*.cpp)
 TEST_GCDA = $(LIB_SRC:.cpp=.gcda)
 TEST_GCNO = $(LIB_SRC:.cpp=.gcno)
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
