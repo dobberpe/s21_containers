@@ -45,7 +45,7 @@ class array {
   void fill(const_reference value);
 
   array();
-  array(std::initializer_list<value_type> const &items);
+  explicit array(std::initializer_list<value_type> const &items);
   array(const array<value_type, _MAX> &a);
   array(array<value_type, _MAX> &&a);
   array<value_type, _MAX> &operator=(array<value_type, _MAX> &&a);

@@ -83,11 +83,11 @@ typename list<value_type>::iterator list<value_type>::insert_many(
 template <typename value_type>
 template <typename... Args>
 void list<value_type>::insert_many_back(Args &&...args) {
-  insert_many(end(), args...);
+  insert_many(cend(), args...);
 }
 
 template <typename value_type>
 template <typename... Args>
 void list<value_type>::insert_many_front(Args &&...args) {
-  insert_many(begin(), args...);
+  insert_many(cbegin(), args...);
 }

@@ -247,9 +247,10 @@ TEST_F(test_s21_list, test_s21_list_const_iterator) {
   list2.push_back(101);
   list2.push_back(102);
   list2.push_back(103);
-  _SPCE_::list<int>::const_iterator iter = list2.begin();
+  _SPCE_::list<int>::const_iterator iter = list2.cbegin();
+  _SPCE_::list<int>::iterator iter1 = iter;
+  ++iter1;
   ASSERT_EQ(*iter, -111);
-
   ASSERT_EQ(*(++iter), 101);
   ASSERT_EQ(*(++iter), 102);
   ASSERT_EQ(*(++iter), 103);
@@ -325,7 +326,7 @@ TEST_F(test_s21_list, test_s21_list_splice) {
   _SPCE_::list<int> list1{5, 6, 7, 8, 11};
   _SPCE_::list<int> list2{1, 2, 3};
   _SPCE_::list<int> list3{9, 10};
-  _SPCE_::list<int>::const_iterator iter = list1.begin();
+  _SPCE_::list<int>::const_iterator iter{list1.begin()};
 
   _SPCE_::list<int>::const_iterator iter1;
   iter1 = iter;
@@ -334,7 +335,8 @@ TEST_F(test_s21_list, test_s21_list_splice) {
   list1.insert(iter, 4);
 
   iter = list1.end();
-  list1.splice(--iter, list3);
+  --iter;
+  list1.splice(iter, list3);
 
   ASSERT_EQ(list1 == answ1, SUCCESS);
   ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
@@ -445,7 +447,7 @@ TEST_F(test_s21_list, test_s21_list_sort) {
 TEST_F(test_s21_list, test_s21_list_insert_many) {
   _SPCE_::list<int> answ1{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
   _SPCE_::list<int> list1{5, 6, 7, 8, 11};
-  _SPCE_::list<int>::const_iterator iter = list1.begin();
+  _SPCE_::list<int>::const_iterator iter(list1.begin());
 
   list1.insert_many(iter, 1, 2, 3, 4);
   iter = list1.end();

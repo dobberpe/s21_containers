@@ -41,11 +41,6 @@ array<value_type, _MAX>::array(array<value_type, _MAX> &&a) {
 }
 
 template <typename value_type, size_t _MAX>
-array<value_type, _MAX>::~array() {
-  if (head_node) delete[] head_node;
-}
-
-template <typename value_type, size_t _MAX>
 array<value_type, _MAX> &array<value_type, _MAX>::operator=(
     array<value_type, _MAX> &&a) {
   if (&a != this) {
@@ -54,6 +49,12 @@ array<value_type, _MAX> &array<value_type, _MAX>::operator=(
   }
   return *this;
 }
+
+template <typename value_type, size_t _MAX>
+array<value_type, _MAX>::~array() {
+  if (head_node) delete[] head_node;
+}
+
 
 template <typename value_type, size_t _MAX>
 bool array<value_type, _MAX>::operator==(

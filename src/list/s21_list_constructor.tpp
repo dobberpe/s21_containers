@@ -27,8 +27,8 @@ list<value_type>::list(const list<value_type> &copy) {
   create_empty_list();
 
   if (copy.empty() == CONTAINER_NOT_EMPTY) {
-    const_iterator iter = copy.begin();
-    for (; iter != copy.end(); ++iter) push_back(*iter);
+    const_iterator iter = copy.cbegin();
+    for (; iter != copy.cend(); ++iter) push_back(*iter);
   }
 }
 

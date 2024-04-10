@@ -69,8 +69,8 @@ class vector {
   void insert_many_back(Args &&...args);
 
   vector();
-  vector(const size_type n);
-  vector(std::initializer_list<value_type> const &items);
+  explicit vector(const size_type n);
+  explicit vector(std::initializer_list<value_type> const &items);
   vector(const vector<value_type> &v);
   vector(vector<value_type> &&v);
   vector<value_type> &operator=(vector<value_type> &&v);
@@ -87,20 +87,21 @@ class VectorIterator {
 
  public:
   VectorIterator();
-  VectorIterator(T *node);
+  explicit VectorIterator(T *node);
   VectorIterator(const VectorIterator &copy);
   VectorIterator &operator++();
   VectorIterator &operator--();
-  VectorIterator &operator=(const VectorIterator &iter);
   typename vector<T>::reference operator*() const;
   bool operator!=(const VectorIterator &pos) const;
+  VectorIterator &operator=(const VectorIterator &iter);
 };
 
 template <typename T>
 class VectorConstIterator : public VectorIterator<T> {
  public:
   using VectorIterator<T>::VectorIterator;
-  VectorConstIterator(const VectorIterator<T> &copy);
+   VectorConstIterator(const VectorIterator<T> &copy);
+  // VectorConstIterator &operator=(typename vector<T>::iterator pos);
   typename vector<T>::const_reference operator*() const;
 };
 

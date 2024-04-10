@@ -49,8 +49,8 @@ class list {
   const_reference front() const;
   iterator begin();
   iterator end();
-  const_iterator begin() const;
-  const_iterator end() const;
+  const_iterator cbegin() const;
+  const_iterator cend() const;
   bool empty() const;
   size_type size() const;
   size_type max_size() const;
@@ -99,20 +99,23 @@ template <typename value_type>
 class ListConstIterator : public ListIterator<value_type> {
  public:
   using ListIterator<value_type>::ListIterator;
-  ListConstIterator(const ListIterator<value_type> &copy);
+  // using ListIterator<value_type>::operator=;
+  explicit ListConstIterator(const ListIterator<value_type> &copy);
+  ListConstIterator &operator=(typename list<value_type>::iterator pos);
   typename list<value_type>::const_reference operator*() const;
 };
 
 template <typename value_type>
 class ListIterator {
   friend list<value_type>;
+  friend ListConstIterator<value_type>;
 
  private:
   typename list<value_type>::list_node *index_ptr;
 
  public:
   ListIterator();
-  ListIterator(typename list<value_type>::list_node *copy);
+  explicit ListIterator(typename list<value_type>::list_node *copy);
   ListIterator(const ListIterator &copy);
   ListIterator &operator++();
   ListIterator &operator--();
