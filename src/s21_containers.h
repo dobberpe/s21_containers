@@ -2,8 +2,6 @@
 #define _S21_CONTAINERS_H_
 
 #define _NO_ERROR 0
-#define SUCCESS 1
-#define FAILURE 0
 #define CONTAINER_EMPTY 1
 #define CONTAINER_NOT_EMPTY 0
 #define ERROR_MEM 128
