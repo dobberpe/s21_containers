@@ -12,103 +12,103 @@ class test_s21_list : public testing::Test {
 
 TEST_F(test_s21_list, test_s21_list_create) {
   _SPCE_::list<int> list1;
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 
   _SPCE_::list list11(std::move(list1));
-  ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list11.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 
   _SPCE_::list<int> list2(1);
-  ASSERT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
   list2.push_back(15);
   list2.push_back(19);
   list2.push_back(4);
   list2.push_back(50);
   list2.push_back(-4);
-  ASSERT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(list2.size(), 6);
+  EXPECT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list2.size(), 6);
 
   _SPCE_::list list3(list2);
-  ASSERT_EQ(list3.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(list3.size(), 6);
+  EXPECT_EQ(list3.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list3.size(), 6);
 
   _SPCE_::list list4(std::move(list3));
-  ASSERT_EQ(list4.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list4.empty(), CONTAINER_NOT_EMPTY);
   list4.push_back(1000);
-  ASSERT_EQ(list4.size(), 7);
+  EXPECT_EQ(list4.size(), 7);
 
   _SPCE_::list<double> list5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
-  ASSERT_EQ(list5.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(list5.size(), 9);
+  EXPECT_EQ(list5.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list5.size(), 9);
 
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list5(0), 1.1);
-  ASSERT_DOUBLE_EQ(list5(8), 5914.09);
+  EXPECT_DOUBLE_EQ(list5(0), 1.1);
+  EXPECT_DOUBLE_EQ(list5(8), 5914.09);
 #endif
 
   _SPCE_::list list6 = std::move(list5);
-  ASSERT_EQ(list5.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list6.size(), 9);
+  EXPECT_EQ(list5.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list6.size(), 9);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list6(0), 1.1);
-  ASSERT_DOUBLE_EQ(list6(8), 5914.09);
+  EXPECT_DOUBLE_EQ(list6(0), 1.1);
+  EXPECT_DOUBLE_EQ(list6(8), 5914.09);
 #endif
 
   _SPCE_::list<double> list7;
   list7 = std::move(list6);
-  ASSERT_EQ(list6.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list7.size(), 9);
+  EXPECT_EQ(list6.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list7.size(), 9);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list7(0), 1.1);
-  ASSERT_DOUBLE_EQ(list7(8), 5914.09);
+  EXPECT_DOUBLE_EQ(list7(0), 1.1);
+  EXPECT_DOUBLE_EQ(list7(8), 5914.09);
 #endif
 
   _SPCE_::list list8 = std::move(list11);  // move empty-list
-  ASSERT_EQ(list8.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list8.empty(), CONTAINER_EMPTY);
 
   list8.push_back(5);
-  ASSERT_EQ(list8.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list8.empty(), CONTAINER_NOT_EMPTY);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list8(0), 5);
+  EXPECT_DOUBLE_EQ(list8(0), 5);
 #endif
 
-  ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list11.empty(), CONTAINER_EMPTY);
   _SPCE_::list list9(std::move(list11));  // move empty-list
-  ASSERT_EQ(list9.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list11.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list9.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list11.empty(), CONTAINER_EMPTY);
 
   list9.push_back(10);
-  ASSERT_EQ(list9.size(), 1);
+  EXPECT_EQ(list9.size(), 1);
 
   // тест конструктор перемещения и параметризированного конструктора
   // конструктор "со списком" и опрератором присваивания
   _SPCE_::list<int> list10(4);
-  ASSERT_EQ(list10.size(), 4);
+  EXPECT_EQ(list10.size(), 4);
   _SPCE_::list listcpy = std::move(list10);
-  ASSERT_EQ(listcpy.size(), 4);
-  ASSERT_EQ(list10.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(listcpy.size(), 4);
+  EXPECT_EQ(list10.empty(), CONTAINER_EMPTY);
 }
 
 // empty(), size(), clear();
 TEST_F(test_s21_list, test_s21_list_empty_size) {
   _SPCE_::list<double> list0;
-  ASSERT_EQ(list0.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list0.empty(), CONTAINER_EMPTY);
 
   _SPCE_::list<int> list1(1);
-  ASSERT_EQ(list1.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_NOT_EMPTY);
 
   for (size_t i = 0; i < 100; i++) list1.push_back(i);
   list1.pop_back();
-  ASSERT_EQ(list1.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(list1.size(), 100);
+  EXPECT_EQ(list1.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list1.size(), 100);
 
   list1.clear();
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
   list1.clear();  // clear empty-list
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 
   // list1.pop_back();  // del from empty-list
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 }
 
 // begin(), end(), front(), back()
@@ -118,22 +118,22 @@ TEST_F(test_s21_list, test_s21_list_begin_end_front_back) {
   list1.push_back(-0.1);
   list1.push_back(25.1);
   _SPCE_::list<double>::iterator pos = list1.begin();
-  ASSERT_EQ(list1.front(), *pos);
+  EXPECT_EQ(list1.front(), *pos);
   pos = list1.end();
   --pos;
-  ASSERT_EQ(list1.back(), *pos);
+  EXPECT_EQ(list1.back(), *pos);
   list1.clear();
   pos = list1.begin();
-  ASSERT_EQ(list1.front(), *pos);
-  ASSERT_EQ(list1.front(), list1.back());
+  EXPECT_EQ(list1.front(), *pos);
+  EXPECT_EQ(list1.front(), list1.back());
 
   _SPCE_::list<int> list2(4);
-  ASSERT_EQ(list2.front(), 0);
-  ASSERT_EQ(list2.back(), 0);
+  EXPECT_EQ(list2.front(), 0);
+  EXPECT_EQ(list2.back(), 0);
 
   _SPCE_::list<double> list3{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
-  ASSERT_EQ(list3.front(), 1.1);
-  ASSERT_EQ(list3.back(), 5914.09);
+  EXPECT_EQ(list3.front(), 1.1);
+  EXPECT_EQ(list3.back(), 5914.09);
 }
 
 // insert(), erase(), push's, pop's
@@ -149,69 +149,69 @@ TEST_F(test_s21_list, test_s21_list_insert_erase) {
   pos1 = list1.insert(pos, 2024);
   list1.push_back(9.6);
 
-  ASSERT_EQ(list1 == answer, SUCCESS);
+  EXPECT_EQ(list1 == answer, SUCCESS);
 
   list1.pop_back();
-  ASSERT_EQ(list1 == answer1, SUCCESS);
+  EXPECT_EQ(list1 == answer1, SUCCESS);
 
   list1.push_front(123.4);
-  ASSERT_EQ(list1 == answer2, SUCCESS);
+  EXPECT_EQ(list1 == answer2, SUCCESS);
 
   list1.pop_front();
-  ASSERT_EQ(list1 == answer1, SUCCESS);
+  EXPECT_EQ(list1 == answer1, SUCCESS);
   list1.pop_front();
   list1.pop_back();
   list1.pop_front();
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
   list1.push_back(9.6);
   list1.pop_back();
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 }
 
 // push_back/pop_back
 TEST_F(test_s21_list, test_s21_list_pushback_popback) {
   _SPCE_::list<int> list2;
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
   list2.push_back(100);
-  ASSERT_EQ(list2.size(), 1);
-  ASSERT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list2.size(), 1);
+  EXPECT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
 
   list2.pop_back();
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
 }
 
 // тест push_back/pop_back, доступ по индексу()
 TEST_F(test_s21_list, test_s21_list_index) {
   _SPCE_::list<double> list1;
   list1.push_back(-20.4);
-  ASSERT_EQ(list1.size(), 1);
+  EXPECT_EQ(list1.size(), 1);
 
   _SPCE_::list<double>::iterator iter;
   iter = list1.begin();
 
   list1.push_back(1.5);
   list1.push_back(13514.9);
-  ASSERT_EQ(list1.size(), 3);
+  EXPECT_EQ(list1.size(), 3);
   *(list1.begin()) = 20.4;
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list1(0), 20.4);
-  ASSERT_DOUBLE_EQ(list1(1), 1.5);
-  ASSERT_DOUBLE_EQ(list1(2), 13514.9);
+  EXPECT_DOUBLE_EQ(list1(0), 20.4);
+  EXPECT_DOUBLE_EQ(list1(1), 1.5);
+  EXPECT_DOUBLE_EQ(list1(2), 13514.9);
 #endif
 
   list1.push_back(4);
   list1.push_back(50.7);
   list1.push_back(-4);
-  ASSERT_EQ(list1.size(), 6);
+  EXPECT_EQ(list1.size(), 6);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list1(5), -4);
+  EXPECT_DOUBLE_EQ(list1(5), -4);
 #endif
 
   list1.pop_back();
-  ASSERT_EQ(list1.size(), 5);
+  EXPECT_EQ(list1.size(), 5);
 #ifndef _SPCE_ORIG_
-  ASSERT_DOUBLE_EQ(list1(3), 4);
-  ASSERT_DOUBLE_EQ(list1(4), 50.7);
+  EXPECT_DOUBLE_EQ(list1(3), 4);
+  EXPECT_DOUBLE_EQ(list1(4), 50.7);
 #endif
 }
 
@@ -223,21 +223,21 @@ TEST_F(test_s21_list, test_s21_list_iterator) {
   list2.push_back(102);
   list2.push_back(103);
   _SPCE_::list<int>::iterator iter = list2.begin();
-  ASSERT_EQ(*iter, -111);
+  EXPECT_EQ(*iter, -111);
 
-  ASSERT_EQ(*(++iter), 101);
-  ASSERT_EQ(*(++iter), 102);
-  ASSERT_EQ(*(++iter), 103);
+  EXPECT_EQ(*(++iter), 101);
+  EXPECT_EQ(*(++iter), 102);
+  EXPECT_EQ(*(++iter), 103);
   ++iter;
-  ASSERT_EQ(*(--iter), 103);
-  ASSERT_EQ(*(--iter), 102);
-  ASSERT_EQ(*(--iter), 101);
-  ASSERT_EQ(*(--iter), -111);
+  EXPECT_EQ(*(--iter), 103);
+  EXPECT_EQ(*(--iter), 102);
+  EXPECT_EQ(*(--iter), 101);
+  EXPECT_EQ(*(--iter), -111);
 
   for (int i = 0; i < 4; i++) list2.pop_front();
   // for (int i = 0; i < 4; i++) list2.pop_back();
 
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
 }
 
 // тест итераторов, push_back/pop_back
@@ -248,22 +248,24 @@ TEST_F(test_s21_list, test_s21_list_const_iterator) {
   list2.push_back(102);
   list2.push_back(103);
   _SPCE_::list<int>::const_iterator iter = list2.cbegin();
-  _SPCE_::list<int>::iterator iter1 = iter;
-  ++iter1;
-  ASSERT_EQ(*iter, -111);
-  ASSERT_EQ(*(++iter), 101);
-  ASSERT_EQ(*(++iter), 102);
-  ASSERT_EQ(*(++iter), 103);
+  // _SPCE_::list<int>::iterator iter1 = iter;
+  // ++iter1;
+  int a = *iter;
+  EXPECT_EQ(a, -111);
+  EXPECT_EQ(*iter, -111);
+  EXPECT_EQ(*(++iter), 101);
+  EXPECT_EQ(*(++iter), 102);
+  EXPECT_EQ(*(++iter), 103);
   ++iter;
-  ASSERT_EQ(*(--iter), 103);
-  ASSERT_EQ(*(--iter), 102);
-  ASSERT_EQ(*(--iter), 101);
-  ASSERT_EQ(*(--iter), -111);
+  EXPECT_EQ(*(--iter), 103);
+  EXPECT_EQ(*(--iter), 102);
+  EXPECT_EQ(*(--iter), 101);
+  EXPECT_EQ(*(--iter), -111);
 
   for (int i = 0; i < 4; i++) list2.pop_front();
   // for (int i = 0; i < 4; i++) list2.pop_back();
 
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
 }
 
 // swap()
@@ -274,15 +276,15 @@ TEST_F(test_s21_list, test_s21_list_swap) {
   _SPCE_::list<int> answ1(list1);
   _SPCE_::list<int> answ2(list2);
   list1.swap(list2);
-  ASSERT_EQ(list1 == answ2, SUCCESS);
-  ASSERT_EQ(list2 == answ1, SUCCESS);
+  EXPECT_EQ(list1 == answ2, SUCCESS);
+  EXPECT_EQ(list2 == answ1, SUCCESS);
   list2.swap(list1);
-  ASSERT_EQ(list1 == answ1, SUCCESS);
-  ASSERT_EQ(list2 == answ2, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list2 == answ2, SUCCESS);
   list1.clear();
   list2.clear();
   list1.swap(list2);
-  ASSERT_EQ(list2 == list1, SUCCESS);
+  EXPECT_EQ(list2 == list1, SUCCESS);
 }
 
 // merge()
@@ -295,29 +297,29 @@ TEST_F(test_s21_list, test_s21_list_merge) {
 
   list1.merge(list2);
 
-  ASSERT_EQ(list1.size(), answ1.size());
-  ASSERT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1.size(), answ1.size());
+  EXPECT_EQ(list1 == answ1, SUCCESS);
 
-  ASSERT_EQ(list2.size(), 0);
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list2.size(), 0);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
   list1.merge(list2);  // merge with empty-list2
-  ASSERT_EQ(list1 == answ1, SUCCESS);
-  ASSERT_EQ(list1.size(), 19);
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1.size(), 19);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
 
   answ1.pop_back();
   list1.pop_back();
 
   list2.merge(list1);  // merge to empty-list2
-  ASSERT_EQ(list2 == answ1, SUCCESS);
-  ASSERT_EQ(list1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list2 == answ1, SUCCESS);
+  EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 
   _SPCE_::list<double> list3;
   _SPCE_::list<double> list4;
   list3.merge(list4);  // merge both empty-list
-  ASSERT_EQ(list3 == list4, SUCCESS);
-  ASSERT_EQ(list3.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list4.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list3 == list4, SUCCESS);
+  EXPECT_EQ(list3.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list4.empty(), CONTAINER_EMPTY);
 }
 
 // splice()
@@ -338,15 +340,15 @@ TEST_F(test_s21_list, test_s21_list_splice) {
   --iter;
   list1.splice(iter, list3);
 
-  ASSERT_EQ(list1 == answ1, SUCCESS);
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
 
   iter = list2.end();
   list2.splice(iter, list1);  // splice to empty-list
-  ASSERT_EQ(list2 == answ1, SUCCESS);
+  EXPECT_EQ(list2 == answ1, SUCCESS);
 
   list2.splice(iter = list2.begin(), list1);  // splice empty-list
-  ASSERT_EQ(list2 == answ1, SUCCESS);
+  EXPECT_EQ(list2 == answ1, SUCCESS);
 }
 
 // insert()
@@ -366,7 +368,7 @@ TEST_F(test_s21_list, test_s21_list_insert) {
   ++iter;
   list1.insert(++iter, 13);
 
-  ASSERT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
 }
 
 // unique()
@@ -375,19 +377,19 @@ TEST_F(test_s21_list, test_s21_list_unique) {
   _SPCE_::list<int> list1{1, 1, 1, 2, 2, 2, 3, 4, 5, 5, 5, 5, 5, 5};
 
   list1.unique();
-  ASSERT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
 
   _SPCE_::list<int> list2;
   list2.unique();
-  ASSERT_EQ(list2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
 
   list2.push_back(1);
   list2.push_back(1);
   list2.unique();
   _SPCE_::list<int> answ2{1};
 
-  ASSERT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(list2 == answ2, SUCCESS);
+  EXPECT_EQ(list2.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(list2 == answ2, SUCCESS);
 }
 
 // reverse()
@@ -398,15 +400,15 @@ TEST_F(test_s21_list, test_s21_list_reverse) {
   _SPCE_::list<int> list1{5, 4, 3, 2, 1};
 
   list1.reverse();
-  ASSERT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
 
   _SPCE_::list<int> list2;
   list2.reverse();
-  ASSERT_EQ(list2 == answ2, SUCCESS);
+  EXPECT_EQ(list2 == answ2, SUCCESS);
   list2.push_back(3);
   list2.push_back(777);
   list2.reverse();
-  ASSERT_EQ(list2 == answ3, SUCCESS);
+  EXPECT_EQ(list2 == answ3, SUCCESS);
 }
 
 // sort()
@@ -431,14 +433,14 @@ TEST_F(test_s21_list, test_s21_list_sort) {
   list5.sort();
   list6.sort();
   list7.sort();
-  ASSERT_EQ(list1 == answ1, SUCCESS);
-  ASSERT_EQ(list2 == answ2, SUCCESS);
-  ASSERT_EQ(list3.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(list4.size(), 1);
-  ASSERT_EQ(list4.front(), 4);
-  ASSERT_EQ(list5 == answ5, SUCCESS);
-  ASSERT_EQ(list6 == answ6, SUCCESS);
-  ASSERT_EQ(list7 == answ7, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list2 == answ2, SUCCESS);
+  EXPECT_EQ(list3.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(list4.size(), 1);
+  EXPECT_EQ(list4.front(), 4);
+  EXPECT_EQ(list5 == answ5, SUCCESS);
+  EXPECT_EQ(list6 == answ6, SUCCESS);
+  EXPECT_EQ(list7 == answ7, SUCCESS);
 }
 
 #ifndef _SPCE_ORIG_
@@ -456,7 +458,7 @@ TEST_F(test_s21_list, test_s21_list_insert_many) {
   list1.insert_many(iter, 9, 10);
   iter = list1.end();
   list1.insert_many(iter, 12);
-  ASSERT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
 }
 
 // insert_many_back()
@@ -468,7 +470,7 @@ TEST_F(test_s21_list, test_s21_list_insert_back) {
   list1.insert_many_back(5, 6, 7, 8);
   list1.insert_many_back(9, 10, 11);
 
-  ASSERT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
 }
 
 // insert_many_front()
@@ -480,7 +482,7 @@ TEST_F(test_s21_list, test_s21_list_insert_front) {
   list1.insert_many_front(2, 3, 4, 5, 6, 7);
   list1.insert_many_front(1);
 
-  ASSERT_EQ(list1 == answ1, SUCCESS);
+  EXPECT_EQ(list1 == answ1, SUCCESS);
 }
 
 #endif

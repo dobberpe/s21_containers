@@ -1,7 +1,7 @@
 #ifndef _S21_ARRAY_H_
 #define _S21_ARRAY_H_
 
-#include "../vector/s21_vector.h"
+#include "../s21_containers.h"
 
 namespace s21 {
 
@@ -46,8 +46,8 @@ class array {
 
   array();
   explicit array(std::initializer_list<value_type> const &items);
-  array(const array<value_type, _MAX> &a);
-  array(array<value_type, _MAX> &&a);
+  array<value_type, _MAX>(const array<value_type, _MAX> &a);
+  array<value_type, _MAX>(array<value_type, _MAX> &&a);
   array<value_type, _MAX> &operator=(array<value_type, _MAX> &&a);
   ~array();
 };

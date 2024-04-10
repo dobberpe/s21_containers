@@ -1,10 +1,7 @@
 #ifndef _S21_VECTOR_H_
 #define _S21_VECTOR_H_
 
-#include "../list/s21_list.h"
-
-#define ERROR_MEM 128
-#define ERROR_OUT_OF_RANGE 5
+#include "../s21_containers.h"
 
 namespace s21 {
 
@@ -21,8 +18,8 @@ class vector {
   typedef value_type &reference;
   typedef const value_type &const_reference;
   typedef size_t size_type;
-  typedef VectorIterator<value_type> iterator;
-  typedef VectorConstIterator<value_type> const_iterator;
+  typedef VectorIterator<T> iterator;
+  typedef VectorConstIterator<T> const_iterator;
 
  private:
   size_type max_number;
@@ -43,8 +40,8 @@ class vector {
   // *Vector Iterators*
   iterator begin();
   iterator end();
-  const_iterator begin() const;
-  const_iterator end() const;
+  const_iterator cbegin() const;
+  const_iterator cend() const;
 
   // *Vector Capacity*
   bool empty() const noexcept;
@@ -76,12 +73,14 @@ class vector {
   vector<value_type> &operator=(vector<value_type> &&v);
   ~vector();
 
-  friend VectorIterator<value_type>;
-  friend VectorConstIterator<value_type>;
+  friend VectorIterator<T>;
+  friend VectorConstIterator<T>;
 };
 
 template <typename T>
 class VectorIterator {
+  friend VectorConstIterator<T>;
+
  private:
   T *index_ptr;
 
@@ -100,8 +99,8 @@ template <typename T>
 class VectorConstIterator : public VectorIterator<T> {
  public:
   using VectorIterator<T>::VectorIterator;
-   VectorConstIterator(const VectorIterator<T> &copy);
-  // VectorConstIterator &operator=(typename vector<T>::iterator pos);
+  explicit VectorConstIterator<T>(const VectorIterator<T> &copy);
+  VectorConstIterator &operator=(typename vector<T>::iterator pos);
   typename vector<T>::const_reference operator*() const;
 };
 

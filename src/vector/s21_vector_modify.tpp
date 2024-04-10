@@ -93,5 +93,5 @@ typename vector<value_type>::iterator vector<value_type>::insert_many(
 template <typename value_type>
 template <typename... Args>
 void vector<value_type>::insert_many_back(Args &&...args) {
-  insert_many(end(), args...);
+  insert_many(cend(), args...);
 }

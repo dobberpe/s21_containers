@@ -1,14 +1,7 @@
 #ifndef _S21_LIST_H_
 #define _S21_LIST_H_
 
-#define _NO_ERROR 0
-#define SUCCESS 1
-#define FAILURE 0
-#define CONTAINER_EMPTY 1
-#define CONTAINER_NOT_EMPTY 0
-
-#include <cstddef>
-#include <initializer_list>
+#include "../s21_containers.h"
 
 namespace s21 {
 template <typename T>
@@ -86,8 +79,8 @@ class list {
   list();
   explicit list(const size_type count);
   explicit list(std::initializer_list<value_type> const &items);
-  list(const list<value_type> &copy);
-  list(list<value_type> &&moved);
+  list<value_type>(const list<value_type> &copy);
+  list<value_type>(list<value_type> &&moved);
   list<value_type> &operator=(list<value_type> &&moved);
   ~list();
 
@@ -99,7 +92,6 @@ template <typename value_type>
 class ListConstIterator : public ListIterator<value_type> {
  public:
   using ListIterator<value_type>::ListIterator;
-  // using ListIterator<value_type>::operator=;
   explicit ListConstIterator(const ListIterator<value_type> &copy);
   ListConstIterator &operator=(typename list<value_type>::iterator pos);
   typename list<value_type>::const_reference operator*() const;

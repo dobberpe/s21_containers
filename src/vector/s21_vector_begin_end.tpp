@@ -4,20 +4,20 @@ using namespace s21;
 
 template <typename value_type>
 typename vector<value_type>::iterator vector<value_type>::begin() {
-  return VectorIterator(head_node);
+  return iterator(head_node);
 }
 
 template <typename value_type>
 typename vector<value_type>::iterator vector<value_type>::end() {
-  return VectorIterator(head_node + number);
+  return iterator(head_node + number);
 }
 
 template <typename value_type>
-typename vector<value_type>::const_iterator vector<value_type>::begin() const {
-  return VectorConstIterator(head_node);
+typename vector<value_type>::const_iterator vector<value_type>::cbegin() const {
+  return const_iterator(head_node);
 }
 
 template <typename value_type>
-typename vector<value_type>::const_iterator vector<value_type>::end() const {
-  return VectorConstIterator(head_node + number);
+typename vector<value_type>::const_iterator vector<value_type>::cend() const {
+  return const_iterator(head_node + number);
 }

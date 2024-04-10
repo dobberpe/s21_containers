@@ -61,7 +61,6 @@ void list<value_type>::merge(list &merge) {
   }
 }
 
-// transfers elements from list other starting from pos
 template <typename value_type>
 void list<value_type>::splice(const_iterator pos, list &other) {
   if (this != &other && other.empty() == CONTAINER_NOT_EMPTY) {

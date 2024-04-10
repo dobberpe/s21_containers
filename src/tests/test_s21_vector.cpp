@@ -13,18 +13,18 @@ class test_s21_vector : public testing::Test {
 // тест конструкторов
 TEST_F(test_s21_vector, test_vector_create) {
   _SPCE_::vector<int> vect1;
-  ASSERT_EQ(vect1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(vect1.empty(), CONTAINER_EMPTY);
 
   _SPCE_::vector<int> vect2(6);
-  ASSERT_EQ(vect2.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(vect2.size(), 6);
-  ASSERT_EQ(vect2.capacity(), 6);
+  EXPECT_EQ(vect2.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(vect2.size(), 6);
+  EXPECT_EQ(vect2.capacity(), 6);
   try {
 #ifndef _SPCE_ORIG_
     vect2.at(6);
 #endif
   } catch (int error) {
-    ASSERT_EQ(error, ERROR_OUT_OF_RANGE);
+    EXPECT_EQ(error, ERROR_OUT_OF_RANGE);
   }
 
   vect2.push_back(15);
@@ -33,98 +33,102 @@ TEST_F(test_s21_vector, test_vector_create) {
   vect2.push_back(50);
   vect2.push_back(-4);
 
-  ASSERT_EQ(vect2.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(vect2.size(), 11);
+  EXPECT_EQ(vect2.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(vect2.size(), 11);
 
   _SPCE_::vector v3(std::move(vect2));
-  ASSERT_EQ(vect2.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(v3.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(vect2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v3.empty(), CONTAINER_NOT_EMPTY);
   v3.push_back(1000);
-  ASSERT_EQ(v3.size(), 12);
+  EXPECT_EQ(v3.size(), 12);
 
   _SPCE_::vector<double> v5{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
-  ASSERT_EQ(v5.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(v5.size(), 9);
-  ASSERT_DOUBLE_EQ(v5[0], 1.1);
-  ASSERT_DOUBLE_EQ(v5[8], 5914.09);
+  EXPECT_EQ(v5.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(v5.size(), 9);
+  EXPECT_DOUBLE_EQ(v5[0], 1.1);
+  EXPECT_DOUBLE_EQ(v5[8], 5914.09);
 
   _SPCE_::vector v6 = std::move(v5);
-  ASSERT_EQ(v5.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(v6.size(), 9);
-  ASSERT_DOUBLE_EQ(v6[0], 1.1);
-  ASSERT_DOUBLE_EQ(v6[8], 5914.09);
+  EXPECT_EQ(v5.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v6.size(), 9);
+  EXPECT_DOUBLE_EQ(v6[0], 1.1);
+  EXPECT_DOUBLE_EQ(v6[8], 5914.09);
 
   _SPCE_::vector<double> v7;
   v7 = std::move(v6);
 
-  ASSERT_EQ(v6.empty(), CONTAINER_EMPTY);
-  ASSERT_EQ(v7.size(), 9);
-  ASSERT_DOUBLE_EQ(v7[0], 1.1);
-  ASSERT_DOUBLE_EQ(v7[8], 5914.09);
+  EXPECT_EQ(v6.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v7.size(), 9);
+  EXPECT_DOUBLE_EQ(v7[0], 1.1);
+  EXPECT_DOUBLE_EQ(v7[8], 5914.09);
 
   _SPCE_::vector v8 = std::move(v6);  // std::move empty-vector
-  ASSERT_EQ(v8.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v8.empty(), CONTAINER_EMPTY);
 
   v8.push_back(5);
-  ASSERT_EQ(v8.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(v8[0], 5);
+  EXPECT_EQ(v8.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(v8[0], 5);
   v8[0] = 30;
-  ASSERT_EQ(v8[0], 30);
+  EXPECT_EQ(v8[0], 30);
   _SPCE_::vector v9(v8);  // copy
 
   v9.push_back(15);
-  ASSERT_EQ(v9.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(v9.size(), 2);
-  ASSERT_EQ(v9[0], 30);
+  EXPECT_EQ(v9.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(v9.size(), 2);
+  EXPECT_EQ(v9[0], 30);
 }
 
 // // empty(), size(), clear();
 TEST_F(test_s21_vector, test_vector_empty_size) {
   _SPCE_::vector<double> v0;
-  ASSERT_EQ(v0.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v0.empty(), CONTAINER_EMPTY);
 
   _SPCE_::vector<int> v1(1);
-  ASSERT_EQ(v1.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(v1.empty(), CONTAINER_NOT_EMPTY);
 
   // for (int i = 0; i < 100; i++) v1[i] = i;
   v1.pop_back();
-  ASSERT_EQ(v1.size(), 0);
-  ASSERT_EQ(v1.capacity(), 1);
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v1.size(), 0);
+  EXPECT_EQ(v1.capacity(), 1);
+  EXPECT_EQ(v1.empty(), CONTAINER_EMPTY);
 
   for (int i = 0; i < 10000; i++) v1.push_back(i);
-  ASSERT_EQ(v1.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(v1.size(), 10000);
+  EXPECT_EQ(v1.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(v1.size(), 10000);
 
   v1.clear();
-  ASSERT_EQ(v1.size(), 0);
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v1.size(), 0);
+  EXPECT_EQ(v1.empty(), CONTAINER_EMPTY);
   v1.clear();  // clear empty-vector, but capacity >0
-  ASSERT_EQ(v1.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v1.empty(), CONTAINER_EMPTY);
 }
 
 // begin(), end(), front(), back()
 TEST_F(test_s21_vector, test_vector_begin_end_front_back) {
   _SPCE_::vector<double> v1;
   v1.push_back(1.1);
+  v1.pop_back();
+  EXPECT_EQ(v1.back(), 1.1);
+
+  v1.push_back(1.1);
   v1.push_back(-0.1);
   v1.push_back(25.1);
-  ASSERT_DOUBLE_EQ(v1.front(), 1.1);
+  EXPECT_DOUBLE_EQ(v1.front(), 1.1);
   _SPCE_::vector<double>::iterator pos = v1.end();
   --pos;
-  ASSERT_DOUBLE_EQ(*pos, 25.1);
-  ASSERT_DOUBLE_EQ(v1.back(), 25.1);
+  EXPECT_DOUBLE_EQ(*pos, 25.1);
+  EXPECT_DOUBLE_EQ(v1.back(), 25.1);
   v1.clear();
   pos = v1.begin();
-  ASSERT_DOUBLE_EQ(v1.front(), *pos);
+  EXPECT_DOUBLE_EQ(v1.front(), *pos);
 
   _SPCE_::vector<int> v2(4);
-  ASSERT_EQ(v2.front(), 0);
-  ASSERT_EQ(v2.back(), 0);
+  EXPECT_EQ(v2.front(), 0);
+  EXPECT_EQ(v2.back(), 0);
 
   _SPCE_::vector<double> v3{1.1, 4, 2, 5, 7, 13, 56, 11, 5914.09};
-  ASSERT_DOUBLE_EQ(v3.front(), 1.1);
-  ASSERT_DOUBLE_EQ(v3.back(), 5914.09);
+  EXPECT_DOUBLE_EQ(v3.front(), 1.1);
+  EXPECT_DOUBLE_EQ(v3.back(), 5914.09);
 }
 
 // insert(), erase(), push's, pop's
@@ -138,72 +142,82 @@ TEST_F(test_s21_vector, test_vector_insert_erase) {
   _SPCE_::vector<double>::iterator pos1;
   ++pos;
   pos1 = v1.insert(pos, 2024);
-  ASSERT_DOUBLE_EQ(v1[0], 1.1);
-  ASSERT_DOUBLE_EQ(v1[1], 2024);
-  ASSERT_DOUBLE_EQ(v1[2], 25.1);
+  EXPECT_DOUBLE_EQ(v1[0], 1.1);
+  EXPECT_DOUBLE_EQ(v1[1], 2024);
+  EXPECT_DOUBLE_EQ(v1[2], 25.1);
 
   v1.push_back(9.6);
 
-  ASSERT_EQ(v1 == answer, SUCCESS);
-  ASSERT_EQ(v1[2], 25.1);
+  EXPECT_EQ(v1 == answer, SUCCESS);
+  EXPECT_EQ(v1[2], 25.1);
 
   v1.pop_back();
-  ASSERT_EQ(v1 == answer1, SUCCESS);
+  EXPECT_EQ(v1 == answer1, SUCCESS);
 
   v1.erase(++(v1.begin()));
-  ASSERT_DOUBLE_EQ(v1[0], 1.1);
-  ASSERT_DOUBLE_EQ(v1[1], 25.1);
+  EXPECT_DOUBLE_EQ(v1[0], 1.1);
+  EXPECT_DOUBLE_EQ(v1[1], 25.1);
   v1.erase(v1.begin());
-  ASSERT_DOUBLE_EQ(v1[0], 25.1);
-  ASSERT_DOUBLE_EQ(v1.size(), 1);
+  EXPECT_DOUBLE_EQ(v1[0], 25.1);
+  EXPECT_DOUBLE_EQ(v1.size(), 1);
 
   v1.pop_back();
-  ASSERT_EQ(v1.size(), 0);
+  EXPECT_EQ(v1.size(), 0);
   v1.push_back(9.6);
   v1.pop_back();
-  ASSERT_EQ(v1.size(), 0);
+  EXPECT_EQ(v1.size(), 0);
 }
 
 // тест конструктора по умолчанию, empty(), push_back/pop_back
 TEST_F(test_s21_vector, test_vector_push_pop) {
   _SPCE_::vector<int> v2;
-  ASSERT_EQ(v2.empty(), CONTAINER_EMPTY);
+  EXPECT_EQ(v2.empty(), CONTAINER_EMPTY);
   v2.push_back(100);
-  ASSERT_EQ(v2.size(), 1);
-  ASSERT_EQ(v2.empty(), CONTAINER_NOT_EMPTY);
-  ASSERT_EQ(v2[0], 100);
+  EXPECT_EQ(v2.size(), 1);
+  EXPECT_EQ(v2.empty(), CONTAINER_NOT_EMPTY);
+  EXPECT_EQ(v2[0], 100);
 
   v2.pop_back();
-  ASSERT_EQ(v2.size(), 0);
+  EXPECT_EQ(v2.size(), 0);
 }
 
 // тест push_back/pop_back, доступ по индексу()
 TEST_F(test_s21_vector, test_vector_index) {
   _SPCE_::vector<double> v1;
   v1.push_back(-20.4);
-  ASSERT_EQ(v1.size(), 1);
+  EXPECT_EQ(v1.size(), 1);
 
   _SPCE_::vector<double>::iterator iter;
   iter = v1.begin();
 
   v1.push_back(1.5);
   v1.push_back(13514.9);
-  ASSERT_EQ(v1.size(), 3);
+  EXPECT_EQ(v1.size(), 3);
   v1[0] = 20.4;
-  ASSERT_DOUBLE_EQ(v1[0], 20.4);
-  ASSERT_DOUBLE_EQ(v1[1], 1.5);
-  ASSERT_DOUBLE_EQ(v1[2], 13514.9);
+  EXPECT_DOUBLE_EQ(v1[0], 20.4);
+  EXPECT_DOUBLE_EQ(v1[1], 1.5);
+  EXPECT_DOUBLE_EQ(v1[2], 13514.9);
 
   v1.push_back(4);
   v1.push_back(50.7);
   v1.push_back(-4);
-  ASSERT_EQ(v1.size(), 6);
-  ASSERT_DOUBLE_EQ(v1[5], -4);
+  EXPECT_EQ(v1.size(), 6);
+  EXPECT_DOUBLE_EQ(v1[5], -4);
 
   v1.pop_back();
-  ASSERT_EQ(v1.size(), 5);
-  ASSERT_DOUBLE_EQ(v1[3], 4);
-  ASSERT_DOUBLE_EQ(v1[4], 50.7);
+  EXPECT_EQ(v1.size(), 5);
+  EXPECT_DOUBLE_EQ(v1[3], 4);
+  EXPECT_DOUBLE_EQ(v1[4], 50.7);
+
+#ifndef _SPCE_ORIG_
+  EXPECT_DOUBLE_EQ(v1.at(4), 50.7);
+  EXPECT_DOUBLE_EQ(v1.at(0), 20.4);
+  try {
+    v1.at(10000);
+  } catch (int erorr) {
+    EXPECT_EQ(erorr, ERROR_OUT_OF_RANGE);
+  }
+#endif
 }
 
 // тест итераторов, push_back/pop_back
@@ -215,19 +229,19 @@ TEST_F(test_s21_vector, test_vector_iterator) {
   v2.push_back(103);
   _SPCE_::vector<int>::iterator iter;
   iter = v2.begin();
-  ASSERT_EQ(*iter, -111);
-  ASSERT_EQ(*(++iter), 101);
-  ASSERT_EQ(*(++iter), 102);
-  ASSERT_EQ(*(++iter), 103);
+  EXPECT_EQ(*iter, -111);
+  EXPECT_EQ(*(++iter), 101);
+  EXPECT_EQ(*(++iter), 102);
+  EXPECT_EQ(*(++iter), 103);
 
-  ASSERT_EQ(*iter, 103);
-  ASSERT_EQ(*(--iter), 102);
-  ASSERT_EQ(*(--iter), 101);
-  ASSERT_EQ(*(--iter), -111);
+  EXPECT_EQ(*iter, 103);
+  EXPECT_EQ(*(--iter), 102);
+  EXPECT_EQ(*(--iter), 101);
+  EXPECT_EQ(*(--iter), -111);
 
   for (int i = 0; i < 4; i++) v2.pop_back();
 
-  ASSERT_EQ(v2.size(), 0);
+  EXPECT_EQ(v2.size(), 0);
 }
 
 // постоянный итератор
@@ -237,23 +251,23 @@ TEST_F(test_s21_vector, test_vector_const_iterator) {
   v2.push_back(101);
   v2.push_back(102);
   v2.push_back(103);
-  _SPCE_::vector<int>::const_iterator iter = v2.begin();
+  _SPCE_::vector<int>::const_iterator iter = v2.cbegin();
 
-  ASSERT_EQ(*iter, -111);
-  ASSERT_EQ(*(++iter), 101);
-  ASSERT_EQ(*(++iter), 102);
-  ASSERT_EQ(*(++iter), 103);
+  EXPECT_EQ(*iter, -111);
+  EXPECT_EQ(*(++iter), 101);
+  EXPECT_EQ(*(++iter), 102);
+  EXPECT_EQ(*(++iter), 103);
 
   _SPCE_::vector<int>::const_iterator iter1(v2.end());
   --iter1;
-  ASSERT_EQ(*iter1, 103);
-  ASSERT_EQ(*(--iter1), 102);
-  ASSERT_EQ(*(--iter1), 101);
-  ASSERT_EQ(*(--iter1), -111);
+  EXPECT_EQ(*iter1, 103);
+  EXPECT_EQ(*(--iter1), 102);
+  EXPECT_EQ(*(--iter1), 101);
+  EXPECT_EQ(*(--iter1), -111);
 
   for (int i = 0; i < 4; i++) v2.pop_back();
 
-  ASSERT_EQ(v2.size(), 0);
+  EXPECT_EQ(v2.size(), 0);
 }
 
 // swap()
@@ -264,15 +278,15 @@ TEST_F(test_s21_vector, test_vector_swap) {
   _SPCE_::vector<int> answ1(v1);
   _SPCE_::vector<int> answ2(v2);
   v1.swap(v2);
-  ASSERT_EQ(v1 == answ2, SUCCESS);
-  ASSERT_EQ(v2 == answ1, SUCCESS);
+  EXPECT_EQ(v1 == answ2, SUCCESS);
+  EXPECT_EQ(v2 == answ1, SUCCESS);
   v2.swap(v1);
-  ASSERT_EQ(v1 == answ1, SUCCESS);
-  ASSERT_EQ(v2 == answ2, SUCCESS);
+  EXPECT_EQ(v1 == answ1, SUCCESS);
+  EXPECT_EQ(v2 == answ2, SUCCESS);
   v1.clear();
   v2.clear();
   v1.swap(v2);
-  ASSERT_EQ(v2 == v1, SUCCESS);
+  EXPECT_EQ(v2 == v1, SUCCESS);
 }
 
 // insert()
@@ -292,7 +306,7 @@ TEST_F(test_s21_vector, test_vector_insert) {
   v1.insert(++iter, 13);
 
   iter = v1.begin();
-  ASSERT_EQ(v1 == answ1, SUCCESS);
+  EXPECT_EQ(v1 == answ1, SUCCESS);
 }
 
 // shrink_to_fit()
@@ -300,29 +314,29 @@ TEST_F(test_s21_vector, test_vector_shrink_to_fit) {
   _SPCE_::vector<int> v1{11, 12, 13, 14};
   _SPCE_::vector<int> answ1{11, 12, 13, 14};
   v1.shrink_to_fit();
-  ASSERT_EQ(v1 == answ1, SUCCESS);
-  ASSERT_EQ(v1.capacity(), 4);
+  EXPECT_EQ(v1 == answ1, SUCCESS);
+  EXPECT_EQ(v1.capacity(), 4);
   v1.pop_back();
   v1.pop_back();
-  ASSERT_EQ(v1.capacity(), 4);
+  EXPECT_EQ(v1.capacity(), 4);
   v1.shrink_to_fit();
-  ASSERT_EQ(v1.capacity(), 2);
+  EXPECT_EQ(v1.capacity(), 2);
   v1.pop_back();
   v1.pop_back();
-  ASSERT_EQ(v1.size(), 0);
-  ASSERT_EQ(v1.capacity(), 2);
+  EXPECT_EQ(v1.size(), 0);
+  EXPECT_EQ(v1.capacity(), 2);
   v1.shrink_to_fit();  // shrink empty-vector
-  ASSERT_EQ(v1.size(), 0);
-  ASSERT_EQ(v1.capacity(), 0);
-  ASSERT_EQ(v1.data(), nullptr);
+  EXPECT_EQ(v1.size(), 0);
+  EXPECT_EQ(v1.capacity(), 0);
+  EXPECT_EQ(v1.data(), nullptr);
   v1.shrink_to_fit();  // shrink empty-vector one more
-  ASSERT_EQ(v1.size(), 0);
-  ASSERT_EQ(v1.capacity(), 0);
-  ASSERT_EQ(v1.data(), nullptr);
+  EXPECT_EQ(v1.size(), 0);
+  EXPECT_EQ(v1.capacity(), 0);
+  EXPECT_EQ(v1.data(), nullptr);
 
   v1.push_back(4);
-  ASSERT_EQ(v1.size(), 1);
-  ASSERT_EQ(v1.capacity(), 1);
+  EXPECT_EQ(v1.size(), 1);
+  EXPECT_EQ(v1.capacity(), 1);
 }
 
 #ifndef _SPCE_ORIG_
@@ -331,7 +345,7 @@ TEST_F(test_s21_vector, test_vector_shrink_to_fit) {
 TEST_F(test_s21_vector, test_s21_vector_insert_many) {
   _SPCE_::vector<int> answ1{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
   _SPCE_::vector<int> vector1{5, 6, 7, 8, 11};
-  _SPCE_::vector<int>::const_iterator iter = vector1.begin();
+  _SPCE_::vector<int>::const_iterator iter = vector1.cbegin();
 
   vector1.insert_many(iter, 1, 2, 3, 4);
   iter = vector1.end();
@@ -342,7 +356,7 @@ TEST_F(test_s21_vector, test_s21_vector_insert_many) {
   vector1.insert_many(iter, 12, 13);
 
   vector1.insert_many(iter);  // insert null-elements
-  ASSERT_EQ(vector1 == answ1, SUCCESS);
+  EXPECT_EQ(vector1 == answ1, SUCCESS);
 }
 
 // insert_many_back()
@@ -355,7 +369,7 @@ TEST_F(test_s21_vector, test_s21_vector_insert_back) {
   vector1.insert_many_back(9, 10, 11);
   vector1.insert_many_back();
 
-  ASSERT_EQ(vector1 == answ1, SUCCESS);
+  EXPECT_EQ(vector1 == answ1, SUCCESS);
 }
 
 #endif

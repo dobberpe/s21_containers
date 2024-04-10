@@ -11,9 +11,9 @@ typename vector<T>::const_reference VectorConstIterator<T>::operator*() const {
   return VectorIterator<T>::operator*();
 }
 
-// template <typename value_type>
-// VectorConstIterator<value_type> &VectorConstIterator<value_type>::operator=(
-//     typename vector<value_type>::iterator pos) {
-//   this->index_ptr = pos.index_ptr;
-//   return *this;
-// }
+template <typename value_type>
+VectorConstIterator<value_type> &VectorConstIterator<value_type>::operator=(
+    typename vector<value_type>::iterator pos) {
+  this->index_ptr = pos.index_ptr;
+  return *this;
+}

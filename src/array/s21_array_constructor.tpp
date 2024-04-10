@@ -12,7 +12,7 @@ void array<value_type, _MAX>::allocate_array(size_type n) {
   number = 0;
   head_node = nullptr;
   if (n > 0) {
-    head_node = new value_type[n];
+    head_node = new value_type[n]{0};
     if (!head_node) throw ERROR_MEM;
     number = n;
   }
@@ -54,7 +54,6 @@ template <typename value_type, size_t _MAX>
 array<value_type, _MAX>::~array() {
   if (head_node) delete[] head_node;
 }
-
 
 template <typename value_type, size_t _MAX>
 bool array<value_type, _MAX>::operator==(
