@@ -172,11 +172,11 @@ bool map<Key, T>::contains(const Key& key) {
 }
 
 template <typename Key, typename T>
-map<Key, T>::iterator::Iterator(Node<Key, T>* curr, Node<Key, T>* lst)
+map<Key, T>::Iterator::Iterator(Node<Key, T>* curr, Node<Key, T>* lst)
     : current(curr), last(lst) {}
 
 template <typename Key, typename T>
-map<Key, T>::iterator::Iterator(const Iterator& other)
+map<Key, T>::Iterator::Iterator(const Iterator& other)
     : current(other.current), last(other.last) {}
 
 template <typename Key, typename T>
@@ -226,7 +226,7 @@ typename map<Key, T>::iterator::Iterator& map<Key, T>::iterator::operator--() {
 }
 
 template <typename Key, typename T>
-typename map<Key, T>::iterator::Iterator& map<Key, T>::iterator::operator=(
+typename map<Key, T>::Iterator::Iterator& map<Key, T>::Iterator::operator=(
     const Iterator& other) {
   current = other.current;
   last = other.last;
