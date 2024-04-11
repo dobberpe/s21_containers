@@ -114,6 +114,6 @@ template <typename... Args>
 std::vector<typename multiset<Key>::iterator> multiset<Key>::insert_many(
     Args &&...args) {
   std::vector<typename set<Key>::iterator> results;
-  ((void)results.push_back(insert(std::forward<Args>(args))), ...);
+  (results.push_back(insert(std::forward<Args>(args))), ...);
   return results;
 }

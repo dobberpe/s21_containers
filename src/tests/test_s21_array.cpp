@@ -12,10 +12,10 @@ class test_array : public testing::Test {
 
 // тест конструкторов
 TEST_F(test_array, test_array_create) {
-  _SPCE_::array<int, 0> arr1;
+  _SPCE_::array<int, 0> arr1{};
   EXPECT_EQ(arr1.empty(), CONTAINER_EMPTY);
 
-  _SPCE_::array<int, 6> arr2;
+  _SPCE_::array<int, 6> arr2{};
   EXPECT_EQ(arr2.empty(), CONTAINER_NOT_EMPTY);
 #ifndef _SPCE_ORIG_
   try {
@@ -73,7 +73,7 @@ TEST_F(test_array, test_array_create) {
   // тест конструктор перемещения и параметризированного конструктора
   // конструктор "со списком" и опрератором присваивания
 
-  _SPCE_::array<int, 4> a2;
+  _SPCE_::array<int, 4> a2{};
   _SPCE_::array listcpy = std::move(a2);
   EXPECT_EQ(listcpy.size(), 4);
   EXPECT_EQ(a2.size(), 4);
@@ -84,10 +84,10 @@ TEST_F(test_array, test_array_create) {
 
 // empty(), size(), доступ по индексу[]
 TEST_F(test_array, test_array_empty_size) {
-  _SPCE_::array<double, 0> a0;
+  _SPCE_::array<double, 0> a0{};
   EXPECT_EQ(a0.empty(), CONTAINER_EMPTY);
 
-  _SPCE_::array<int, 1> a00;
+  _SPCE_::array<int, 1> a00{};
   EXPECT_EQ(a00.empty(), CONTAINER_NOT_EMPTY);
   EXPECT_EQ(a00.size(), 1);
 

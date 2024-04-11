@@ -42,5 +42,5 @@ void stack<Key>::swap(stack& other) {
 template <typename Key>
 template <typename... Args>
 void stack<Key>::insert_many_front(Args&&... args) {
-  ((void)data.push_back(std::forward<Args>(args)), ...);
+  (data.push_back(std::forward<Args>(args)), ...);
 }

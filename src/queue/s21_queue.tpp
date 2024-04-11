@@ -47,5 +47,5 @@ void queue<Key>::swap(queue& other) {
 template <typename Key>
 template <typename... Args>
 void queue<Key>::insert_many_back(Args&&... args) {
-  ((void)data.push_back(std::forward<Args>(args)), ...);
+  (data.push_back(std::forward<Args>(args)), ...);
 }

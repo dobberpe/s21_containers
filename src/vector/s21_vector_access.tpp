@@ -16,8 +16,7 @@ typename vector<value_type>::reference vector<value_type>::front() {
 
 template <typename value_type>
 typename vector<value_type>::reference vector<value_type>::back() {
-
-    return *(--end());
+  return *(--end());
 }
 
 template <typename value_type>
