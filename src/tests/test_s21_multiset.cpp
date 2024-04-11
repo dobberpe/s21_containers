@@ -49,11 +49,9 @@ TEST(msTest, Iteration) {
 TEST(msTest, LowerBound) {
   multiset<int> ms{1, 2, 2, 3, 3, 3, 4, 5};
 
-  // Lower bound of 2 should point to the first occurrence of 2
   auto it = ms.lower_bound(2);
   EXPECT_EQ(*it, 2);
 
-  // Lower bound of 3 should point to the first occurrence of 3
   it = ms.lower_bound(3);
   EXPECT_EQ(*it, 3);
 }
@@ -61,13 +59,9 @@ TEST(msTest, LowerBound) {
 TEST(msTest, UpperBound) {
   multiset<int> ms{1, 2, 2, 3, 3, 3, 4, 5};
 
-  // Upper bound of 2 should point to the first element after the last
-  // occurrence of 2
   auto it = ms.upper_bound(2);
   EXPECT_EQ(*it, 3);
 
-  // Upper bound of 3 should point to the first element after the last
-  // occurrence of 3
   it = ms.upper_bound(3);
   EXPECT_EQ(*it, 4);
 }
@@ -75,7 +69,6 @@ TEST(msTest, UpperBound) {
 TEST(msTest, EqualRange) {
   multiset<int> ms{1, 2, 2, 3, 3, 3, 4, 5};
 
-  // Equal range of 2 should cover all occurrences of 2
   auto range = ms.equal_range(2);
   auto it = range.first;
   int count = 0;
@@ -86,7 +79,6 @@ TEST(msTest, EqualRange) {
   }
   EXPECT_EQ(count, 2);
 
-  // Equal range of 3 should cover all occurrences of 3
   range = ms.equal_range(3);
   it = range.first;
   count = 0;
@@ -126,14 +118,11 @@ TEST(MultisetTest, Merge) {
 }
 
 TEST(MultisetTest, InsertMany) {
-  // Создаем мультимножество и вставляем несколько элементов
   multiset<int> ms;
   auto inserted = ms.insert_many(1, 2, 2, 3, 3, 3, 4, 5);
 
-  // Проверяем размер мультимножества
   EXPECT_EQ(ms.size(), 8);
   EXPECT_EQ(inserted.size(), 8);
-  // Проверяем количество вставленных элементов
   EXPECT_EQ(ms.count(2), 2);
   EXPECT_EQ(ms.count(3), 3);
   EXPECT_EQ(ms.count(6), 0);

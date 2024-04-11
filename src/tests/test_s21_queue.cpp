@@ -55,13 +55,10 @@ TEST(QueueTest, Swap) {
 TEST(QueueTest, InsertManyBack) {
   queue<int> qu;
 
-  // Вставляем несколько элементов
   qu.insert_many_back(1, 2, 3, 4, 5);
 
-  // Проверяем размер очереди
   EXPECT_EQ(qu.size(), 5);
 
-  // Проверяем, что элементы были вставлены в правильном порядке
   EXPECT_EQ(qu.front(), 1);
   qu.pop();
   EXPECT_EQ(qu.front(), 2);
@@ -73,6 +70,5 @@ TEST(QueueTest, InsertManyBack) {
   EXPECT_EQ(qu.front(), 5);
   qu.pop();
 
-  // Проверяем, что очередь теперь пуста
   EXPECT_TRUE(qu.empty());
 }
