@@ -117,7 +117,7 @@ TEST_F(test_array, test_array_begin_end_front_back) {
   EXPECT_EQ(a1.front(), 1.1);
   EXPECT_EQ(a1.back(), 25.1);
 
-  _SPCE_::array<double>::iterator pos = a1.begin();
+  _SPCE_::array<double, 3>::iterator pos = a1.begin();
   pos = a1.begin();
   EXPECT_EQ(a1.front(), *pos);
   pos = a1.end();
@@ -218,4 +218,7 @@ TEST_F(test_array, test_array_fill) {
 
   a2.fill(-3.14);
   for (std::size_t i = 0; i < a2.size(); i++) EXPECT_DOUBLE_EQ(a2[i], -3.14);
+
+  _SPCE_::array<int, 0> a3;
+  a3.fill(100);
 }

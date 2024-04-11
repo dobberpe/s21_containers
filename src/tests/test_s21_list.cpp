@@ -107,7 +107,8 @@ TEST_F(test_s21_list, test_s21_list_empty_size) {
   list1.clear();  // clear empty-list
   EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 
-  list1.pop_back();  // del from empty-list
+  EXPECT_DEATH((list1.pop_back(), exit(0)),
+               ".*");  // del from empty-list ... ERROR
   EXPECT_EQ(list1.empty(), CONTAINER_EMPTY);
 }
 
@@ -251,6 +252,7 @@ TEST_F(test_s21_list, test_s21_list_iterator) {
   EXPECT_EQ(*(++iter), -111);
 
   for (int i = 0; i < 4; i++) list2.pop_back();
+
   EXPECT_EQ(list2.empty(), CONTAINER_EMPTY);
 }
 

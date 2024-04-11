@@ -16,9 +16,7 @@ typename vector<value_type>::reference vector<value_type>::front() {
 
 template <typename value_type>
 typename vector<value_type>::reference vector<value_type>::back() {
-  if (empty() == CONTAINER_EMPTY)
-    return *end();
-  else
+
     return *(--end());
 }
 

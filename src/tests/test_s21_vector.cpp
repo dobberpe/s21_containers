@@ -106,10 +106,6 @@ TEST_F(test_s21_vector, test_vector_empty_size) {
 TEST_F(test_s21_vector, test_vector_begin_end_front_back) {
   _SPCE_::vector<double> v1;
   v1.push_back(1.1);
-  v1.pop_back();
-  EXPECT_EQ(v1.back(), 1.1);
-
-  v1.push_back(1.1);
   v1.push_back(-0.1);
   v1.push_back(25.1);
   EXPECT_DOUBLE_EQ(v1.front(), 1.1);

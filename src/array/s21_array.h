@@ -5,7 +5,7 @@
 
 namespace s21 {
 
-template <typename T, size_t _MAX = 0>
+template <typename T, size_t _MAX>
 class array {
  public:
   using value_type = T;
@@ -44,7 +44,7 @@ class array {
   void swap(array<value_type, _MAX> &other);
   void fill(const_reference value);
 
-  array();
+  array<value_type, _MAX>();
   explicit array(std::initializer_list<value_type> const &items);
   array<value_type, _MAX>(const array<value_type, _MAX> &a);
   array<value_type, _MAX>(array<value_type, _MAX> &&a);
