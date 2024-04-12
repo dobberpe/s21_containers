@@ -28,6 +28,7 @@ typename multiset<Key>::iterator multiset<Key>::insert(const_reference key) {
       return iterator(new_node, Tree<Key>::get_max());
     }
   }
+
   new_node->parent = parent;
   if (parent == nullptr)
     Tree<Key>::root = new_node;
@@ -52,22 +53,18 @@ typename multiset<Key>::size_type multiset<Key>::count(const Key &key) {
 
 template <typename Key>
 typename multiset<Key>::iterator multiset<Key>::lower_bound(const Key &key) {
-  for (auto it = Tree<Key>::begin(); it != Tree<Key>::end(); ++it) {
-    if (*it >= key) {
-      return it;
-    }
+  auto it = Tree<Key>::begin();
+  for (; it != Tree<Key>::end() && *it < key; ++it) {
   }
-  return Tree<Key>::end();
+  return it;
 }
 
 template <typename Key>
 typename multiset<Key>::iterator multiset<Key>::upper_bound(const Key &key) {
-  for (auto it = Tree<Key>::begin(); it != Tree<Key>::end(); ++it) {
-    if (*it > key) {
-      return it;
-    }
+  auto it = Tree<Key>::begin();
+  for (; it != Tree<Key>::end() && *it <= key; ++it) {
   }
-  return Tree<Key>::end();
+  return it;
 }
 
 template <typename Key>
@@ -81,23 +78,19 @@ multiset<Key>::equal_range(const Key &key) {
 template <typename Key>
 typename multiset<Key>::const_iterator multiset<Key>::lower_bound(
     const Key &key) const {
-  for (auto it = Tree<Key>::begin(); it != Tree<Key>::end(); ++it) {
-    if (*it >= key) {
-      return it;
-    }
+  auto it = Tree<Key>::begin();
+  for (; it != Tree<Key>::end() && *it < key; ++it) {
   }
-  return Tree<Key>::end();
+  return it;
 }
 
 template <typename Key>
 typename multiset<Key>::const_iterator multiset<Key>::upper_bound(
     const Key &key) const {
-  for (auto it = Tree<Key>::begin(); it != Tree<Key>::end(); ++it) {
-    if (*it > key) {
-      return it;
-    }
+  auto it = Tree<Key>::begin();
+  for (; it != Tree<Key>::end() && *it <= key; ++it) {
   }
-  return Tree<Key>::end();
+  return it;
 }
 
 template <typename Key>

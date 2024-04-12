@@ -30,26 +30,27 @@ void Tree<Key>::destroy(Node *node) {
 
 template <typename Key>
 typename Tree<Key>::Node *Tree<Key>::copy_nodes(Node *other, Node *parent) {
-  if (other == nullptr) return nullptr;
-  Node *new_node = new Node(other->key);
-  new_node->parent = parent;
-  new_node->left = copy_nodes(other->left, new_node);
-  new_node->right = copy_nodes(other->right, new_node);
+  Node *new_node = nullptr;
+  if (other != nullptr) {
+    new_node = new Node(other->key);
+    new_node->parent = parent;
+    new_node->left = copy_nodes(other->left, new_node);
+    new_node->right = copy_nodes(other->right, new_node);
+  }
   return new_node;
 }
 
 template <typename Key>
 typename Tree<Key>::Node *Tree<Key>::find_node(const_reference key) const {
   Node *current = root;
-  while (current != nullptr) {
-    if (key == current->key)
-      return current;
-    else if (key < current->key)
+  while (current != nullptr && key != current->key) {
+    if (key < current->key)
       current = current->left;
     else
       current = current->right;
   }
-  return nullptr;
+  if (current && key != current->key) current = nullptr;
+  return current;
 }
 
 template <typename Key>
@@ -94,21 +95,19 @@ typename Tree<Key>::Tree &Tree<Key>::operator=(Tree &&s) noexcept {
 template <typename Key>
 std::pair<typename Tree<Key>::iterator, bool> Tree<Key>::insert(
     const_reference key) {
-  Node *new_node = new Node(key);
   Node *parent = nullptr;
   Node *current = root;
-
   while (current != nullptr) {
     parent = current;
     if (key < current->key)
       current = current->left;
     else if (key > current->key)
       current = current->right;
-    else {
-      delete new_node;
+    else
       return std::make_pair(iterator(current, get_max()), false);
-    }
   }
+
+  Node *new_node = new Node(key);
   new_node->parent = parent;
   if (parent == nullptr)
     root = new_node;
@@ -241,17 +240,17 @@ template <typename Key>
 typename Tree<Key>::Iterator &Tree<Key>::Iterator::operator--() {
   if (current == nullptr) {
     current = last;
-    return *this;
-  }
-  if (current->left != nullptr) {
-    current = maximum(current->left);
   } else {
-    typename Tree<Key>::Node *y = current->parent;
-    while (y != nullptr && current == y->left) {
+    if (current->left != nullptr) {
+      current = maximum(current->left);
+    } else {
+      typename Tree<Key>::Node *y = current->parent;
+      while (y != nullptr && current == y->left) {
+        current = y;
+        y = y->parent;
+      }
       current = y;
-      y = y->parent;
     }
-    current = y;
   }
   return *this;
 }
@@ -286,6 +285,7 @@ typename Tree<Key>::Node *Tree<Key>::Iterator::successor(
     while (x->left != nullptr) x = x->left;
     return x;
   }
+
   typename Tree<Key>::Node *y = x->parent;
   while (y != nullptr && x == y->right) {
     x = y;
